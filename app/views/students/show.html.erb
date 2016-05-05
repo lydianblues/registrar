@@ -1,29 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @student.first_name + " " + @student.last_name %></h3>
+  </div>
+  <div class="panel-body">
+  <p>
+      <strong>ID:</strong>
+      <%= @student.id %>
+  </p>
+  <p>
+      <strong>Email:</strong>
+      <%= @student.email %>
+  </p>
+  <p>
+      <strong>Occupation:</strong>
+      <%= @student.occupation %>
+  </p>
+  <p>
+      <strong>Organization:</strong>
+      <%= @student.organization %>
+  </p>
+  <p>
+      <strong>Created at:</strong>
+      <%= @student.created_at %>
+  </p>
+  <p>
+      <strong>Updated at:</strong>
+      <%= @student.updated_at %>
+  </p>
+  </div>
+</div>
 
-<p>
-  <strong>First name:</strong>
-  <%= @student.first_name %>
-</p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @student.last_name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @student.email %>
-</p>
-
-<p>
-  <strong>Occupation:</strong>
-  <%= @student.occupation %>
-</p>
-
-<p>
-  <strong>Organization:</strong>
-  <%= @student.organization %>
-</p>
-
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+<div class="form-actions">
+  <%= link_to 'Back', students_path, :class => 'btn btn-sm btn-info'  %>
+  <%= link_to 'Edit', edit_student_path(@student), :class => 'btn btn-sm btn-info' %>
+    <%= link_to 'Delete', student_path(@student), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
