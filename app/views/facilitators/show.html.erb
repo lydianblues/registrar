@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @facilitator.name %></h3>
+  </div>
+  <div class="panel-body">
+  <p>
+      <strong>ID:</strong>
+      <%= @facilitator.id %>
+  </p>
+  <p>
+      <strong>Description:</strong>
+      <%= @facilitator.description%>
+  </p>
+  </div>
+</div>
+
+
+<div class="form-actions">
+  <%= link_to 'Back', facilitators_path, :class => 'btn btn-sm btn-info'  %>
+  <%= link_to 'Edit', edit_facilitator_path(@facilitator), :class => 'btn btn-sm btn-info' %>
+    <%= link_to 'Delete', facilitator_path(@facilitator), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>

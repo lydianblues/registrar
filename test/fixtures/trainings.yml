@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2016-05-04
+  end_date: 2016-05-04
+  code: MyString
+  early_cost: 
+  early_cost: 
+  late_cost: 
+  late_cost: 
+  new_registration_closed: 2016-05-04
+  early_registration_cutoff: 2016-05-04
+  course: one
+  facilitator: one
+  location: one
+
+two:
+  start_date: 2016-05-04
+  end_date: 2016-05-04
+  code: MyString
+  early_cost: 
+  early_cost: 
+  late_cost: 
+  late_cost: 
+  new_registration_closed: 2016-05-04
+  early_registration_cutoff: 2016-05-04
+  course: two
+  facilitator: two
+  location: two

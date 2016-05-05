@@ -1,0 +1,31 @@
+<%= simple_form_for(@training, html: { class: 'form-vertical' }) do |f| %>
+
+    <%= f.error_notification %>
+
+  <fieldset>
+    <div class="form-inputs">
+        <%= f.input :course_id, collection: @courses, 
+            prompt: "Choose a Course" %>
+        <%= f.input :location_id, collection: @locations,
+            prompt: "Choose a Location" %>
+        <%= f.input :facilitator_id, collection: @facilitators,
+            prompt: "Choose a Facilitator" %>
+        <%= f.input :start_date %>
+        <%= f.input :end_date %>
+        <%= f.input :code %>
+        <%= f.input :early_cost %>
+        <%= f.input :late_cost %>
+        <%= f.input :staff_cost %>
+        <%= f.input :max_attendees %>
+        <%= f.input :min_attendees %>
+        <%= f.input :new_registration_closed %>
+        <%= f.input :early_registration_cutoff %>
+    </div>
+
+    <div class="form-actions">
+        <%= f.button :submit, class: 'btn btn-md btn-primary' %>
+        <%= link_to 'Cancel', trainings_path, class: 'btn btn-md btn-warning' %>
+    </div>
+
+  </fieldset>
+<% end %>

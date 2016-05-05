@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @course.name %></h3>
+  </div>
+  <div class="panel-body">
+  <p>
+      <strong>ID:</strong>
+      <%= @course.id %>
+  </p>
+  <p>
+      <strong>Description:</strong>
+      <%= @course.description%>
+  </p>
+  </div>
+</div>
+
+
+<div class="form-actions">
+  <%= link_to 'Back', courses_path, :class => 'btn btn-sm btn-info'  %>
+  <%= link_to 'Edit', edit_course_path(@course), :class => 'btn btn-sm btn-info' %>
+    <%= link_to 'Delete', course_path(@course), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
