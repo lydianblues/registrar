@@ -1,0 +1,41 @@
+<%= simple_form_for(@registration, html: { class: 'form-vertical' }) do |f| %>
+
+    <%= f.error_notification %>
+
+  <fieldset>
+    <div class="form-inputs">
+        <%= f.input :code, placeholder: "#{9999 + rand(90000)} (random)",
+            required: true %>
+
+         <%= f.input :training_id, collection: @trainings, 
+            prompt: "Choose a Training", label_method: :label, value_method: :id %>
+
+        <%= f.input :registerable_type, as: :radio_buttons,
+            collection: [['Student', 'Student'], ['Group', 'Group']], 
+            label_method: :last, value_method: :first %>
+
+       
+        <%= f.input :student_id, collection: @students,
+            prompt: "Choose a Student", label_method: :label, value_method: :id,
+            input_html: {id: :registerable_student} %>
+
+
+        <%= f.input :group_id, collection: @groups,
+            prompt: "Choose a Group", label_method: :label, value_method: :id,
+            input_html: {id: :registerable_group} %>
+       
+        <%= f.input :paid_for %>
+        <%= f.input :amt_paid %>
+        <%= f.input :sign_up_date %>
+        <%= f.input :auth_code %>
+        <%= f.input :refunded %>
+       
+    </div>
+
+    <div class="form-actions">
+        <%= f.button :submit, class: 'btn btn-md btn-primary' %>
+        <%= link_to 'Cancel', registrations_path, class: 'btn btn-md btn-warning' %>
+    </div>
+
+  </fieldset>
+<% end %>

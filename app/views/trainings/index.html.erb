@@ -5,16 +5,10 @@
     <thead>
       <tr>
         <th>Course Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
         <th>Code</th>
-        <th>Early Cost</th>
-        <th>Late Cost</th>
-        <th>Staff Cost</th>
-        <th>New Registration Closed</th>
-        <th>Early Registration Cutoff</th>
-        <th>Max Attendees</th>
-        <th>Min Attendees</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>City</th>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -23,16 +17,10 @@
       <% @trainings.each do |training| %>
         <tr>
           <td><%= link_to training.course.name, training.course %></td>
+          <td><%= link_to training.code, training %></td>
           <td><%= training.start_date %></td>
           <td><%= training.end_date %></td>
-          <td><%= training.code %></td>
-          <td><%= training.early_cost %></td>
-          <td><%= training.late_cost %></td>
-          <td><%= training.staff_cost %></td>
-          <td><%= training.new_registration_closed %></td>
-          <td><%= training.early_registration_cutoff %></td>
-          <td><%= training.max_attendees %></td>
-          <td><%= training.min_attendees %></td>
+          <td><%= training.location.city %></td>
           <td><%= link_to 'Edit', edit_training_path(training),
             class: 'btn btn-primary btn-xs' %></td>
           <td><%= link_to 'Delete', training, class: 'btn btn-xs btn-danger', 

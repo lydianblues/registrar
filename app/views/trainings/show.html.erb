@@ -1,15 +1,73 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= "Course: #{@training.course.name}" %></h3>
+    <h3 class="panel-title">Training Session Details</h3>
   </div>
   <div class="panel-body">
   <p>
-      <strong>ID For This Training:</strong>
+  <strong>Course:</strong>
+  <%= link_to @training.course.name, @training.course %>
+  </p>
+  <p>
+      <strong>Database ID:</strong>
       <%= @training.id %>
   </p>
   <p>
-      <strong>Description:</strong>
-      <%= @training.start_date %>
+      <strong>Code:</strong>
+      <%= @training.code %>
+  </p>
+  <p>
+      <strong>Address:</strong>
+      <!-- This styling is not very good.  Use isotope? -->
+      <div style="margin-left:1em;border:1px solid black; border-radius:8px;padding:1em;width:50%;background:yellow;">
+      <%= @training.location.name %><br>
+      <%= @training.location.street_1 %><br>
+      <% if @training.location.street_2 %>
+        <%= @training.location.street_2%><br>
+      <% end %>
+      <%= @training.location.city %>,&nbsp;
+      <% if @training.location.country %>
+        <%= @training.location.country %>
+      <% else %>
+        <%= @training.location.state %>
+        <%= @training.location.zip %>
+      <% end %>
+      </div>
+  </p>
+  <p>
+      <strong>Dates:</strong>
+      <%= "#{@training.start_date} through #{@training.end_date}" %>
+  </p>
+  <p>
+      <strong>Facilitator:</strong>
+      <%= link_to @training.facilitator.name, @training.facilitator %>
+  </p>
+  <p>
+      <strong>Early Cost:</strong>
+      <%= @training.early_cost %>
+  </p>
+  <p>
+      <strong>Late Cost:</strong>
+      <%= @training.late_cost %>
+  </p>
+  <p>
+      <strong>Staff Cost:</strong>
+      <%= @training.staff_cost %>
+  </p>
+  <p>
+      <strong>New Registration Closed:</strong>
+      <%= @training.new_registration_closed %>
+  </p>
+  <p>
+      <strong>Early Registration Cutoff:</strong>
+      <%= @training.early_registration_cutoff %>
+  </p>
+  <p>
+      <strong>Mininum Attendees:</strong>
+      <%= @training.min_attendees %>
+  </p>
+  <p>
+      <strong>Maximum Attendees:</strong>
+      <%= @training.max_attendees %>
   </p>
   </div>
 </div>

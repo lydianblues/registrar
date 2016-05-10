@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-default">
+ 	<div class="panel-heading">
+	   <h3 class="panel-title">Group Details</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <p>
+            <strong>Database ID:</strong>
+            <%= @group.id %>
+        </p>
+        <p>
+            <strong>Group Leader:</strong>
+            <%= link_to @group.leader.first_name + ' ' +
+                @group.leader.last_name, @group.leader %>
+        </p>
+        <p>
+            <strong>Group Name:</strong>
+            <%= link_to @group.leader.last_name + '$' + @group.tag, @group %>
+        </p>
+        <p>
+            <strong>Created at:</strong>
+            <%= @group.created_at.strftime("%b %-d, %Y") %>
+        </p>
+        <p>
+            <strong>Updated at:</strong>
+            <%= @group.updated_at.strftime("%b %-d, %Y") %>
+        </p>
+        <p>
+            <strong>Members:</strong>
+            <%= @group.students.count %>
+        </p> 
+  </div>
+</div>
+
+<div class="form-actions">
+  <%= link_to 'Back', groups_path, :class => 'btn btn-sm btn-info'  %>
+  <%= link_to 'Edit', edit_group_path(@group), :class => 'btn btn-sm btn-info' %>
+    <%= link_to 'Delete', group_path(@group), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
+
+<div class="panel panel-default" style="margin-top:2em;">
+    <div class="panel-heading">
+       <h3 class="panel-title">Group Members</h3>
+       <div style="background-color:#def;padding:1em;margin-top:1em;">
+            Here will be a list of all members in the group.
+        </div>
+    </div>
+</div>

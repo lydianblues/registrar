@@ -16,7 +16,7 @@
       <% @students.each do |student| %>
         <tr>
           <td><%= link_to student.first_name + " " + student.last_name, student %></td>
-          <td><%= student.email %></td>
+          <td><%= student.wp_user_email %></td>
           <td><%= student.occupation %></td>
           <td><%= student.organization %></td>
           <td><%= link_to 'Edit', edit_student_path(student),

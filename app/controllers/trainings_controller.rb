@@ -4,7 +4,18 @@ class TrainingsController < ApplicationController
   # GET /trainings
   # GET /trainings.json
   def index
-    @trainings = Training.all
+   
+    if params[:course_id] 
+      # Be careful of SQL Injection
+      @trainings = Training.where("course_id = ?", params[:course_id])
+     
+      # @filtered_trainings = @trainings.map {|t|
+      #   {t.id, t.code, t.location.city}
+      #}
+    else
+      @trainings = Training.all
+    end
+
   end
 
   # GET /trainings/1
@@ -80,4 +91,6 @@ class TrainingsController < ApplicationController
        :min_attendees, :max_attendees,
        :early_registration_cutoff, :course_id, :facilitator_id, :location_id)
     end
+
+    skip_before_action :verify_authenticity_token, :only => [:create]
 end

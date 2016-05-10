@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Registration Details</h3>
+  </div>
+  <div class="panel-body">
+  <p>
+  <strong>Training for Course:</strong>
+  <%= link_to @registration.training.course.name, @registration.training.course %>
+  </p>
+  <p>
+      <strong>Database ID:</strong>
+      <%= @registration.id %>
+  </p>
+  <p>
+      <strong>Code:</strong>
+      <%= @registration.code %>
+  </p>
+  <p>
+   
+  </div>
+</div>
+
+
+<div class="form-actions">
+  <%= link_to 'Back', registrations_path, :class => 'btn btn-sm btn-info'  %>
+  <%= link_to 'Edit', edit_registration_path(@registration), :class => 'btn btn-sm btn-info' %>
+    <%= link_to 'Delete', registration_path(@registration), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>

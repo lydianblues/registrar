@@ -35,6 +35,7 @@ gem 'bootstrap-sass', path: "/opt/Bootstrap/bootstrap-sass" # Bootstrap 3
 gem 'font-awesome-sass', path: "/opt/fonts/font-awesome/font-awesome-sass"
 gem 'fontello-sass', path: "/opt/fonts/fontello/fontello-sass"
 gem 'simple_form'
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

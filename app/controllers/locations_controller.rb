@@ -66,9 +66,10 @@ class LocationsController < ApplicationController
     def set_location
       @location = Location.find(params[:id])
     end
-
+ 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:name, :address)
+      params.require(:location).permit(:name, :street_1, :street_2, :city,
+        :country, :state, :zip, :notes)
     end
 end

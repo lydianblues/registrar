@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  registerable: one
+  registerable_type: Registerable
+  paid_for: false
+  amt_paid: 9.99
+  sign_up_date: 2016-05-08
+  auth_code: MyString
+  refunded: false
+
+two:
+  registerable: two
+  registerable_type: Registerable
+  paid_for: false
+  amt_paid: 9.99
+  sign_up_date: 2016-05-08
+  auth_code: MyString
+  refunded: false
