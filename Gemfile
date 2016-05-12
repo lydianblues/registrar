@@ -1,17 +1,19 @@
 source 'https://rubygems.org'
 
-gem 'rails', path: "/opt/rails/rails-edge"
+gem 'rails', path: "/opt/rails/rails5"
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', github: "rails/sass-rails"
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', github: "rails/coffee-rails"
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -32,8 +34,8 @@ gem 'jbuilder', '~> 2.0'
 ########## Added by mbs ##########
 gem 'bootstrap-sass', path: "/opt/Bootstrap/bootstrap-sass" # Bootstrap 3
 # gem 'bootstrap', path: "/opt/Bootstrap/bootstrap-rubygem" # Bootstrap 4
-gem 'font-awesome-sass', path: "/opt/fonts/font-awesome/font-awesome-sass"
-gem 'fontello-sass', path: "/opt/fonts/fontello/fontello-sass"
+# gem 'font-awesome-sass', path: "/opt/fonts/font-awesome/font-awesome-sass"
+# gem 'fontello-sass', path: "/opt/fonts/fontello/fontello-sass"
 gem 'simple_form'
 gem 'rack-cors'
 
