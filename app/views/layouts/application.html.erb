@@ -86,6 +86,19 @@
         <% end %>
 
         <div class="row">
+          <div class="col-sm-9"></div>
+          <div class="col-sm-3">
+          <% if current_user %>
+            Logged in as <%= current_user.email %>.
+            <%= link_to "Log Out", logout_path %>
+          <% else %>
+            <%= link_to "Sign Up", signup_path %> or
+            <%= link_to "Log In", login_path %>
+          <% end %>
+          </div>
+        </div>
+
+        <div class="row">
 
 			<div class="col-sm-9"><%= yield %></div>
 
