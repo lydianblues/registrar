@@ -1,5 +1,6 @@
 class FacilitatorsController < ApplicationController
   before_action :set_facilitator, only: [:show, :edit, :update, :destroy]
+  before_filter :staff_only
 
   # GET /facilitators
   # GET /facilitators.json

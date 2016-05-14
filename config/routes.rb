@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
-  get 'signup', to: 'users#new', as: 'signup'
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+  # devise_for :users
+  devise_for :users, controllers: {
+        registrations: 'users/registrations'
+   }
 
-  root 'students#index'
+  root to: 'home#index'
 
-  resources :users
   resources :groups
   resources :registrations
   resources :trainings
@@ -14,6 +14,6 @@ Rails.application.routes.draw do
   resources :facilitators
   resources :courses
   resources :students
-  resources :sessions
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

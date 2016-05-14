@@ -3,17 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+	def authorize_admin
+    	return if (current_user && current_user.admin?)
+    	redirect_to root_path, alert: 'Admins only!'
+  	end
 
+  	def staff_only
+  		return if current_user
+  		redirect_to root_path, alert: 'Niroga staff only!'
+  	end
 
-  private
-
-	def current_user
-  		@current_user ||= User.find(session[:user_id]) if session[:user_id]
-	end
-
-	helper_method :current_user
-
-	def authorize
-  		redirect_to login_url, alert: "Not authorized" if current_user.nil?
-	end
 end

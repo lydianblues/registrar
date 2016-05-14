@@ -284,6 +284,20 @@ Registration.create(
 	training: trainings[0],
 	code: 9999 + rand(90000))
 
+User.create(
+	email: "admin@niroga.org",
+	password: "harpenter911",
+	password_confirmation: "harpenter911",
+	admin: true
+)
+
+User.create(
+	email: "mbs@niroga.org",
+	password: "harpenter911",
+	password_confirmation: "harpenter911",
+	admin: false
+)
+
 __END__
 
 
