@@ -6,5 +6,6 @@
 json.array!(@trainings) do |training|
 	json.extract! training, :id, :code
 	json.start_date training.start_date.strftime("%a %b %d %Y")
+	json.end_date training.end_date.strftime("%a %b %d %Y")
 	json.city training.location.city
 end

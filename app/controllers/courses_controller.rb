@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
-  before_filter :staff_only, except: :index
+  before_filter :staff_only, except: [:index, :show]
   
   # GET /courses
   # GET /courses.json

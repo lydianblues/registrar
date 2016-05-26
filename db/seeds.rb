@@ -7,16 +7,21 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 students = [
-	Student.create(first_name: "Bill", last_name: "Rogers", 
-		wp_user_email: "bill@hoptoad.com", occupation: "carpenter", organization: "aflcio"),
-	Student.create(first_name: "Dave", last_name: "Plummer", 
-		wp_user_email: "Dave@hoptoad.com", occupation: "shoemaker", organization: "leathercorp"),
-	Student.create(first_name: "Mary", last_name: "StMarie", 
-		wp_user_email: "mary@hoptoad.com", occupation: "saint", organization: "catholicism"),
-	Student.create(first_name: "Sue", last_name: "Painter", 
-		wp_user_email: "sue@hoptoad.com", occupation: "school principal", organization: "NEA"),
-	Student.create(first_name: "Artur", last_name: "Pineapple", 
-		wp_user_email: "artur@squarepants.com", occupation: "teacher", organization: "NEA")
+	Student.create(wp_first_name: "Bill", wp_last_name: "Rogers", 
+		wp_email: "bill@hoptoad.com", occupation: "carpenter", organization: "aflcio",
+		wp_id: 7, email_list: true),
+	Student.create(wp_first_name: "Dave", wp_last_name: "Plummer", 
+		wp_email: "Dave@hoptoad.com", occupation: "shoemaker", organization: "leathercorp",
+		wp_id: 8, email_list: false),
+	Student.create(wp_first_name: "Mary", wp_last_name: "StMarie", 
+		wp_email: "mary@hoptoad.com", occupation: "saint", organization: "catholicism",
+	wp_id: 67, email_list: true),
+	Student.create(wp_first_name: "Sue", wp_last_name: "Painter", 
+		wp_email: "sue@hoptoad.com", occupation: "school principal", organization: "NEA",
+		wp_id: 709, email_list: true),
+	Student.create(wp_first_name: "Artur", wp_last_name: "Pineapple", 
+		wp_email: "artur@squarepants.com", occupation: "teacher", organization: "NEA",
+		wp_id: 45, email_list: false)
 ]
 
 courses = [
@@ -256,12 +261,12 @@ trainings = [
 ]
 
 groups = [
-	Group.create(leader_first: "Salmon", leader_last: "Rushdie", tag: "alpha", leader: students[0]),
-	Group.create(leader_first: "Menehuna", leader_last: "Raja", tag: "beta", leader: students[1]),
-	Group.create(leader_first: "Richard", leader_last: "Nixon", tag: "gamma", leader: students[2]),
-	Group.create(leader_first: "Gerald", leader_last: "Ford", tag: "delta", leader: students[2]),
-	Group.create(leader_first: "Lyndon", leader_last: "Johnson", tag: "epsilon", leader: students[2]),
-	Group.create(leader_first: "Salmon", leader_last: "Rushdie", tag: "zeta", leader: students[4])
+	Group.create(tag: "alpha", owner: students[0]),
+	Group.create(tag: "beta", owner: students[1]),
+	Group.create(tag: "gamma", owner: students[2]),
+	Group.create(tag: "delta", owner: students[2]),
+	Group.create(tag: "epsilon", owner: students[2]),
+	Group.create(tag: "zeta", owner: students[4])
 ]
 
 Registration.create(

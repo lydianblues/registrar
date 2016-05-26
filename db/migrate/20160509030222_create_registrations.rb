@@ -9,7 +9,8 @@ class CreateRegistrations < ActiveRecord::Migration[5.0]
       t.date :sign_up_date
       t.string :auth_code
       t.boolean :refunded
-
+      t.string :reg_type
+      t.references :proxy
       t.timestamps
     end
   end

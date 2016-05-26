@@ -72,6 +72,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:first_name, :last_name, :wp_user_email, :occupation, :organization)
+      params.require(:student).permit(:wp_login, :wp_first_name, :wp_last_name, :wp_email,
+        :wp_display_name, :wp_id, :email_list, :occupation, :organization)
     end
 end

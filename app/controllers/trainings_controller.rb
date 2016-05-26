@@ -1,6 +1,6 @@
 class TrainingsController < ApplicationController
   before_action :set_training, only: [:show, :edit, :update, :destroy]
-  before_filter :staff_only, except: :index
+  before_filter :staff_only, except: [:index, :show]
 
   # GET /trainings
   # GET /trainings.json

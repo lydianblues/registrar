@@ -2,6 +2,7 @@ class Registration < ApplicationRecord
 
   belongs_to :registerable, polymorphic: true
   belongs_to :training
+  belongs_to :proxy, foreign_key: :proxy_id, class_name: Student
 
   validates :code, presence: true
   validates :training_id, presence: true

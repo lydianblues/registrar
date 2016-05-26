@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
-  before_filter :staff_only
+  before_filter :staff_only, except: :show
 
   # GET /locations
   # GET /locations.json
