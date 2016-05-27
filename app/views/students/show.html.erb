@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= @student.first_name + " " + @student.last_name %></h3>
+    <h3 class="panel-title"><%= @student.wp_first_name + " " + @student.wp_last_name %></h3>
   </div>
   <div class="panel-body">
   <p>
@@ -9,7 +9,7 @@
   </p>
   <p>
       <strong>Email:</strong>
-      <%= @student.wp_user_email %>
+      <%= @student.wp_email %>
   </p>
   <p>
       <strong>Occupation:</strong>

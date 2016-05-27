@@ -10,7 +10,8 @@ class CreateRegistrations < ActiveRecord::Migration[5.0]
       t.string :auth_code
       t.boolean :refunded
       t.string :reg_type
-      t.references :proxy
+      t.references :owner
+      t.references :transaction
       t.timestamps
     end
   end

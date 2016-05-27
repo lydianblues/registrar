@@ -24,53 +24,106 @@ class ApiController < ApplicationController
 			return
 		end
 
-		# Are we registering a group?
+		#
+		# Find or create the owner.  There should always be one since the ower
+		# is the entity that pays for the the registration. The owner may already
+		# be in the database from a previous transaction. 
+		#
+		owner_params = params[:owner]
+		owner = Student.find_by_wp_email(owner_params[:wp_email])
+		unless owner 
+			owner = Student.find_by_wp_login(owner_params[:wp_login])
+			if owner && owner_params[:wp_email]
+				owner.wp_email = owner_params[:wp_email]
+			end
+			unless owner
+				owner = Student.new(
+				wp_id: owner_params[:wp_id],
+				wp_login: owner_params[:wp_login],
+				wp_email: owner_params[:wp_email],
+				wp_first_name: owner_params[:wp_first_name],
+				wp_last_name: owner_params[:wp_last_name],
+				wp_display_name: owner_params[:wp_display_name],
+				occupation: owner_params[:occupation],
+				organization: owner_params[:organization],
+				email_list: owner_params[:email_list])
+			end
+		end
+		owner.save!
+
 		group_registration =
 			['group-inclusive', 'group-exclusive'].include?(reg_type)
 
 		proxy_registration = reg_type == 'single-other'
-		self_registration = reg_type == 'single-self'
-
+		self_registration = reg_type == 'single-self'		
+		
 		#
-		# Create the group owner or proxy.
+		# Create the group to hold the participants.  Every group registration
+		# creates a new group.  There is no way to reuse a group created in 
+		# an earlier registration for a later registration.
 		#
-		# If this registration is on behalf of a different person,
-		# (reg_type = single-other) then the owner is the proxy and
-		# the participants array contains the person who is taking
-		# the course.
-		# 
-		owner_params = params[:owner]
-		owner = Student.new(
-			wp_id: owner_params[:wp_id],
-			wp_login: owner_params[:wp_login],
-			wp_email: owner_params[:wp_email],
-			wp_first_name: owner_params[:wp_first_name],
-			wp_last_name: owner_params[:wp_last_name],
-			wp_display_name: owner_params[:wp_display_name],
-			occupation: owner_params[:occupation],
-			organization: owner_params[:organization],
-			email_list: owner_params[:email_list])
-
-		# Create the group to hold the participants
 		if (group_registration)
 			group = Group.new
 			group.owner = owner;
-			group.save! # Also saves the owner
+			group.tag = 10000 + rand(90000)
+			group.tag = 
+			group.save!
 		end
 		
+		registration = Registration.new
+		registration.training = training
+		registration.owner = owner
+		registration.reg_type = reg_type
 
+		# Fix this.  We need to have a sequence in the database.
+		registration.code  = 10000 + rand(90000)
 		
+		if (self_registration)
+			registration.registerable = owner
+		elsif proxy_registration
+			#
+			# Look up or create the dude in participants[0]
+			#
+			# {"first_name":"Joe ","last_name":"Cooper ",
+			#	"email":"joe@avistra.org ","occupation":"Barrel Maker",
+			#	"newsletter":"On"
+			#
+			friend_params = params[:participants][0]
+			friend = Student.find_by_wp_email(friend_params[:wp_email])
+			unless friend
+				friend = Student.new(
+					wp_email: friend_params[:wp_email],
+					wp_first_name: friend_params[:wp_first_name],
+					wp_last_name: friend_params[:wp_last_name],
+					email_list: friend_params[:email_list],
+					occupation: friend_params[:occupation]
+				)
+			end
+			registration.registerable = friend
+		elsif group_registration
+			member_list = params[:participants]
+			member_list.each do |member_params|
+				member = Student.find_by_wp_email(member_params[:email])
+				unless member
+					member = Student.new(
+					wp_email: member_params[:wp_email],
+					wp_first_name: member_params[:wp_first_name],
+					wp_last_name: member_params[:wp_last_name],
+					email_list: member_params[:email_list],
+					occupation: member_params[:occupation]
+				)
+				end
+				# Add the new member to the group
+				byebug
+				group.students << member
+				
+			end
+			registration.registerable = group
+		end
 
-		
-	
-
-
-		participants = params[:participants]
-
-
+		registration.save!
 
 		render inline: "{\"status\": \"OK\"}"
-
 
 	end
 

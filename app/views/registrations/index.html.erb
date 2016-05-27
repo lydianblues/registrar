@@ -1,18 +1,21 @@
 <h1>Registrations</h1>
 <div class="panel panel-default">
   <div class="panel-body">
-    Note that the Group name is a combination of the last name of the 
-    group leader and group tag, separated
-    by a dollar sign.
+    When the <i>Registrant</i> column contains a hash sign (<i>#</i>), then the
+    registration is for a group.  Otherwise, the column contains the first and 
+    last name of the person being registered.
   </div>
 </div>
 <div class="table-responsive">
   <table class="table table-striped table-condensed table-hover">
     <thead>
       <tr>
-        <th>Code</th>
-        <th>Student Name</th>
-        <th>Group Name</th>
+        <th>Registration</th>
+        <th>Course</th>
+        <th>Training</th>
+        <th>Owner</th>
+        <th>Registrant</th>
+        <th>Paid</th>
         <th>Last Update</th>
         <th colspan="2"></th>
       </tr>
@@ -21,21 +24,21 @@
     <tbody>
       <% @registrations.each do |registration| %>
         <tr>
+
+
           <td><%= link_to registration.code, registration %></td>
-          
-          <% if registration.registerable_type == "Student" %>
-          <td><%= link_to registration.registerable.first_name + " " +
-            registration.registerable.last_name, registration.registerable %></td>
-          <td/>
-          <% end %>
+          <td><%= link_to registration.training.course.name,
+            registration.training.course %></td>
+          <td><%= link_to registration.training.code, registration.training %></td>
 
-          <% if registration.registerable_type == "Group" %>
-            <td/>
-            <td><%= link_to registration.registerable.leader_last + '$' +
-              registration.registerable.tag, registration.registerable %>
-            </td>
-          <% end %>
+          <td><%= link_to registration.owner.wp_first_name + " " +
+            registration.owner.wp_last_name, registration.owner %></td>
+               
+          <td><%= link_to registration.registerable.handle,
+            registration.registerable %></td>
 
+          <td><%= registration.paid_for ? "yes" : "no" %>
+         
           <td><%= registration.updated_at.strftime("%b %-d, %Y") %></td>
 
           <td><%= link_to 'Edit', edit_registration_path(registration),

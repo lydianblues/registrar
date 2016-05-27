@@ -1,8 +1,13 @@
 class Student < ApplicationRecord
 	has_many :registrations, as: :registerable
 	has_and_belongs_to_many :groups
+	has_many :transactions
 
 	def label
-		"#{id} #{first_name} #{last_name}"
+		"#{id} #{wp_first_name} #{wp_last_name}"
+	end
+
+	def handle
+		wp_first_name + " " + wp_last_name
 	end
 end

@@ -5,7 +5,7 @@
 <div class="panel panel-default">
   <div class="panel-body">
     Note that the Group name is a combination of the last name of the 
-    group leader and group tag, separated by a dollar sign.
+    group owner and group tag, separated by a dollar sign.
   </div>
 </div>
 <div class="table-responsive">
@@ -14,7 +14,7 @@
       <tr>
         <th>Group ID</th>
         <th>Group Name</th>
-        <th>Group Leader</th>
+        <th>Group Owner</th>
         <th>Last Update</th>
         <th colspan="2"></th>
       </tr>
@@ -24,12 +24,11 @@
       <% @groups.each do |group| %>
         <tr>
           <td><%= group.id %></td>
-        <td><%= link_to group.leader.last_name + '$' + group.tag, group %></td>
-            
-        <td><%= link_to group.leader.first_name + ' ' +
-          group.leader.last_name, group.leader %></td>
+          <td><%= link_to group.owner.wp_last_name + '#' + (group.id).to_s %></td> 
+          <td><%= link_to group.owner.wp_first_name + ' ' +
+            group.owner.wp_last_name, group.owner %></td>
 
-         <td><%= group.updated_at.strftime("%b %-d, %Y") %></td> 
+          <td><%= group.updated_at.strftime("%b %-d, %Y") %></td> 
 
           <td><%= link_to 'Edit', edit_group_path(group),
             class: 'btn btn-primary btn-xs' %></td>

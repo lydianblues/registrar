@@ -4,22 +4,52 @@
   </div>
   <div class="panel-body">
   <p>
-  <strong>Training for Course:</strong>
-  <%= link_to @registration.training.course.name, @registration.training.course %>
-  </p>
-  <p>
-      <strong>Database ID:</strong>
-      <%= @registration.id %>
-  </p>
-  <p>
       <strong>Code:</strong>
       <%= @registration.code %>
+  </p
+  <p>
+    <strong>Course:</strong>
+    <%= link_to @registration.training.course.name, @registration.training.course %>
   </p>
   <p>
-   
+    <strong>Training:</strong>
+    <%= link_to @registration.training.code, @registration.training %>
+  <p/>
+  <p>
+    <strong>Owner:</strong>
+    <%= link_to @registration.owner.wp_first_name + " " +
+      @registration.owner.wp_last_name, @registration.owner %>
+  </p>
+  <p>
+    <strong>Registrant:</strong>              
+    <%= link_to @registration.registerable.handle,
+      @registration.registerable %>
+  </p>
+
+  <p>
+    <strong>Paid:</strong>
+    <%= @registration.paid_for ? "yes" : "no" %>
+  </p>
+
+  <p>
+    <strong>Updated:</strong>
+    <%= @registration.updated_at.strftime("%b %-d, %Y") %>
+  </p>
+ 
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Transactions</h3>
+  </div>
+  <div class="panel-body">
+    <% @registration.transactions.each do |transaction| %>
+      
+
+    <% end %>
+  </div>
+</div>
 
 <div class="form-actions">
   <%= link_to 'Back', registrations_path, :class => 'btn btn-sm btn-info'  %>

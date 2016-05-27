@@ -15,13 +15,28 @@ students = [
 		wp_id: 8, email_list: false),
 	Student.create(wp_first_name: "Mary", wp_last_name: "StMarie", 
 		wp_email: "mary@hoptoad.com", occupation: "saint", organization: "catholicism",
-	wp_id: 67, email_list: true),
+		wp_id: 67, email_list: true),
 	Student.create(wp_first_name: "Sue", wp_last_name: "Painter", 
 		wp_email: "sue@hoptoad.com", occupation: "school principal", organization: "NEA",
 		wp_id: 709, email_list: true),
 	Student.create(wp_first_name: "Artur", wp_last_name: "Pineapple", 
 		wp_email: "artur@squarepants.com", occupation: "teacher", organization: "NEA",
-		wp_id: 45, email_list: false)
+		wp_id: 45, email_list: false),
+	Student.create(wp_first_name: "Charles", wp_last_name: "MacDuff", 
+		wp_email: "charles@macbeth.com", occupation: "thane", organization: "royal society",
+		wp_id: 101, email_list: true),
+	Student.create(wp_first_name: "Stu", wp_last_name: "Pickles", 
+		wp_email: "stu@rugrats.com", occupation: "inventor", organization: "very little",
+		wp_id: 102, email_list: false),
+	Student.create(wp_first_name: "Grandpa", wp_last_name: "Pickles", 
+		wp_email: "grandpa@rugrats.com", occupation: "child care", organization: "sleep society",
+		wp_id: 103, email_list: true),
+	Student.create(wp_first_name: "Chaz", wp_last_name: "Pickles", 
+		wp_email: "chaz@rugrats.com", occupation: "accountat", organization: "boring league",
+		wp_id: 104, email_list: true),
+	Student.create(wp_first_name: "Bob", wp_last_name: "SquarePants", 
+		wp_email: "bob@undersea.com", occupation: "entertainer", organization: "ASCAP",
+		wp_id: 105, email_list: false)
 ]
 
 courses = [
@@ -272,21 +287,25 @@ groups = [
 Registration.create(
 	registerable: students[0],
 	training: trainings[0],
+	owner_id: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: students[1],
 	training: trainings[1],
+	owner_id: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: groups[5],
 	training: trainings[0],
+	owner_id: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: groups[4],
 	training: trainings[0],
+	owner_id: students[rand(10)],
 	code: 9999 + rand(90000))
 
 User.create(

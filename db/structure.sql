@@ -8,16 +8,20 @@ CREATE TABLE "trainings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "star
 CREATE INDEX "index_trainings_on_course_id" ON "trainings" ("course_id");
 CREATE INDEX "index_trainings_on_facilitator_id" ON "trainings" ("facilitator_id");
 CREATE INDEX "index_trainings_on_location_id" ON "trainings" ("location_id");
-CREATE TABLE "registrations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registerable_type" varchar, "registerable_id" integer, "training_id" integer, "code" integer, "paid_for" boolean, "amt_paid" decimal(8,2), "sign_up_date" date, "auth_code" varchar, "refunded" boolean, "reg_type" varchar, "proxy_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE TABLE "registrations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registerable_type" varchar, "registerable_id" integer, "training_id" integer, "code" integer, "paid_for" boolean, "amt_paid" decimal(8,2), "sign_up_date" date, "auth_code" varchar, "refunded" boolean, "reg_type" varchar, "owner_id" integer, "transaction_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_registrations_on_registerable_type_and_registerable_id" ON "registrations" ("registerable_type", "registerable_id");
 CREATE INDEX "index_registrations_on_training_id" ON "registrations" ("training_id");
-CREATE INDEX "index_registrations_on_proxy_id" ON "registrations" ("proxy_id");
+CREATE INDEX "index_registrations_on_owner_id" ON "registrations" ("owner_id");
+CREATE INDEX "index_registrations_on_transaction_id" ON "registrations" ("transaction_id");
 CREATE TABLE "groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "owner_id" integer, "tag" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_groups_on_owner_id" ON "groups" ("owner_id");
 CREATE TABLE "groups_students" ("group_id" integer NOT NULL, "student_id" integer NOT NULL);
 CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "admin" boolean, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar);
 CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email");
 CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token");
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222');
+CREATE TABLE "transactions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration_id" integer, "owner_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+CREATE INDEX "index_transactions_on_registration_id" ON "transactions" ("registration_id");
+CREATE INDEX "index_transactions_on_owner_id" ON "transactions" ("owner_id");
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958');
 
 
