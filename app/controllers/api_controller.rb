@@ -65,8 +65,7 @@ class ApiController < ApplicationController
 		if (group_registration)
 			group = Group.new
 			group.owner = owner;
-			group.tag = 10000 + rand(90000)
-			group.tag = 
+			group.tag = owner.wp_last_name + "#" + group.id
 			group.save!
 		end
 		
@@ -76,19 +75,17 @@ class ApiController < ApplicationController
 		registration.reg_type = reg_type
 
 		# Fix this.  We need to have a sequence in the database.
-		registration.code  = 10000 + rand(90000)
+		registration.code  = 100000 + rand(900000)
 		
 		if (self_registration)
 			registration.registerable = owner
 		elsif proxy_registration
-			#
-			# Look up or create the dude in participants[0]
-			#
-			# {"first_name":"Joe ","last_name":"Cooper ",
-			#	"email":"joe@avistra.org ","occupation":"Barrel Maker",
-			#	"newsletter":"On"
-			#
+			
 			friend_params = params[:participants][0]
+			if friend_params[:wp_email].blank? 
+				render  inline: "{\"status\": \"Registrant has no email\"}"
+				return
+			end
 			friend = Student.find_by_wp_email(friend_params[:wp_email])
 			unless friend
 				friend = Student.new(
@@ -98,7 +95,9 @@ class ApiController < ApplicationController
 					email_list: friend_params[:email_list],
 					occupation: friend_params[:occupation]
 				)
+				friend.save!
 			end
+			byebug
 			registration.registerable = friend
 		elsif group_registration
 			member_list = params[:participants]
@@ -110,7 +109,8 @@ class ApiController < ApplicationController
 					wp_first_name: member_params[:wp_first_name],
 					wp_last_name: member_params[:wp_last_name],
 					email_list: member_params[:email_list],
-					occupation: member_params[:occupation]
+					occupation: member_params[:occupation],
+					organization: member_params[:organization]
 				)
 				end
 				# Add the new member to the group
