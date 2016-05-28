@@ -1,7 +1,6 @@
 class ApiController < ApplicationController
 
 	def register
-		byebug
 
 		training_id = params[:training_id]
 		if training_id.blank? 
@@ -97,7 +96,6 @@ class ApiController < ApplicationController
 				)
 				friend.save!
 			end
-			byebug
 			registration.registerable = friend
 		elsif group_registration
 			member_list = params[:participants]
@@ -114,7 +112,6 @@ class ApiController < ApplicationController
 				)
 				end
 				# Add the new member to the group
-				byebug
 				group.students << member
 				
 			end
