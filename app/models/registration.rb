@@ -6,9 +6,12 @@ class Registration < ApplicationRecord
   has_many :transactions
 
   validates :code, presence: true
-  validates :training_id, presence: true
-  validates :registerable_type, presence: true
-  validates :registerable_id, presence: true
+  validates :training, presence: true
+  validates :registerable, presence: true
+
+  def cost
+    "53.00"
+  end
 
   # Used internally by simple form.
   def student_id

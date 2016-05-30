@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   resources :courses
   resources :students
 
-  post '/api/register', to: 'api#register'
+  post '/api/register', to: 'api#create'
+  get '/api/register/:id', to: 'api#show'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

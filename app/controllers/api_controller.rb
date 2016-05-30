@@ -1,7 +1,8 @@
 class ApiController < ApplicationController
+	wrap_parameters false
 
-	def register
-
+	def create
+		
 		training_id = params[:training_id]
 		if training_id.blank? 
 			render  inline: "{\"status\": \"Training ID is missing\"}"
@@ -22,7 +23,7 @@ class ApiController < ApplicationController
 			render  inline: "{\"status\": \"Registration Type is invalid\"}"
 			return
 		end
-
+		
 		#
 		# Find or create the owner.  There should always be one since the ower
 		# is the entity that pays for the the registration. The owner may already
@@ -37,19 +38,18 @@ class ApiController < ApplicationController
 			end
 			unless owner
 				owner = Student.new(
-				wp_id: owner_params[:wp_id],
-				wp_login: owner_params[:wp_login],
-				wp_email: owner_params[:wp_email],
-				wp_first_name: owner_params[:wp_first_name],
-				wp_last_name: owner_params[:wp_last_name],
-				wp_display_name: owner_params[:wp_display_name],
-				occupation: owner_params[:occupation],
-				organization: owner_params[:organization],
-				email_list: owner_params[:email_list])
-			end
+					wp_id: owner_params[:wp_id],
+					wp_login: owner_params[:wp_login],
+					wp_email: owner_params[:wp_email],
+					wp_first_name: owner_params[:wp_first_name],
+					wp_last_name: owner_params[:wp_last_name],
+					wp_display_name: owner_params[:wp_display_name],
+					occupation: owner_params[:occupation],
+					organization: owner_params[:organization],
+					email_list: owner_params[:email_list])
+			end	
 		end
-		owner.save!
-
+		
 		group_registration =
 			['group-inclusive', 'group-exclusive'].include?(reg_type)
 
@@ -76,11 +76,13 @@ class ApiController < ApplicationController
 		# Fix this.  We need to have a sequence in the database.
 		registration.code  = 100000 + rand(900000)
 		
-		if (self_registration)
+		if self_registration
 			registration.registerable = owner
 		elsif proxy_registration
-			
 			friend_params = params[:participants][0]
+
+			puts friend_params
+
 			if friend_params[:wp_email].blank? 
 				render  inline: "{\"status\": \"Registrant has no email\"}"
 				return
@@ -94,22 +96,23 @@ class ApiController < ApplicationController
 					email_list: friend_params[:email_list],
 					occupation: friend_params[:occupation]
 				)
-				friend.save!
+				puts friend
 			end
 			registration.registerable = friend
 		elsif group_registration
 			member_list = params[:participants]
 			member_list.each do |member_params|
 				member = Student.find_by_wp_email(member_params[:email])
-				unless member
+				unless member	
 					member = Student.new(
-					wp_email: member_params[:wp_email],
-					wp_first_name: member_params[:wp_first_name],
-					wp_last_name: member_params[:wp_last_name],
-					email_list: member_params[:email_list],
-					occupation: member_params[:occupation],
-					organization: member_params[:organization]
-				)
+						wp_email: member_params[:wp_email],
+						wp_first_name: member_params[:wp_first_name],
+						wp_last_name: member_params[:wp_last_name],
+						email_list: member_params[:email_list],
+						occupation: member_params[:occupation],
+						organization: member_params[:organization]
+					)
+					member.save!
 				end
 				# Add the new member to the group
 				group.students << member
@@ -117,13 +120,24 @@ class ApiController < ApplicationController
 			end
 			registration.registerable = group
 		end
-
+		
 		registration.save!
 
-		render inline: "{\"status\": \"OK\"}"
+		render inline: "{\"status\": \"OK\", \"reg_id\": #{registration.id}}"
 
 	end
 
+	def show
+		@registration = Registration.find(params[:id])
+
+		respond_to do |format|
+    		format.html
+    		format.json
+  		end
+
+	end
+
+	# DEPRECATED: Use 'skip_before_action' instead
 	skip_before_filter :verify_authenticity_token
 
 	def api_params

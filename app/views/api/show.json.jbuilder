@@ -1,0 +1,1 @@
+json.extract! @registration, :updated_at, :cost
