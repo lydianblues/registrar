@@ -10,7 +10,7 @@ class Registration < ApplicationRecord
   validates :registerable, presence: true
 
   def cost
-    "53.00"
+    53.00
   end
 
   # Used internally by simple form.

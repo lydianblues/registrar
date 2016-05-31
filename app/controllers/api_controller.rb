@@ -64,8 +64,8 @@ class ApiController < ApplicationController
 		if (group_registration)
 			group = Group.new
 			group.owner = owner;
-			group.tag = owner.wp_last_name + "#" + group.id
-			group.save!
+			group.save! # to generate the group id needed in next line
+			group.tag = owner.wp_last_name + "#" + group.id.to_s
 		end
 		
 		registration = Registration.new
