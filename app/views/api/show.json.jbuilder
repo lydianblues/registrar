@@ -1,4 +1,4 @@
-json.extract! @registration, :id, :updated_at, :cost,
+json.extract! @registration, :id, :updated_at, :price, :formatted_price,
 	:reg_type, :code
 
 json.owner do
@@ -23,7 +23,6 @@ if @registration.registerable_type == "Student"
 		json.extract! @registration.registerable, :wp_first_name, :wp_last_name,
 			:wp_email, :occupation, :organization, :wp_login, :email_list
 	end
-
 end
 
 if @registration.registerable_type == "Group"

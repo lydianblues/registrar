@@ -7,36 +7,68 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 students = [
-	Student.create(wp_first_name: "Bill", wp_last_name: "Rogers", 
+	Student.create!(wp_first_name: "Bill", wp_last_name: "Rogers", 
 		wp_email: "bill@hoptoad.com", occupation: "carpenter", organization: "aflcio",
 		wp_id: 7, email_list: true),
-	Student.create(wp_first_name: "Dave", wp_last_name: "Plummer", 
+	Student.create!(wp_first_name: "Dave", wp_last_name: "Plummer", 
 		wp_email: "Dave@hoptoad.com", occupation: "shoemaker", organization: "leathercorp",
 		wp_id: 8, email_list: false),
-	Student.create(wp_first_name: "Mary", wp_last_name: "StMarie", 
+	Student.create!(wp_first_name: "Mary", wp_last_name: "StMarie", 
 		wp_email: "mary@hoptoad.com", occupation: "saint", organization: "catholicism",
 		wp_id: 67, email_list: true),
-	Student.create(wp_first_name: "Sue", wp_last_name: "Painter", 
+	Student.create!(wp_first_name: "Sue", wp_last_name: "Painter", 
 		wp_email: "sue@hoptoad.com", occupation: "school principal", organization: "NEA",
 		wp_id: 709, email_list: true),
-	Student.create(wp_first_name: "Artur", wp_last_name: "Pineapple", 
+	Student.create!(wp_first_name: "Artur", wp_last_name: "Pineapple", 
 		wp_email: "artur@squarepants.com", occupation: "teacher", organization: "NEA",
 		wp_id: 45, email_list: false),
-	Student.create(wp_first_name: "Charles", wp_last_name: "MacDuff", 
+
+	Student.create!(wp_first_name: "Charles", wp_last_name: "MacDuff", 
 		wp_email: "charles@macbeth.com", occupation: "thane", organization: "royal society",
 		wp_id: 101, email_list: true),
-	Student.create(wp_first_name: "Stu", wp_last_name: "Pickles", 
+	Student.create!(wp_first_name: "Stu", wp_last_name: "Pickles", 
 		wp_email: "stu@rugrats.com", occupation: "inventor", organization: "very little",
 		wp_id: 102, email_list: false),
-	Student.create(wp_first_name: "Grandpa", wp_last_name: "Pickles", 
+	Student.create!(wp_first_name: "Grandpa", wp_last_name: "Pickles", 
 		wp_email: "grandpa@rugrats.com", occupation: "child care", organization: "sleep society",
 		wp_id: 103, email_list: true),
-	Student.create(wp_first_name: "Chaz", wp_last_name: "Pickles", 
+	Student.create!(wp_first_name: "Chaz", wp_last_name: "Pickles", 
 		wp_email: "chaz@rugrats.com", occupation: "accountat", organization: "boring league",
 		wp_id: 104, email_list: true),
-	Student.create(wp_first_name: "Bob", wp_last_name: "SquarePants", 
+	Student.create!(wp_first_name: "Bob", wp_last_name: "SquarePants", 
 		wp_email: "bob@undersea.com", occupation: "entertainer", organization: "ASCAP",
-		wp_id: 105, email_list: false)
+		wp_id: 105, email_list: false),
+	Student.create!(wp_first_name: "Bill", wp_last_name: "Fillip", 
+		wp_email: "bill@filli.com", occupation: "carpenter", organization: "aflcio",
+		wp_id: 700, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Killi", wp_last_name: "dwarf", 
+		wp_email: "killi@middleearth.com", occupation: "digger", organization: "leathercorp",
+		wp_id: 708, email_list: false, student_discount:true),
+
+	Student.create!(wp_first_name: "Mary", wp_last_name: "StMarie", 
+		wp_email: "bombur@middleearth.com", occupation: "saint", organization: "catholicism",
+		wp_id: 767, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Sue", wp_last_name: "Painter", 
+		wp_email: "bifur@middleearth.com", occupation: "school principal", organization: "NEA",
+		wp_id: 7709, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Artur", wp_last_name: "Pineapple", 
+		wp_email: "gandalf@middleearth.com", occupation: "teacher", organization: "NEA",
+		wp_id: 745, email_list: false, student_discount:true),
+	Student.create!(wp_first_name: "Charles", wp_last_name: "MacDuff", 
+		wp_email: "sauron@middleearth.com", occupation: "thane", organization: "royal society",
+		wp_id: 7101, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Stu", wp_last_name: "Pickles", 
+		wp_email: "saruman@middleearth.com", occupation: "inventor", organization: "very little",
+		wp_id: 7102, email_list: false, student_discount:true),
+	Student.create!(wp_first_name: "Grandpa", wp_last_name: "Pickles", 
+		wp_email: "sgamgee@middleearth.com", occupation: "child care", organization: "sleep society",
+		wp_id: 7103, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Chaz", wp_last_name: "Pickles", 
+		wp_email: "galadriel@middleearth.com", occupation: "accountat", organization: "boring league",
+		wp_id: 7104, email_list: true, student_discount:true),
+	Student.create!(wp_first_name: "Bob", wp_last_name: "SquarePants", 
+		wp_email: "smaug@middleearth.com", occupation: "entertainer", organization: "ASCAP",
+		wp_id: 7105, email_list: false, student_discount:true)
 ]
 
 courses = [
@@ -112,7 +144,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -123,7 +155,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -134,7 +166,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -145,7 +177,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -156,7 +188,18 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
+		new_registration_closed: late_dates[-1 + rand(16)],
+		early_registration_cutoff: early_dates[-1 + rand(16)],
+		min_attendees: 2, max_attendees: 100,
+		course_id: courses[-1 + rand(5)].id,
+		facilitator_id: facilitators[-1 + rand(8)].id,
+		location_id: locations[-1 + rand(3)].id),
+	Training.create(
+		start_date: early_dates[-1 + rand(16)],
+		end_date: late_dates[-1 + rand(16)],
+		code: 999 + rand(9000),	
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -167,7 +210,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -178,7 +221,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -189,7 +232,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -200,7 +243,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -211,7 +254,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -222,7 +265,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -233,7 +276,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -244,7 +287,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -255,18 +298,7 @@ trainings = [
 		start_date: early_dates[-1 + rand(16)],
 		end_date: late_dates[-1 + rand(16)],
 		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
-		new_registration_closed: late_dates[-1 + rand(16)],
-		early_registration_cutoff: early_dates[-1 + rand(16)],
-		min_attendees: 2, max_attendees: 100,
-		course_id: courses[-1 + rand(5)].id,
-		facilitator_id: facilitators[-1 + rand(8)].id,
-		location_id: locations[-1 + rand(3)].id),
-	Training.create(
-		start_date: early_dates[-1 + rand(16)],
-		end_date: late_dates[-1 + rand(16)],
-		code: 999 + rand(9000),
-		early_cost: 89.56, late_cost: 100.01, staff_cost: 500.00,
+		regular_price: 8000, group_price: 7000, student_price: 6500,
 		new_registration_closed: late_dates[-1 + rand(16)],
 		early_registration_cutoff: early_dates[-1 + rand(16)],
 		min_attendees: 2, max_attendees: 100,
@@ -284,28 +316,49 @@ groups = [
 	Group.create(tag: "zeta", owner: students[4])
 ]
 
-Registration.create(
+# Group 4 has more than 5 students
+groups[4].students << students[5]
+groups[4].students << students[6]
+groups[4].students << students[7]
+groups[4].students << students[8]
+groups[4].students << students[9]
+groups[4].students << students[10] # student discount
+groups[4].students << students[11] # student discount
+
+# Group 1 has fewer than 5 students
+groups[1].students << students[8]
+groups[1].students << students[9]
+groups[1].students << students[10] # student discount
+groups[1].students << students[11] # student discount
+
+Registration.create!(
 	registerable: students[0],
 	training: trainings[0],
-	owner_id: students[rand(10)],
+	owner: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: students[1],
 	training: trainings[1],
-	owner_id: students[rand(10)],
+	owner: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: groups[5],
 	training: trainings[0],
-	owner_id: students[rand(10)],
+	owner: students[rand(10)],
 	code: 9999 + rand(90000))
 
 Registration.create(
 	registerable: groups[4],
 	training: trainings[0],
-	owner_id: students[rand(10)],
+	owner: students[rand(10)],
+	code: 9999 + rand(90000))
+
+Registration.create(
+	registerable: groups[1],
+	training: trainings[0],
+	owner: students[rand(10)],
 	code: 9999 + rand(90000))
 
 User.create(

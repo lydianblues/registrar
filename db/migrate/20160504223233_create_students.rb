@@ -10,6 +10,7 @@ class CreateStudents < ActiveRecord::Migration[5.0]
       t.string :wp_login
       t.string :wp_display_name
       t.boolean :email_list
+      t.boolean :student_discount, default: false
 
       t.timestamps
     end
