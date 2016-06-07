@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   post '/api/register', to: 'api#create'
   get '/api/register/:id', to: 'api#show'
+  put '/api/register/:id', to:'api#update'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

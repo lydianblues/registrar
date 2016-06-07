@@ -11,7 +11,6 @@ class CreateRegistrations < ActiveRecord::Migration[5.0]
       t.boolean :refunded
       t.string :reg_type
       t.references :owner
-      t.references :transaction
       t.timestamps
     end
   end

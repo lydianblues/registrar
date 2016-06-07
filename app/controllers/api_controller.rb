@@ -137,6 +137,14 @@ class ApiController < ApplicationController
 
 	end
 
+	def update
+		byebug
+		@registration = Registration.find(params[:id])
+		# @transaction = Transaction.create();
+		render  inline: "{\"status\": \"OK\"}"
+
+	end
+
 	# DEPRECATED: Use 'skip_before_action' instead
 	skip_before_filter :verify_authenticity_token
 
