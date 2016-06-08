@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+gem 'braintree'
+require 'braintree'
+
+# Put this in a YAML config file. TODO.
+Braintree::Configuration.environment = :sandbox
+Braintree::Configuration.merchant_id = 'n4zyq6yr2t5k66cx'
+Braintree::Configuration.public_key = '8q2c4q5bj9sxkhjk'
+Braintree::Configuration.private_key = '045e6ad4a8e9e977642fe5787037e279'
+
+# Give usage message. TODO.
+tid = ARGV[0]
+
+begin
+	transaction = Braintree::Transaction.find(tid)
+rescue Braintree::NotFoundError => e
+	puts e.message
+end
+
+output = Hash.new
+
+output[:status] =  transaction.status
+output[:payment_instrument_type] = transaction.payment_instrument_type
+output[:amount] = '$%.2f' % transaction.amount
+output[:transaction_id] = transaction.id
+output[:transaction_type] = transaction.type
+output[:customer_id] = transaction.customer_details.id # new
+output[:processor_authorization_code] = transaction.processor_authorization_code
+output[:processor_response_code] = transaction.processor_response_code # new
+output[:processor_response_text] = transaction.processor_response_text # new
+
+output[:customer_first_name] = transaction.customer_details.first_name # new
+output[:customer_last_name] = transaction.customer_details.last_name # new
+output[:billing_first_name] = transaction.billing_details.first_name # new
+output[:billing_last_name] = transaction.billing_details.last_name # new
+
+if transaction.payment_instrument_type == 'paypal_account'
+	paypal_details = transaction.paypal_details
+	output[:authorization_id] = paypal_details.authorization_id
+	output[:capture_id] = paypal_details.capture_id
+	output[:payer_first_name] = paypal_details.payer_first_name
+	output[:payer_last_name] = paypal_details.payer_last_name
+	output[:payer_id] = paypal_details.payer_id
+	output[:payment_id] = paypal_details.payment_id
+	output[:transaction_fee_amount] = paypal_details.transaction_fee_amount
+else
+	output[:bin] = transaction.credit_card_details.bin
+	output[:card_type] = transaction.credit_card_details.card_type
+	output[:cardholder_name] = transaction.credit_card_details.cardholder_name
+	output[:last_4] = transaction.credit_card_details.last_4
+end
+
+puts JSON.pretty_generate(output)
