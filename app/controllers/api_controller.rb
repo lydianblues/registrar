@@ -138,11 +138,13 @@ class ApiController < ApplicationController
 	end
 
 	def update
-		byebug
 		@registration = Registration.find(params[:id])
-		# @transaction = Transaction.create();
+		@transaction = Transaction.new
+		@transaction.registration = @registration
+		@transaction.owner = @registration.owner
+		@transaction.setup(params[:bt_id])
+		@transaction.save!
 		render  inline: "{\"status\": \"OK\"}"
-
 	end
 
 	# DEPRECATED: Use 'skip_before_action' instead
