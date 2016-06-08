@@ -52,7 +52,8 @@ class Registration < ApplicationRecord
         price += regular_price
       end
     end
-    return price
+      # return price
+    return 200000 # for testing failed transactions
   end
 
   # Convert 2048 to $20.48, for example.

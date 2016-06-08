@@ -138,12 +138,16 @@ class ApiController < ApplicationController
 	end
 
 	def update
-		@registration = Registration.find(params[:id])
-		@transaction = Transaction.new
-		@transaction.registration = @registration
-		@transaction.owner = @registration.owner
-		@transaction.setup(params[:bt_id])
-		@transaction.save!
+		byebug
+		unless (params[:success] == "false")
+			byebug
+			@registration = Registration.find(params[:id])
+			@transaction = Transaction.new
+			@transaction.registration = @registration
+			@transaction.owner = @registration.owner
+			@transaction.setup(params[:bt_id])
+			@transaction.save!
+		end
 		render  inline: "{\"status\": \"OK\"}"
 	end
 
