@@ -1,4 +1,325 @@
-<p id="notice"><%= notice %></p>
+<% 
+	@registration = @transaction.registration
+	@training = @registration.training 
+	@course = @training.course
+	@owner = @registration.owner
+%>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+	    <h3 class="panel-title">Programmer Notes</h3>
+	</div>
+	<div id="programmer-notes">
+		Add Refresh and Buttons ?<br/>
+		Need to style this page...
+
+	</div>
+</div>	
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+	    <h3 class="panel-title">Registration Summary</h3>
+	</div>
+	<div id="registration-summary">
+		<div class="row">
+ 			<div class="col-sm-4">Course</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= link_to(@course.name, @course) %> 
+    		</div>
+        </div>
+
+		<div class="row">
+ 			<div class="col-sm-4">Owner</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= link_to(
+    				@owner.wp_first_name + " " + @owner.wp_last_name,
+    				@owner) %>
+    		</div>
+        </div>
+
+        <div class="row">
+ 			<div class="col-sm-4">Registration Code</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= link_to(@registration.code, @registration) %>
+    		</div>
+        </div>
+
+        <div class="row">
+ 			<div class="col-sm-4">Training Code</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= link_to(@training.code, @training) %>
+    		</div>
+        </div>
+         <div class="row">
+ 			<div class="col-sm-4">Dates</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= "#{@training.start_date} through #{@training.end_date}" %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">City</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @training.location.city %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Regular Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= '$%.2f' % (@training.regular_price / 100) %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Student Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= '$%.2f' % (@training.student_price / 100) %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Group Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= '$%.2f' % (@training.group_price / 100) %>
+    		</div>
+        </div>
+
+         <div class="row">
+ 			<div class="col-sm-4">Type</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @registration.registerable_type == 'Student' ?
+    				'Individual' : 'Group' %>
+    		</div>
+        </div> 
+        <div class="row">
+ 			<div class="col-sm-4">Total Participants</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @registration.registerable_type == 'Student' ?
+    				"1" : @registration.registerable.students.size.to_s %>
+    		</div>
+        </div> 
+        
+        <div class="row">
+ 			<div class="col-sm-4">Participants @ Regular Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			TODO
+    		</div>
+        </div> 
+      
+        <div class="row">
+ 			<div class="col-sm-4">Participants @ Student Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			TODO
+    		</div>
+        </div> 
+       
+        <div class="row">
+ 			<div class="col-sm-4">Participants @ Group Price</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			TODO
+    		</div>
+        </div> 
+
+        <div class="row">
+ 			<div class="col-sm-4">Paid For</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @registration.paid_for? ? "Yes" : "No" %>
+    		</div>
+        </div> 
+
+        <div class="row">
+ 			<div class="col-sm-4">Refunded</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @registration.refunded? ? "Yes" : "No" %>
+    		</div>
+        </div>
+
+        <div class="row">
+ 			<div class="col-sm-4">Total Amount Paid</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<% 
+    				if @registration.amt_paid.blank?
+    					@registration.amt_paid = 0.0 
+    				end
+    			%>
+    			<%= '$%.2f' % (@registration.amt_paid / 100) %>
+ 			</div>
+        </div>           
+    </div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+	    <h3 class="panel-title">Transaction Summary</h3>
+	</div>
+	<div id="transaction-summary">
+
+		<div class="row">
+ 			<div class="col-sm-4">Transaction ID</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.transaction_id %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Status</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.status %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Payment Instrument Type</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.payment_instrument_type %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Amount</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= '$%2.f' % @transaction.amount %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Type</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.transaction_type %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Customer ID</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.customer_id %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Processor Authorization Code</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.processor_authorization_code %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Processor Response Code</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.processor_response_code %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Processor Response Text</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.processor_response_text %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Customer First Name</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.customer_first_name %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Customer Last Name</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.customer_last_name %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Billing First Name</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.billing_first_name %>
+    		</div>
+        </div>
+        <div class="row">
+ 			<div class="col-sm-4">Billing Last Name</div>
+    		<div id="course" class="col-sm-offset-1 col-sm-7">
+    			<%= @transaction.billing_last_name %>
+    		</div>
+        </div>
+       
+	</div>
+</div> 
+
+<% if @transaction.payment_instrument_type == 'paypal_account' %>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		    <h3 class="panel-title">PayPal Summary</h3>
+		</div>
+		<div id="paypal-summary">
+
+			<div class="row">
+	 			<div class="col-sm-4">Authorization ID</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.authorization_id %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Capture ID</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.capture_id %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Payer First Name</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.payer_first_name %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Payer Last Name</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.payer_last_name %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Payer ID</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.payer_id%>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Payment ID</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.payment_id %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Fee Amount</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.transaction_fee_amount %>
+	    		</div>
+	        </div>
+	    </div>
+	</div>
+<% else %>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		    <h3 class="panel-title">Credit Card Summary</h3>
+		</div>
+		<div id="paypal-summary">
+
+			<div class="row">
+	 			<div class="col-sm-4">Bank ID (BIN)</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.bin %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Card Type</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.card_type %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Cardholder Name</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.cardholder_name %>
+	    		</div>
+	        </div>
+	        <div class="row">
+	 			<div class="col-sm-4">Last 4</div>
+	    		<div id="course" class="col-sm-offset-1 col-sm-7">
+	    			<%= @transaction.last_4 %>
+	    		</div>
+	        </div>
+
+	    </div>
+	</div>
+<% end %>
 
 <%= link_to 'Edit', edit_transaction_path(@transaction) %> |
 <%= link_to 'Back', transactions_path %>

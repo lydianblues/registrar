@@ -1,6 +1,7 @@
 class ApiController < ApplicationController
 	wrap_parameters false
 
+	# Create a new Registration.
 	def create
 		
 		training_id = params[:training_id]
@@ -127,6 +128,7 @@ class ApiController < ApplicationController
 
 	end
 
+	# Get the details about a Registration.
 	def show
 		@registration = Registration.find(params[:id])
 
@@ -137,11 +139,14 @@ class ApiController < ApplicationController
 
 	end
 
-	def update
-		byebug
-		unless (params[:success] == "false")
-			byebug
+	# Update a Registration by flagging it as paid for and
+	# adding the corresponding transaction to it.
+	def update		
+		unless (params[:success] == "false")			
 			@registration = Registration.find(params[:id])
+			@registration.paid_for = true
+			@registration.amt_paid = 0 # FIXME, should this be an increment?
+			@registration.save!
 			@transaction = Transaction.new
 			@transaction.registration = @registration
 			@transaction.owner = @registration.owner
@@ -150,6 +155,15 @@ class ApiController < ApplicationController
 		end
 		render  inline: "{\"status\": \"OK\"}"
 	end
+
+	def refresh
+		@transaction = Transaction.find(params[:id])
+		@transaction.refresh
+		respond_to do |format|
+			format.js { render layout: false, content_type: 'text/javascript' }
+		end
+	end
+
 
 	# DEPRECATED: Use 'skip_before_action' instead
 	skip_before_filter :verify_authenticity_token

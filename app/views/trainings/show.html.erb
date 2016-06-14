@@ -42,16 +42,19 @@
       <%= link_to @training.facilitator.name, @training.facilitator %>
   </p>
   <p>
-      <strong>Early Cost:</strong>
-      <%= @training.early_cost %>
+      <strong>Regular Price:</strong>
+      <!-- FIXME -->
+      <%= @training.regular_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
   </p>
   <p>
-      <strong>Late Cost:</strong>
-      <%= @training.late_cost %>
+      <strong>Group Price:</strong>
+       <!-- FIXME -->
+      <%= @training.group_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
   </p>
   <p>
-      <strong>Staff Cost:</strong>
-      <%= @training.staff_cost %>
+      <strong>Student Price:</strong>
+       <!-- FIXME -->
+      <%= @training.student_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
   </p>
   <p>
       <strong>New Registration Closed:</strong>

@@ -48,4 +48,40 @@ class Transaction < ApplicationRecord
 		end
 		return transaction.amount.class.name
 	end
+
+	def refresh
+		setup(transaction_id)
+		save!
+	end
+
+	# Things below here should be in view helpers....
+	def payer_name
+		if payment_instrument_type == 'paypal_account'
+			return payer_first_name + " " + payer_last_name
+		else
+			if billing_last_name.nil? || billing_first_name.nil?
+				return "Unspecified"
+			else
+				return billing_first_name + " " + billing_last_name
+			end
+		end
+	end
+
+	def short_status
+		short_status = status
+		if status == 'submitted_for_settlement'
+			short_status = 'settling'
+		end
+		short_status
+	end
+
+	# Please fix me
+	def updated_local_time
+		updated_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %H:%M')
+	end
+
+	# Please fix me
+	def created_local_time
+		created_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %H:%M')
+	end
 end

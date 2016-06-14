@@ -16,14 +16,18 @@ class Registration < ApplicationRecord
 
     # Registration.find(4).registerable.students.count has 7 students...
     # Registration.find(5).registerable.students.count has 4 students...
-
-    group_price = training.group_price
+    
     regular_price = training.regular_price
     student_price = training.student_price
-    min_price = [group_price, student_price].min
-    min_group_size = training.min_group_size
-
+   
     if registerable_type == "Group"
+      group_price = training.group_price
+      if group_price.blank?
+        group_price = regular_price
+      end
+
+      min_price = [group_price, student_price].min
+      min_group_size = training.min_group_size
 
       group_discount_available =
         (registerable.students.count >= min_group_size)
@@ -52,8 +56,8 @@ class Registration < ApplicationRecord
         price += regular_price
       end
     end
-      # return price
-    return 200000 # for testing failed transactions
+      return price
+    # return 200000 # for testing failed transactions
   end
 
   # Convert 2048 to $20.48, for example.

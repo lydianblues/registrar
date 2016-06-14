@@ -1,0 +1,10 @@
+
+	var selector = "#tid-<%= @transaction.transaction_id %> td";
+	var updated_at = "<%= @transaction.local_time %>";
+	var status = "<%= @transaction.status %>";
+	
+	var cols = jQuery(selector);
+
+	// "eq" is zero based...
+	cols.eq(7).text(updated_at);
+	cols.eq(3).text(status);

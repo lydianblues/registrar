@@ -1,25 +1,65 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-default" style="overflow-y:auto;">
+  <div class="panel-heading">
+      <h3 class="panel-title">Transactions</h3>
+  </div>
+  <div id="transaction-list">
 
-<h1>Transactions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @transactions.each do |transaction| %>
+<div class="table-responsive">
+  <table class="table table-striped table-condensed table-hover">
+    <thead>
       <tr>
-        <td><%= link_to 'Show', transaction %></td>
-        <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
-        <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Id</th>
+        <th>Registration</th>
+        <th>Owner</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Payer</th>
+        <th>Amount</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Refresh</th>
+        
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @transactions.each do |t| %>
+        <tr id="tid-<%= t.transaction_id %>" >
+          <td><%= link_to t.transaction_id, t %></td>
+
+          <td><%= link_to t.registration.code, t.registration %></td>
+
+          <td><%= link_to t.registration.owner.wp_first_name + " " +
+            t.registration.owner.wp_last_name, t.registration.owner %></td>
+
+          <% if t.payment_instrument_type == 'paypal_account' %>
+            <td>PayPal</td>
+          <% else %>
+            <td>Credit Card</td>
+          <% end %>
+
+          <td><%= t.short_status %></td>
+
+          <td><%= t.payer_name %></td>
+
+          <td><%= '$%.2f' % t.amount %></td>
+
+          <td><%= t.created_local_time %></td>
+          <td><%= t.updated_local_time %></td>
+          
+          <td><%= link_to 'Refresh', "/api/transaction/#{t.id}/refresh.js", 
+            remote: true,
+            class: 'btn btn-primary btn-xs' %></td>
+          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
-<%= link_to 'New Transaction', new_transaction_path %>
+<%= link_to 'New transaction', new_transaction_path, class: 'btn btn-primary btn-sm' %>
+
+</div>
+</div>
