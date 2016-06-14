@@ -18,9 +18,9 @@ GIT
 
 GIT
   remote: git://github.com/rails/web-console.git
-  revision: 96aa4cbe804741be02b801fb37890a06785302f3
+  revision: 47523ac00c9c2e5de62d1b571b9ea6e064f638a1
   specs:
-    web-console (3.2.0)
+    web-console (3.2.1)
       activemodel (>= 4.2)
       debug_inspector
       railties (>= 4.2)

@@ -1,3 +1,22 @@
-// Place all the styles related to the transactions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/* 
+ * Registration Summary Panel.  This is copied from 
+ * the style.css stylesheet on dmind.
+ */
+.panel-table {
+    padding:1em;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0.25em;
+    position:relative;
+}
+.panel-table div.row {
+    margin-bottom: 0.5em;
+    width: 100%;
+    margin-left: -0.25em;
+}
+.panel-table div.row:nth-child(odd) {
+    background-color: #eff;
+}
+.panel-table div.row:nth-child(even) {
+    background-color: #ffe;
+}
