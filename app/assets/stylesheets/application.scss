@@ -2,9 +2,9 @@
  *= require transactions
  */
 
-@import "bootstrap-sprockets";
 @import "bootstrap";
-@import "bootstrap/theme";
+@import "tether";
+@import "dataTables.bootstrap4.css";
 
 // @import "font-awesome-sprockets";
 // @import "font-awesome";
