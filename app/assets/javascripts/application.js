@@ -16,5 +16,4 @@
 //= require turbolinks
 //= require tether
 //= require bootstrap
-//= require dataTables.bootstrap4
-//= require_tree .
+//= require navbar

@@ -6,6 +6,7 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations = Location.all
+    render layout: "no_sidebar"
   end
 
   # GET /locations/1

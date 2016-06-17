@@ -8,6 +8,7 @@ class StudentsController < ApplicationController
   # GET /students.json
   def index
     @students = Student.all
+    render layout: "no_sidebar"
   end
 
   # GET /students/1

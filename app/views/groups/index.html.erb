@@ -1,45 +1,50 @@
-<p id="notice"><%= notice %></p>
+<div class="card">
 
+  <div class="card-header">
+    <div style="float:left;"><h2>Groups</h2></div>
+    <div style="float:right;">
+      <%= link_to 'New group', new_group_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
 
-<h1>Groups</h1>
-<div class="panel panel-default">
-  <div class="panel-body">
-    Note that the Group name is a combination of the last name of the 
-    group owner and group tag, separated by a dollar sign.
+  <div class="card-body">
+
+    <div class="alert alert-info" role="alert">
+       Note that the Group name is a combination of the last name of the 
+      group owner and group tag, separated by a hash sign.
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-sm table-hover table-bordered">
+
+        <thead>
+          <tr>
+            <th>Group ID</th>
+            <th>Group Name</th>
+            <th>Group Owner</th>
+            <th>Last Update</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @groups.each do |group| %>
+            <tr>
+              <td><%= group.id %></td>
+              <td><%= link_to group.owner.wp_last_name + '#' + (group.id).to_s %></td> 
+              <td><%= link_to group.owner.wp_first_name + ' ' +
+                group.owner.wp_last_name, group.owner %></td>
+
+              <td><%= group.updated_at.strftime("%b %-d, %Y") %></td> 
+
+              <td><%= link_to 'Edit', edit_group_path(group),
+                class: 'btn btn-primary btn-xs' %></td>
+              <td><%= link_to 'Delete', group, class: 'btn btn-xs btn-danger', 
+                method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div class="table-responsive">
-  <table class="table table-striped table-condensed table-hover">
-    <thead>
-      <tr>
-        <th>Group ID</th>
-        <th>Group Name</th>
-        <th>Group Owner</th>
-        <th>Last Update</th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @groups.each do |group| %>
-        <tr>
-          <td><%= group.id %></td>
-          <td><%= link_to group.owner.wp_last_name + '#' + (group.id).to_s %></td> 
-          <td><%= link_to group.owner.wp_first_name + ' ' +
-            group.owner.wp_last_name, group.owner %></td>
-
-          <td><%= group.updated_at.strftime("%b %-d, %Y") %></td> 
-
-          <td><%= link_to 'Edit', edit_group_path(group),
-            class: 'btn btn-primary btn-xs' %></td>
-          <td><%= link_to 'Delete', group, class: 'btn btn-xs btn-danger', 
-            method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<br>
-
-<%= link_to 'New group', new_group_path, class: 'btn btn-primary btn-sm' %>

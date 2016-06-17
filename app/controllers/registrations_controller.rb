@@ -6,6 +6,7 @@ class RegistrationsController < ApplicationController
   # GET /registrations.json
   def index
     @registrations = Registration.all
+    render layout: "no_sidebar"
   end
 
   # GET /registrations/1

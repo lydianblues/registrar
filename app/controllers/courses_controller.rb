@@ -6,6 +6,7 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @courses = Course.all
+    render layout: "no_sidebar"
   end
 
   # GET /courses/1

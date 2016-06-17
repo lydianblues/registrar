@@ -16,6 +16,7 @@ class TrainingsController < ApplicationController
     else
       @trainings = Training.all
     end
+    render layout: "no_sidebar"
 
   end
 

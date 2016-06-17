@@ -6,6 +6,7 @@ class FacilitatorsController < ApplicationController
   # GET /facilitators.json
   def index
     @facilitators = Facilitator.all
+    render layout: "no_sidebar"
   end
 
   # GET /facilitators/1

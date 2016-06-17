@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     @groups = Group.all
+    render layout: "no_sidebar"
   end
 
   # GET /groups/1
