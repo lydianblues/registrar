@@ -71,6 +71,12 @@ students = [
 		wp_id: 7105, email_list: false, student_discount:true)
 ]
 
+# (1..1000).each do {
+# Student.create!(wp_first_name: "Bob", wp_last_name: "SquarePants", 
+#		wp_email: "smaug@middleearth.com", occupation: "entertainer", organization: "ASCAP",
+#		wp_id: 9999, email_list: false, student_discount:true)
+# end
+
 courses = [
 	Course.create(name: "dynamic mindfulness intro", description: "a good thing"),
 	Course.create(name: "dynamic mindfulness advanced", description: "more of a good thing"),

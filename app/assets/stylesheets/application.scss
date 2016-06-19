@@ -1,12 +1,14 @@
 /*
  *= require transactions
  *= require generic
+ *= require students
  */
 
 @import "bootstrap";
 @import "tether";
 
-@import "dataTables.bootstrap4.css";
+// @import "dataTables/jquery.dataTables";
+@import "dataTables/dataTables.bootstrap4";
 
 // @import "font-awesome-sprockets";
 // @import "font-awesome";
