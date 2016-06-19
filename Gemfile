@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.0'
 ########## Added by mbs ##########
 # gem 'bootstrap-sass', path: "/opt/Bootstrap/bootstrap-sass" # Bootstrap 3
 gem 'bootstrap', path: "/opt/Bootstrap/bootstrap-rubygem" # Bootstrap 4
+gem 'jquery-datatables-rails', path: "/opt/DataTables/jquery-datatables-rails"
 # gem 'font-awesome-sass', path: "/opt/fonts/font-awesome/font-awesome-sass"
 # gem 'fontello-sass', path: "/opt/fonts/fontello/fontello-sass"
 gem 'simple_form'

@@ -17,3 +17,5 @@
 //= require tether
 //= require bootstrap
 //= require navbar
+//= require jquery.dataTables
+//= require dataTables.bootstrap4

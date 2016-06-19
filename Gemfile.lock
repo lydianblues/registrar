@@ -33,6 +33,15 @@ PATH
       sass (>= 3.4.19)
 
 PATH
+  remote: /opt/DataTables/jquery-datatables-rails
+  specs:
+    jquery-datatables-rails (3.4.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
+
+PATH
   remote: /opt/rails/rails5
   specs:
     actioncable (5.0.0.rc1)
@@ -208,6 +217,7 @@ DEPENDENCIES
   coffee-rails!
   devise
   jbuilder (~> 2.0)
+  jquery-datatables-rails!
   jquery-rails
   jquery-turbolinks
   listen (~> 3.0.5)

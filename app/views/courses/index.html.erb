@@ -1,9 +1,9 @@
-<div class="card">
+<div class="card top-card">
 
   <div class="card-header">
     <div style="float:left;"><h2>Courses</h2></div>
     <div style="float:right;">
-      <%= link_to 'New Course', new_course_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'New Course', new_course_path, class: 'btn btn-primary btn-md' %>
     </div>
   </div>
 
@@ -25,8 +25,8 @@
               <td><%= link_to course.name, course %></td>
               <td><%= course.description %></td>
               <td><%= link_to 'Edit', edit_course_path(course),
-                class: 'btn btn-primary btn-xs' %></td>
-              <td><%= link_to 'Delete', course, class: 'btn btn-xs btn-danger', 
+                class: 'btn btn-primary btn-sm' %></td>
+              <td><%= link_to 'Delete', course, class: 'btn btn-sm btn-danger', 
                 method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
           <% end %>

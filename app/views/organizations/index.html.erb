@@ -1,0 +1,30 @@
+<div class="card top-card">
+
+  <div class="card-header">
+    <div style="float:left;"><h2>Organizations</h2></div>
+    <div style="float:right;">
+      <%= link_to 'New Organization', new_organization_path, class: 'btn btn-primary btn-md' %>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <div class="alert alert-info" role="alert">
+       This page will list all the organizations that users have specified.  Each 
+       organization will have at least one owner, and it may have several owners.
+       There will be several owners when more than one individual specifies the same
+       organization when creating a group.  Therefore, an organization may have
+       many groups, and a group has exactly one owner.  But an organization can have
+       many owners, namely the set of all the owners of all the groups created.  Currently,
+       there is no way for users using the dmind website to explicitly create an 
+       organization and specify its owner.
+    </div>
+    <div class="alert alert-info" role="alert">
+       For a given organization, you will be able to see the list of groups 
+       within the organization.  By going to the group page, you can see the list
+       of individuals in the group.  Question... would it be good to have one page
+       that lists all the individuals in all the groups for that organization (with
+       duplicates removed)?
+    </div>
+  </div>
+</div>

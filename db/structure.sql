@@ -21,6 +21,7 @@ CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_pas
 CREATE TABLE "transactions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "registration_id" integer, "owner_id" integer, "status" varchar, "payment_instrument_type" varchar, "amount" decimal(8,2) DEFAULT 0.0, "transaction_id" varchar, "transaction_type" varchar, "customer_id" varchar, "processor_authorization_code" varchar, "processor_response_code" varchar, "processor_response_text" varchar, "customer_first_name" varchar, "customer_last_name" varchar, "billing_first_name" varchar, "billing_last_name" varchar, "authorization_id" varchar, "capture_id" varchar, "payer_first_name" varchar, "payer_last_name" varchar, "payer_id" varchar, "payment_id" varchar, "transaction_fee_amount" varchar, "bin" varchar, "card_type" varchar, "cardholder_name" varchar, "last_4" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE INDEX "index_transactions_on_registration_id" ON "transactions" ("registration_id");
 CREATE INDEX "index_transactions_on_owner_id" ON "transactions" ("owner_id");
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958');
+CREATE TABLE "organizations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836');
 
 

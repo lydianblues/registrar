@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :organizations
   resources :transactions
   # devise_for :users
   devise_for :users, controllers: {
