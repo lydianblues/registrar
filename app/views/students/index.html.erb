@@ -46,5 +46,15 @@
 
 <script>
 
-$('#students-table').DataTable();
+$('#students-table').dataTable( {
+  "columns": [
+    null,
+    null,
+    null,
+    null,
+    { "orderable": false, "searchable": false },
+    { "orderable": false, "searchable": false }
+  ]
+} );
+
 </script>
