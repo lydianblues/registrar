@@ -2,11 +2,12 @@ class StudentsController < ApplicationController
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # before_filter :authorize, only: [:edit, :update, :destroy]
-  before_filter :staff_only
+  before_filter :staff_only, except: [:datatables]
 
   # GET /students
   # GET /students.json
   def index
+    @ajax = true
     @students = Student.all
     render layout: "no_sidebar"
   end
@@ -65,9 +66,14 @@ class StudentsController < ApplicationController
     end
   end
 
-  def data_datables
-
-    byebug
+  def datatables
+    @students = Student.all
+    respond_to do |format|
+      format.json do
+          # render json: @students
+      end
+    end
+   
   end
 
   private
