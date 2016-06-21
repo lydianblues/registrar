@@ -73,7 +73,15 @@ class StudentsController < ApplicationController
    
     @draw = params[:draw].to_i
     @recordsTotal = Student.count
-    @recordsFiltered = @students.count # not doing search yet
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      search_val = params[:search][:value]
+      query = Student.count_search_results(search_val)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
 
     respond_to do |format|
       format.json do

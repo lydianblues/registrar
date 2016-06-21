@@ -13,10 +13,11 @@ class Student < ApplicationRecord
 
 	def self.gen_sql(draw, start, length, search, columns, order)
 
-		students = Arel::Table.new(:students)	
+		students = Arel::Table.new(:students)
+		query = students.project(Arel.star)
 
 		# Handle "start" and "length"
-		query = students.take(length.to_i).skip(start.to_i)
+		query.take(length.to_i).skip(start.to_i)
 
 		# Handle sorting.
 		sort_col_index = order["0"]["column"].to_i
@@ -45,10 +46,6 @@ class Student < ApplicationRecord
 		end
 
 		# Handle searching.
-		# search will extend over wp_first_name, wp_last_name, 
-		# wp_email, organization, occupation
-
-		
 		unless search["value"].blank?
 			search_val = '%' + sanitize_sql(search["value"]) + '%'
 			query.where(students[:wp_first_name].matches(search_val)
@@ -58,8 +55,24 @@ class Student < ApplicationRecord
 				.or(students[:organization].matches(search_val)))
 		end
 
-		query.project(Arel.star).to_sql
+		query.to_sql
 	end
+
+
+	def self.count_search_results(search_val)
+		students = Arel::Table.new(:students)
+		query = students.project("count(*)")
+					
+		search_val = '%' + sanitize_sql(search_val) + '%'
+		query.where(students[:wp_first_name].matches(search_val)
+			.or(students[:wp_last_name].matches(search_val))
+			.or(students[:wp_email].matches(search_val))
+			.or(students[:occupation].matches(search_val))
+			.or(students[:organization].matches(search_val)))
+		
+		query.to_sql
+	end
+
 end
 
 =begin

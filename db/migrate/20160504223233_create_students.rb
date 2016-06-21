@@ -12,6 +12,12 @@ class CreateStudents < ActiveRecord::Migration[5.0]
       t.boolean :email_list
       t.boolean :student_discount, default: false
 
+      t.index :wp_first_name
+      t.index :wp_last_name
+      t.index :wp_email
+      t.index :occupation
+      t.index :organization
+
       t.timestamps
     end
   end

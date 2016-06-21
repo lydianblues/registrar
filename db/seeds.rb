@@ -71,11 +71,115 @@ students = [
 		wp_id: 7105, email_list: false, student_discount:true)
 ]
 
-# (1..1000).each do {
-# Student.create!(wp_first_name: "Bob", wp_last_name: "SquarePants", 
-#		wp_email: "smaug@middleearth.com", occupation: "entertainer", organization: "ASCAP",
-#		wp_id: 9999, email_list: false, student_discount:true)
-# end
+#####################################################
+
+first_names = [
+	"Bill",
+	"Steve",
+	"Tom",
+	"Joe",
+	"Mary",
+	"Sue",
+	"Lavinia",
+	"Arthur",
+	"Mistilav",
+	"Hope",
+	"Annie",
+	"Jennifer",
+	"Meghan",
+	"Charles",
+	"Akhmed",
+	"Sammy"
+]
+
+last_names = [
+	"Hooper",
+	"Looper",
+	"Salient",
+	"Pinapple",
+	"Veggies",
+	"Shankara",
+	"Patanjali",
+	"Bologna",
+	"Partier",
+	"Dark",
+	"Light",
+	"Samovar",
+	"Sartorius",
+	"Pretor",
+	"Lavendar",
+	"Elliver"
+]
+
+emails = [
+	"Vivekananda@ashram.org",
+	"veggies@ashram.org",
+	"samovar@coffeehouse.com",
+	"pleey@tartar.com",
+	"prof@stanford.edu",
+	"hite@standord.edu",
+	"bill@stanford.edu",
+	"mary@stanford.edu",
+	"larry@stooges.com",
+	"curly@stooges.com",
+	"moe@stooges.com",
+	"hopakonanda@hoptoad.com",
+	"larry@stooges.com",
+	"curly@stooges.com",
+	"moe@stooges.com",
+	"hopakonanda@hoptoad.com"
+]
+
+occupations = [
+	"laborer",
+	"programmer",
+	"baker",
+	"sailor",
+	"carpenter",
+	"yoga teacher",
+	"yoga therapist",
+	"author",
+	"scrivener",
+	"cannabis grower",
+	"cannibis consumer",
+	"rehab counselor",
+	"junkie",
+	"cannibis purveyor",
+	"actress",
+	"steward"
+]
+
+organizations = [
+	"peace for all",
+	"AFL-CIO",
+	"yoga alliance",
+	"yoga axis",
+	"yoga for rehab",
+	"yoganandas family",
+	"carter foundation",
+	"bill and melinda gates foundation",
+	"amityville horror",
+	"day of living dead",
+	"brady bunch",
+	"stormtroopers for change",
+	"street people for change",
+	"village people",
+	"People power",
+	"up with people"
+]
+
+(1..100000).each do |i|
+	Student.create!(
+		wp_first_name: first_names[-1 + rand(16)],
+		wp_last_name: last_names[-1 + rand(16)], 
+		wp_email: emails[-1 + rand(16)],
+		occupation: occupations[-1 + rand(16)],
+		organization: organizations[-1 + rand(16)],
+		wp_id: 9999 + i, email_list: true, student_discount:true)
+end
+
+
+######################################################
 
 courses = [
 	Course.create(name: "dynamic mindfulness intro", description: "a good thing"),

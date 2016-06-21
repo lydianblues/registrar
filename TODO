@@ -1,0 +1,6 @@
+1. Datatables "processing" indicator doesn't display properly.
+2. Doubled box on table header.
+3. Silence or fix warnings from Arel.
+4. Fix formatting on login pages.
+5. Find a good quote for login page.
+6. Add datatables to all tables on index pages.
