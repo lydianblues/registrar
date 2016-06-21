@@ -1,3 +1,7 @@
+json.draw @draw
+json.recordsTotal @recordsTotal
+json.recordsFiltered @recordsFiltered
+
 json.data do |json|
 	json.array!(@students) do |student|
 		json.full_name raw render(template: 'students/_full_name.html.erb', locals: {student: student})

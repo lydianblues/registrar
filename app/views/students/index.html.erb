@@ -27,7 +27,6 @@
         <tbody>
           <% unless @ajax %>
             <% @students.each do |student| %>
-
               <tr>
                 <td><%= link_to student.wp_first_name + " " + student.wp_last_name, student %></td>
                 <td><%= student.wp_email %></td>
@@ -49,8 +48,12 @@
 <script>
 
 $('#students-table').dataTable( {
+  processing: true,
+  serverSide: true,
   ajax: {
-    url: '/students/datatables'
+    url: '/students/datatables',
+    processing: true,
+    serverSide: true
   },
   columns: [
     {data: 'full_name'},

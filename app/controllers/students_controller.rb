@@ -67,10 +67,17 @@ class StudentsController < ApplicationController
   end
 
   def datatables
-    @students = Student.all
+    query = Student.gen_sql(params[:draw], params[:start], params[:length],
+      params[:search], params[:columns], params[:order])
+    @students = Student.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Student.count
+    @recordsFiltered = @students.count # not doing search yet
+
     respond_to do |format|
       format.json do
-          # render json: @students
+         
       end
     end
    
