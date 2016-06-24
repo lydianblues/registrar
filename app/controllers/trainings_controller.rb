@@ -80,6 +80,39 @@ class TrainingsController < ApplicationController
     end
   end
 
+   def datatables
+
+    # As far as DataTables is concerned, these are the column names...
+    # 'course
+    # 'code
+    # 'start
+    # 'end
+    # 'city'
+    # 'edit_button'
+    # 'delete_button'
+
+    query = TrainingView.gen_sql(:trainings_view, params)
+    @training_views = TrainingView.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = TrainingView.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = TrainingView.count_search_results(:trainings_view, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training

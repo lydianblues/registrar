@@ -25,20 +25,7 @@
         </thead>
 
         <tbody>
-          <% unless @ajax %>
-            <% @students.each do |student| %>
-              <tr>
-                <td><%= link_to student.wp_first_name + " " + student.wp_last_name, student %></td>
-                <td><%= student.wp_email %></td>
-                <td><%= student.occupation %></td>
-                <td><%= student.organization %></td>
-                <td><%= link_to 'Edit', edit_student_path(student),
-                  class: 'btn btn-primary btn-sm' %></td>
-                <td><%= link_to 'Delete', student, class: 'btn btn-sm btn-danger', 
-                  method: :delete, data: { confirm: 'Are you sure?' } %></td>
-              </tr>
-            <% end %>
-          <% end %>
+        
         </tbody>
       </table>
     </div>

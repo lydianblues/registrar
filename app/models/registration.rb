@@ -1,3 +1,5 @@
+require 'datatables_query'
+
 class Registration < ApplicationRecord
 
   belongs_to :registerable, polymorphic: true
@@ -8,6 +10,8 @@ class Registration < ApplicationRecord
   validates :code, presence: true
   validates :training, presence: true
   validates :registerable, presence: true
+
+  extend ::DataTables::Query
 
   def price
 

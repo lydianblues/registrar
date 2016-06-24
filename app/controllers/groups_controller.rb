@@ -63,6 +63,29 @@ class GroupsController < ApplicationController
     end
   end
 
+   def datatables
+    query = Group.gen_sql(:groups, params)
+    @groups = Group.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Group.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = Group.count_search_results(:groups, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group

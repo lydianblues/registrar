@@ -63,6 +63,29 @@ class CoursesController < ApplicationController
     end
   end
 
+   def datatables
+    query = Course.gen_sql(:courses, params)
+    @courses = Course.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Course.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = Course.count_search_results(:courses, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

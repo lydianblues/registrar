@@ -357,6 +357,23 @@ ALTER SEQUENCE trainings_id_seq OWNED BY trainings.id;
 
 
 --
+-- Name: trainings_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW trainings_view AS
+ SELECT t.id AS training_id,
+    c.id AS course_id,
+    c.name AS course,
+    t.code,
+    to_char((t.start_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS start,
+    to_char((t.end_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS "end",
+    l.city
+   FROM ((trainings t
+     JOIN courses c ON ((t.course_id = c.id)))
+     JOIN locations l ON ((t.location_id = l.id)));
+
+
+--
 -- Name: transactions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -767,6 +784,6 @@ ALTER TABLE ONLY trainings
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836');
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836'), ('20160623224050');
 
 

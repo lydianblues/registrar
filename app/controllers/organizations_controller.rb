@@ -1,6 +1,9 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
 
+  # before_filter :authorize, only: [:edit, :update, :destroy]
+  before_filter :staff_only, except: [:datatables]
+
   # GET /organizations
   # GET /organizations.json
   def index
@@ -60,6 +63,29 @@ class OrganizationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+   def datatables
+    query = Organization.gen_sql(:organizations, params)
+    @organizations = Organization.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Organization.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = Organization.count_search_results(:organizations, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

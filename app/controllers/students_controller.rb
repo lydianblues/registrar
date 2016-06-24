@@ -85,8 +85,7 @@ class StudentsController < ApplicationController
       format.json do
          
       end
-    end
-   
+    end 
   end
 
   private

@@ -7,7 +7,15 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
+  get '/courses/datatables', to: 'courses#datatables'
+  get '/facilitators/datatables', to: 'facilitators#datatables'
+  get '/groups/datatables', to: 'groups#datatables'
+  get '/locations/datatables', to: 'locations#datatables'
+  get '/organizations/datatables', to: 'organizations#datatables'
+  get '/registrations/datatables', to: 'registrations#datatables'
   get '/students/datatables', to: 'students#datatables'
+  get '/trainings/datatables', to: 'trainings#datatables'
+  get '/transactions/datatables', to: 'transactions#datatables'
 
   resources :groups
   resources :registrations

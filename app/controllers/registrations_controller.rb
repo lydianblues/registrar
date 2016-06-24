@@ -17,14 +17,14 @@ class RegistrationsController < ApplicationController
   # GET /registrations/new
   def new
     @registration = Registration.new
-    @students = Student.all
+    @Registrations = Registration.all
     @groups = Group.all
     @trainings = Training.all
   end
 
   # GET /registrations/1/edit
   def edit
-    @students = Student.all
+    @Registrations = Registration.all
     @groups = Group.all
     @trainings = Training.all
   end
@@ -70,6 +70,29 @@ class RegistrationsController < ApplicationController
     end
   end
 
+   def datatables
+    query = Registration.gen_sql(:registrations, params)
+    @registrations = Registration.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Registration.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = Registration.count_search_results(:registrations, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_registration
@@ -78,7 +101,7 @@ class RegistrationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def registration_params
-      params.require(:registration).permit(:student_id, :group_id, :registerable_type, :paid_for,
+      params.require(:registration).permit(:Registration_id, :group_id, :registerable_type, :paid_for,
         :training_id, :code, :amt_paid, :sign_up_date, :auth_code, :refunded)
     end
 
@@ -88,12 +111,12 @@ class RegistrationsController < ApplicationController
       # simple_form not handling the polymorphism properly.
       #
       p = registration_params # a function call
-      p[:registerable_id] = if p[:registerable_type] == "Student"
-        p[:student_id]
+      p[:registerable_id] = if p[:registerable_type] == "Registration"
+        p[:Registration_id]
       elsif p[:registerable_type] == "Group"
         p[:group_id]
       end
-      p.delete(:student_id)
+      p.delete(:Registration_id)
       p.delete(:group_id)
       return p
     end

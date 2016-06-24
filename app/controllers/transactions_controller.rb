@@ -62,6 +62,29 @@ class TransactionsController < ApplicationController
     end
   end
 
+   def datatables
+    query = Transaction.gen_sql(:transactions, params)
+    @transactions = Transaction.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = Transaction.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = Transaction.count_search_results(:transactions, params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction

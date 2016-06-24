@@ -4,9 +4,13 @@ Braintree::Configuration.merchant_id = 'n4zyq6yr2t5k66cx'
 Braintree::Configuration.public_key = '8q2c4q5bj9sxkhjk'
 Braintree::Configuration.private_key = '045e6ad4a8e9e977642fe5787037e279'
 
+require 'datatables_query'
+
 class Transaction < ApplicationRecord
 	belongs_to :registration
 	belongs_to :owner, class_name: 'Student'
+
+	extend ::DataTables::Query
 
 	def setup(bt_tid)
 

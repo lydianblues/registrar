@@ -26,5 +26,43 @@
        that lists all the individuals in all the groups for that organization (with
        duplicates removed)?
     </div>
+
+
+    <div class="table-responsive">
+      <table id="organizations-table" class="table table-striped table-sm table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </div>
+
+<script>
+
+$('#organizations-table').dataTable( {
+  processing: true,
+  serverSide: true,
+  ajax: {
+    url: '/organizations/datatables',
+    processing: true,
+    serverSide: true
+  },
+  columns: [
+    {data: 'id'},
+    {data: 'created_at'},
+    {data: 'updated_at'}
+  ],
+
+} );
+
+</script>
