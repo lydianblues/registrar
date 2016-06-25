@@ -1,8 +1,8 @@
-class CreateTrainingViews < ActiveRecord::Migration[5.0]
+class CreateTrainingDatatables < ActiveRecord::Migration[5.0]
 	def self.up
 
 		execute <<-SQL
-			create view trainings_view as
+			create view training_datatables as
 			select
 				t.id as "training_id",
 				c.id as "course_id",
@@ -19,7 +19,7 @@ class CreateTrainingViews < ActiveRecord::Migration[5.0]
 
 	def self.down
 		execute <<-SQL
-			drop view trainings_view
+			drop view training_datatables
 		SQL
 	end
 

@@ -63,17 +63,18 @@ class FacilitatorsController < ApplicationController
     end
   end
 
-   def datatables
-    query = Facilitator.gen_sql(:facilitators, params)
-    @facilitators = Facilitator.find_by_sql(query)
+  def datatables
+
+    query = FacilitatorDatatable.gen_sql(params)
+    @facilitators = FacilitatorDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Facilitator.count
+    @recordsTotal = FacilitatorDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Facilitator.count_search_results(:facilitators, params)
+      query = FacilitatorDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end
@@ -84,7 +85,6 @@ class FacilitatorsController < ApplicationController
       end
     end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -62,6 +62,30 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def datatables
+
+    query = TransactionDatatable.gen_sql(params)
+    @transactions = TransactionDatatable.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = TransactionDatatable.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = TransactionDatatable.count_search_results(params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
    def datatables
     query = Transaction.gen_sql(:transactions, params)
     @transactions = Transaction.find_by_sql(query)

@@ -67,7 +67,7 @@ class StudentsController < ApplicationController
   end
 
   def datatables
-    query = Student.gen_sql(:students, params)
+    query = Student.gen_sql(params)
     @students = Student.find_by_sql(query)
    
     @draw = params[:draw].to_i
@@ -76,7 +76,7 @@ class StudentsController < ApplicationController
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Student.count_search_results(:students, params)
+      query = Student.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end

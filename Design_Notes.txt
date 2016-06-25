@@ -1,0 +1,23 @@
+Entities	|	     Datatable       |     View Name
+			| 	     View Model      | 
+--------------------------------------------
+
+
+Student			Student (w full_name
+				  hack)
+
+Course			
+
+Training		TrainingDatatable         training_datables
+
+Registration	RegistrationDatatable     registration_datatables
+
+Location
+
+Facilitator
+
+Group			GroupDatatable			  group_datatables
+
+Transaction		TransactionDatatable	  transaction_datatables
+
+Organization

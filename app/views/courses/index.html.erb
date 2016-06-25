@@ -1,6 +1,6 @@
 <div class="card top-card">
 
-  <div class="card-header">
+  <div class="card-header" style="margin-bottom:1rem;">
     <div style="float:left;"><h2>Courses</h2></div>
     <div style="float:right;">
       <%= link_to 'New Course', new_course_path, class: 'btn btn-primary btn-md' %>
@@ -15,21 +15,13 @@
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th colspan="2"></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
 
         <tbody>
-          <% @courses.each do |course| %>
-            <tr>
-              <td><%= link_to course.name, course %></td>
-              <td><%= course.description %></td>
-              <td><%= link_to 'Edit', edit_course_path(course),
-                class: 'btn btn-primary btn-sm' %></td>
-              <td><%= link_to 'Delete', course, class: 'btn btn-sm btn-danger', 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
+          
         </tbody>
       </table>
     </div>
@@ -42,15 +34,11 @@ $('#courses-table').dataTable( {
   processing: true,
   serverSide: true,
   ajax: {
-    url: '/courses/datatables',
-    processing: true,
-    serverSide: true
+    url: '/courses/datatables'
   },
   columns: [
-    {data: 'full_name'},
-    {data: 'wp_email'},
-    {data: 'occupation'},
-    {data: 'organization'},
+    {data: 'course'},
+    {data: 'description'},
     {data: 'edit_button', orderable: false, searchable: false },
     {data: 'delete_button', orderable: false, searchable: false }
   ],

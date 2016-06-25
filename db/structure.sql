@@ -59,6 +59,17 @@ CREATE TABLE courses (
 
 
 --
+-- Name: course_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW course_datatables AS
+ SELECT courses.name AS course,
+    courses.description,
+    courses.id AS course_id
+   FROM courses;
+
+
+--
 -- Name: courses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -91,6 +102,19 @@ CREATE TABLE facilitators (
 
 
 --
+-- Name: facilitator_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW facilitator_datatables AS
+ SELECT facilitators.id,
+    facilitators.name,
+    facilitators.description,
+    facilitators.created_at,
+    facilitators.updated_at
+   FROM facilitators;
+
+
+--
 -- Name: facilitators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -120,6 +144,19 @@ CREATE TABLE groups (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: group_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW group_datatables AS
+ SELECT groups.id,
+    groups.student_id,
+    groups.tag,
+    groups.created_at,
+    groups.updated_at
+   FROM groups;
 
 
 --
@@ -171,6 +208,25 @@ CREATE TABLE locations (
 
 
 --
+-- Name: location_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW location_datatables AS
+ SELECT locations.id,
+    locations.name,
+    locations.street_1,
+    locations.street_2,
+    locations.city,
+    locations.state,
+    locations.zip,
+    locations.country,
+    locations.notes,
+    locations.created_at,
+    locations.updated_at
+   FROM locations;
+
+
+--
 -- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -198,6 +254,17 @@ CREATE TABLE organizations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: organization_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW organization_datatables AS
+ SELECT organizations.id,
+    organizations.created_at,
+    organizations.updated_at
+   FROM organizations;
 
 
 --
@@ -242,34 +309,6 @@ CREATE TABLE registrations (
 
 
 --
--- Name: registrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE registrations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: registrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE registrations_id_seq OWNED BY registrations.id;
-
-
---
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE schema_migrations (
-    version character varying NOT NULL
-);
-
-
---
 -- Name: students; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -288,25 +327,6 @@ CREATE TABLE students (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE students_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: students_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE students_id_seq OWNED BY students.id;
 
 
 --
@@ -338,6 +358,124 @@ CREATE TABLE trainings (
 
 
 --
+-- Name: registration_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW registration_datatables AS
+ SELECT outer_r.code AS registration_code,
+    ( SELECT c.name
+           FROM ((registrations r
+             JOIN trainings t ON ((r.training_id = t.id)))
+             JOIN courses c ON ((t.course_id = c.id)))
+          WHERE (r.id = outer_r.id)) AS course_name,
+    ( SELECT c.id
+           FROM ((registrations r
+             JOIN trainings t ON ((r.training_id = t.id)))
+             JOIN courses c ON ((t.course_id = c.id)))
+          WHERE (r.id = outer_r.id)) AS course_id,
+    ( SELECT t.code
+           FROM (registrations r
+             JOIN trainings t ON ((r.training_id = t.id)))
+          WHERE (r.id = outer_r.id)) AS training_code,
+    ( SELECT t.id
+           FROM (registrations r
+             JOIN trainings t ON ((r.training_id = t.id)))
+          WHERE (r.id = outer_r.id)) AS training_id,
+    ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
+           FROM (registrations r
+             JOIN students s ON ((r.owner_id = s.id)))
+          WHERE (r.id = outer_r.id)) AS owner_name,
+    ( SELECT s.id
+           FROM (registrations r
+             JOIN students s ON ((r.owner_id = s.id)))
+          WHERE (r.id = outer_r.id)) AS owner_id,
+        CASE
+            WHEN ((outer_r.registerable_type)::text = 'Student'::text) THEN ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
+               FROM (registrations r
+                 JOIN students s ON ((r.registerable_id = s.id)))
+              WHERE (r.id = outer_r.id))
+            ELSE ( SELECT (((s.wp_last_name)::text || '#'::text) || g.id)
+               FROM ((registrations r
+                 JOIN groups g ON ((r.registerable_id = g.id)))
+                 JOIN students s ON ((g.student_id = s.id)))
+              WHERE (r.id = outer_r.id))
+        END AS registrant,
+    outer_r.registerable_type,
+    outer_r.registerable_id,
+        CASE
+            WHEN (outer_r.paid_for IS TRUE) THEN 'Yes'::text
+            ELSE 'No'::text
+        END AS paid_for,
+    to_char(outer_r.updated_at, 'MM/DD/YYYY HH:MI AM'::text) AS updated_at,
+    outer_r.id AS registration_id
+   FROM registrations outer_r;
+
+
+--
+-- Name: registrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE registrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: registrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE registrations_id_seq OWNED BY registrations.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+--
+-- Name: students_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE students_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: students_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE students_id_seq OWNED BY students.id;
+
+
+--
+-- Name: training_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW training_datatables AS
+ SELECT t.id AS training_id,
+    c.id AS course_id,
+    c.name AS course,
+    t.code,
+    to_char((t.start_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS start,
+    to_char((t.end_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS "end",
+    l.city
+   FROM ((trainings t
+     JOIN courses c ON ((t.course_id = c.id)))
+     JOIN locations l ON ((t.location_id = l.id)));
+
+
+--
 -- Name: trainings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -354,23 +492,6 @@ CREATE SEQUENCE trainings_id_seq
 --
 
 ALTER SEQUENCE trainings_id_seq OWNED BY trainings.id;
-
-
---
--- Name: trainings_view; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW trainings_view AS
- SELECT t.id AS training_id,
-    c.id AS course_id,
-    c.name AS course,
-    t.code,
-    to_char((t.start_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS start,
-    to_char((t.end_date)::timestamp with time zone, 'MM/DD/YYYY'::text) AS "end",
-    l.city
-   FROM ((trainings t
-     JOIN courses c ON ((t.course_id = c.id)))
-     JOIN locations l ON ((t.location_id = l.id)));
 
 
 --
@@ -408,6 +529,43 @@ CREATE TABLE transactions (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
+
+
+--
+-- Name: transaction_datatables; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW transaction_datatables AS
+ SELECT transactions.id,
+    transactions.registration_id,
+    transactions.owner_id,
+    transactions.status,
+    transactions.payment_instrument_type,
+    transactions.amount,
+    transactions.transaction_id,
+    transactions.transaction_type,
+    transactions.customer_id,
+    transactions.processor_authorization_code,
+    transactions.processor_response_code,
+    transactions.processor_response_text,
+    transactions.customer_first_name,
+    transactions.customer_last_name,
+    transactions.billing_first_name,
+    transactions.billing_last_name,
+    transactions.authorization_id,
+    transactions.capture_id,
+    transactions.payer_first_name,
+    transactions.payer_last_name,
+    transactions.payer_id,
+    transactions.payment_id,
+    transactions.transaction_fee_amount,
+    transactions.bin,
+    transactions.card_type,
+    transactions.cardholder_name,
+    transactions.last_4,
+    transactions.created_at,
+    transactions.updated_at
+   FROM transactions;
 
 
 --
@@ -784,6 +942,6 @@ ALTER TABLE ONLY trainings
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836'), ('20160623224050');
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836'), ('20160623224050'), ('20160624212534'), ('20160624212559'), ('20160624212609'), ('20160624212619'), ('20160624212631'), ('20160624212643'), ('20160624212724');
 
 

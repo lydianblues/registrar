@@ -33,8 +33,10 @@
 
 
               <td><%= link_to registration.code, registration %></td>
+              
               <td><%= link_to registration.training.course.name,
                 registration.training.course %></td>
+
               <td><%= link_to registration.training.code, registration.training %></td>
 
               <td><%= link_to registration.owner.wp_first_name + " " +
@@ -65,15 +67,16 @@ $('#registrations-table').dataTable( {
   processing: true,
   serverSide: true,
   ajax: {
-    url: '/registrations/datatables',
-    processing: true,
-    serverSide: true
+    url: '/registrations/datatables'
   },
   columns: [
-    {data: 'full_name'},
-    {data: 'wp_email'},
-    {data: 'occupation'},
-    {data: 'organization'},
+    {data: 'registration_code'},
+    {data: 'course_name'},
+    {data: 'training_code'},
+    {data: 'owner_name'},
+    {data: 'registrant'},
+    {data: 'paid_for'},
+    {data: 'updated_at'},
     {data: 'edit_button', orderable: false, searchable: false },
     {data: 'delete_button', orderable: false, searchable: false }
   ],

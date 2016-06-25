@@ -70,6 +70,30 @@ class RegistrationsController < ApplicationController
     end
   end
 
+     def datatables
+
+    query = RegistrationDatatable.gen_sql(params)
+    @registrations = RegistrationDatatable.find_by_sql(query)
+   
+    @draw = params[:draw].to_i
+    @recordsTotal = RegistrationDatatable.count
+   
+    if params[:search]["value"].blank?
+      @recordsFiltered = @recordsTotal
+    else
+      query = RegistrationDatatable.count_search_results(params)
+      result = ActiveRecord::Base.connection.execute(query)
+      @recordsFiltered = result[0]['count']
+    end
+
+    respond_to do |format|
+      format.json do
+         
+      end
+    end
+  end
+
+
    def datatables
     query = Registration.gen_sql(:registrations, params)
     @registrations = Registration.find_by_sql(query)

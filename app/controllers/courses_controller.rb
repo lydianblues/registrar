@@ -63,17 +63,18 @@ class CoursesController < ApplicationController
     end
   end
 
-   def datatables
-    query = Course.gen_sql(:courses, params)
-    @courses = Course.find_by_sql(query)
+  def datatables
+
+    query = CourseDatatable.gen_sql(params)
+    @courses = CourseDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Course.count
+    @recordsTotal = CourseDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Course.count_search_results(:courses, params)
+      query = CourseDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end

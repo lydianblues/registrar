@@ -1,7 +1,9 @@
 module DataTables
 	module Query
 
-		def gen_sql(table_sym, params)
+		def gen_sql(params)
+
+			table_sym = self.table_name.to_sym
 
 			draw = params[:draw]
 			start = params[:start]
@@ -33,7 +35,8 @@ module DataTables
 			query.to_sql
 		end
 
-		def count_search_results(table_sym, params)
+		def count_search_results(params)
+			table_sym = self.table_name.to_sym
 			table = Arel::Table.new(table_sym)	
 			query = table.project("count(*)") 
 			query = add_search_to_query(table, params, query)

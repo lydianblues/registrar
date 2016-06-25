@@ -63,17 +63,18 @@ class GroupsController < ApplicationController
     end
   end
 
-   def datatables
-    query = Group.gen_sql(:groups, params)
-    @groups = Group.find_by_sql(query)
+  def datatables
+
+    query = GroupDatatable.gen_sql(params)
+    @groups = GroupDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Group.count
+    @recordsTotal = GroupDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Group.count_search_results(:groups, params)
+      query = GroupDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end

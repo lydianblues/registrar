@@ -63,17 +63,18 @@ class LocationsController < ApplicationController
     end
   end
 
-   def datatables
-    query = Location.gen_sql(:locations, params)
-    @locations = Location.find_by_sql(query)
+  def datatables
+
+    query = LocationDatatable.gen_sql(params)
+    @locations = LocationDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Location.count
+    @recordsTotal = LocationDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Location.count_search_results(:locations, params)
+      query = LocationDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end
@@ -84,7 +85,6 @@ class LocationsController < ApplicationController
       end
     end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

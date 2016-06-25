@@ -82,25 +82,16 @@ class TrainingsController < ApplicationController
 
    def datatables
 
-    # As far as DataTables is concerned, these are the column names...
-    # 'course
-    # 'code
-    # 'start
-    # 'end
-    # 'city'
-    # 'edit_button'
-    # 'delete_button'
-
-    query = TrainingView.gen_sql(:trainings_view, params)
-    @training_views = TrainingView.find_by_sql(query)
+    query = TrainingDatatable.gen_sql(params)
+    @trainings = TrainingDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = TrainingView.count
+    @recordsTotal = TrainingDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = TrainingView.count_search_results(:trainings_view, params)
+      query = TrainingDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end

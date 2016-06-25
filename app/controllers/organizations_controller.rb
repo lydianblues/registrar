@@ -64,17 +64,18 @@ class OrganizationsController < ApplicationController
     end
   end
 
-   def datatables
-    query = Organization.gen_sql(:organizations, params)
-    @organizations = Organization.find_by_sql(query)
+  def datatables
+
+    query = OrganizationDatatable.gen_sql(params)
+    @organizations = OrganizationDatatable.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Organization.count
+    @recordsTotal = OrganizationDatatable.count
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
     else
-      query = Organization.count_search_results(:organizations, params)
+      query = OrganizationDatatable.count_search_results(params)
       result = ActiveRecord::Base.connection.execute(query)
       @recordsFiltered = result[0]['count']
     end
@@ -85,7 +86,6 @@ class OrganizationsController < ApplicationController
       end
     end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
