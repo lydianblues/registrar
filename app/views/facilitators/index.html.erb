@@ -15,22 +15,16 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Email</th>
             <th>Description</th>
-            <th colspan="2"></th>
+            <th>Home City</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
 
         <tbody>
-          <% @facilitators.each do |facilitator| %>
-            <tr>
-              <td><%= link_to facilitator.name, facilitator %></td>
-              <td><%= facilitator.description %></td>
-              <td><%= link_to 'Edit', edit_facilitator_path(facilitator),
-                class: 'btn btn-primary btn-sm' %></td>
-              <td><%= link_to 'Delete', facilitator, class: 'btn btn-sm btn-danger', 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
+         
         </tbody>
       </table>
     </div>
@@ -48,10 +42,10 @@ $('#facilitators-table').dataTable( {
     serverSide: true
   },
   columns: [
-    {data: 'full_name'},
-    {data: 'wp_email'},
-    {data: 'occupation'},
-    {data: 'organization'},
+    {data: 'name'},
+    {data: 'email'},
+    {data: 'description'},
+    {data: 'home_city'},
     {data: 'edit_button', orderable: false, searchable: false },
     {data: 'delete_button', orderable: false, searchable: false }
   ],

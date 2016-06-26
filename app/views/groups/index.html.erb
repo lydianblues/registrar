@@ -19,30 +19,18 @@
 
         <thead>
           <tr>
-            <th>Group ID</th>
-            <th>Group Name</th>
-            <th>Group Owner</th>
-            <th>Last Update</th>
-            <th colspan="2"></th>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Organization</th>
+            <th>Count</th>
+            <th></th>
+            <th></th>
+
           </tr>
         </thead>
 
         <tbody>
-          <% @groups.each do |group| %>
-            <tr>
-              <td><%= group.id %></td>
-              <td><%= link_to group.owner.wp_last_name + '#' + (group.id).to_s %></td> 
-              <td><%= link_to group.owner.wp_first_name + ' ' +
-                group.owner.wp_last_name, group.owner %></td>
-
-              <td><%= group.updated_at.strftime("%b %-d, %Y") %></td> 
-
-              <td><%= link_to 'Edit', edit_group_path(group),
-                class: 'btn btn-primary btn-sm' %></td>
-              <td><%= link_to 'Delete', group, class: 'btn btn-sm btn-danger', 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
+          
         </tbody>
       </table>
     </div>
@@ -60,10 +48,10 @@ $('#groups-table').dataTable( {
     serverSide: true
   },
   columns: [
-    {data: 'full_name'},
-    {data: 'wp_email'},
-    {data: 'occupation'},
+    {data: 'name'},
+    {data: 'owner'},
     {data: 'organization'},
+    {data: 'count'},
     {data: 'edit_button', orderable: false, searchable: false },
     {data: 'delete_button', orderable: false, searchable: false }
   ],

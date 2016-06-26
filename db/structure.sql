@@ -95,6 +95,8 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 CREATE TABLE facilitators (
     id integer NOT NULL,
     name character varying,
+    email character varying,
+    home_city character varying,
     description text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -106,11 +108,11 @@ CREATE TABLE facilitators (
 --
 
 CREATE VIEW facilitator_datatables AS
- SELECT facilitators.id,
-    facilitators.name,
+ SELECT facilitators.name,
+    facilitators.email,
     facilitators.description,
-    facilitators.created_at,
-    facilitators.updated_at
+    facilitators.home_city,
+    facilitators.id AS facilitator_id
    FROM facilitators;
 
 
@@ -141,6 +143,52 @@ CREATE TABLE groups (
     id integer NOT NULL,
     student_id integer,
     tag character varying,
+    organization_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: groups_students; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE groups_students (
+    group_id integer NOT NULL,
+    student_id integer NOT NULL
+);
+
+
+--
+-- Name: organizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE organizations (
+    id integer NOT NULL,
+    name character varying,
+    student_id integer,
+    leader character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: students; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE students (
+    id integer NOT NULL,
+    wp_first_name character varying,
+    wp_last_name character varying,
+    wp_email character varying,
+    wp_id integer,
+    occupation character varying,
+    organization character varying,
+    wp_login character varying,
+    wp_display_name character varying,
+    email_list boolean,
+    student_discount boolean DEFAULT false,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -151,12 +199,22 @@ CREATE TABLE groups (
 --
 
 CREATE VIEW group_datatables AS
- SELECT groups.id,
-    groups.student_id,
-    groups.tag,
-    groups.created_at,
-    groups.updated_at
-   FROM groups;
+ SELECT ( SELECT (((s.wp_last_name)::text || '#'::text) || outer_g.id)
+           FROM students s
+          WHERE (s.id = outer_g.student_id)) AS name,
+    outer_g.id AS group_id,
+    ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
+           FROM students s
+          WHERE (s.id = outer_g.student_id)) AS owner,
+    outer_g.student_id AS owner_id,
+    ( SELECT o.name
+           FROM organizations o
+          WHERE (o.id = outer_g.organization_id)) AS organization,
+    outer_g.organization_id,
+    ( SELECT (count(*))::text AS count
+           FROM groups_students gs
+          WHERE (gs.group_id = outer_g.id)) AS count
+   FROM groups outer_g;
 
 
 --
@@ -176,16 +234,6 @@ CREATE SEQUENCE groups_id_seq
 --
 
 ALTER SEQUENCE groups_id_seq OWNED BY groups.id;
-
-
---
--- Name: groups_students; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE groups_students (
-    group_id integer NOT NULL,
-    student_id integer NOT NULL
-);
 
 
 --
@@ -238,22 +286,14 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: organizations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE organizations (
-    id integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
 -- Name: organization_datatables; Type: VIEW; Schema: public; Owner: -
 --
 
 CREATE VIEW organization_datatables AS
  SELECT organizations.id,
+    organizations.name,
+    organizations.student_id,
+    organizations.leader,
     organizations.created_at,
     organizations.updated_at
    FROM organizations;
@@ -295,27 +335,6 @@ CREATE TABLE registrations (
     refunded boolean,
     reg_type character varying,
     owner_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: students; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE students (
-    id integer NOT NULL,
-    wp_first_name character varying,
-    wp_last_name character varying,
-    wp_email character varying,
-    wp_id integer,
-    occupation character varying,
-    organization character varying,
-    wp_login character varying,
-    wp_display_name character varying,
-    email_list boolean,
-    student_discount boolean DEFAULT false,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -785,10 +804,24 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_groups_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_groups_on_organization_id ON groups USING btree (organization_id);
+
+
+--
 -- Name: index_groups_on_student_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_groups_on_student_id ON groups USING btree (student_id);
+
+
+--
+-- Name: index_organizations_on_student_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_organizations_on_student_id ON organizations USING btree (student_id);
 
 
 --
@@ -929,11 +962,19 @@ ALTER TABLE ONLY trainings
 
 
 --
+-- Name: fk_rails_d9d06276a3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY groups
+    ADD CONSTRAINT fk_rails_d9d06276a3 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160619012836'), ('20160623224050'), ('20160624212534'), ('20160624212559'), ('20160624212609'), ('20160624212619'), ('20160624212631'), ('20160624212643'), ('20160624212724');
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030400'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160623224050'), ('20160624212534'), ('20160624212559'), ('20160624212609'), ('20160624212619'), ('20160624212631'), ('20160624212643'), ('20160624212724');
 
 

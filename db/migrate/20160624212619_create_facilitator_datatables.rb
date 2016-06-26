@@ -4,7 +4,11 @@ class CreateFacilitatorDatatables < ActiveRecord::Migration[5.0]
 
 		execute <<-SQL
 			create view facilitator_datatables as
-				select * from facilitators
+				select name, email,
+					description,
+					home_city,
+					id as facilitator_id	
+				from facilitators;
 		SQL
 
 	end

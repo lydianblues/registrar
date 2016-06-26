@@ -8,6 +8,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations.json
   def index
     @organizations = Organization.all
+    render layout: "no_sidebar"
   end
 
   # GET /organizations/1

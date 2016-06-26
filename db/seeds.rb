@@ -168,7 +168,7 @@ organizations = [
 	"up with people"
 ]
 
-(1..100000).each do |i|
+(1..1000).each do |i|
 	Student.create!(
 		wp_first_name: first_names[-1 + rand(16)],
 		wp_last_name: last_names[-1 + rand(16)], 
@@ -199,14 +199,22 @@ locations = [
 ]
 
 facilitators = [
-	Facilitator.create(name: "BK Bose", description: "the one and only"),
-	Facilitator.create(name: "Adi Shankara", description: "Advaita Vedanta scholar"),
-	Facilitator.create(name: "Hariharananda Giri", description: "yogic scholar"),
-	Facilitator.create(name: "Patanjali", description: "sutra guy"),
-	Facilitator.create(name: "Shrihukteshwar Giri", description: "teacher of Yogananada"),
-	Facilitator.create(name: "Paramahamsa Yogananda", description: "famous autobiographer"),
-	Facilitator.create(name: "Swami Vivekananda", description: "brought yoga to America"),
-	Facilitator.create(name: "Vijanabhiksu", description: "16 century commentator on the sutras")
+	Facilitator.create(name: "BK Bose", email: "bk@niroga.org",
+		 description: "the one and only", home_city: "Berkeley"),
+	Facilitator.create(name: "Adi Shankara", description: "Advaita Vedanta scholar",
+		email: "adi@advaita.org", home_city: "Kaschi"),
+	Facilitator.create(name: "Hariharananda Giri", description: "yogic scholar",
+		email: "hari@santosa.org", home_city: "Veranasi"),
+	Facilitator.create(name: "Patanjali", description: "sutra guy",
+		email: "snakes@yogasource.org", home_city: "Bhopal"),
+	Facilitator.create(name: "Shrihukteshwar Giri", description: "teacher of Yogananada",
+		email: "shri@rishikesh.india.com", home_city: "Pune"),
+	Facilitator.create(name: "Paramahamsa Yogananda", description: "famous autobiographer",
+		email: "param@yoga.org", home_city: "Venice Beach"),
+	Facilitator.create(name: "Swami Vivekananda", description: "brought yoga to America",
+		email: "vivi@purusha.org", home_city: "Benares"),
+	Facilitator.create(name: "Vijñānabhikṣu", description: "16 century commentator on the sutras",
+		email: "vij@indianyoga.com", home_city: "Antwerp")
 ]
 
 early_dates = [
