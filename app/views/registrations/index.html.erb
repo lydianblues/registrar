@@ -29,33 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @registrations.each do |registration| %>
-            <tr>
-
-
-              <td><%= link_to registration.code, registration %></td>
-              
-              <td><%= link_to registration.training.course.name,
-                registration.training.course %></td>
-
-              <td><%= link_to registration.training.code, registration.training %></td>
-
-              <td><%= link_to registration.owner.wp_first_name + " " +
-                registration.owner.wp_last_name, registration.owner %></td>
-                   
-              <td><%= link_to registration.registerable.handle,
-                registration.registerable %></td>
-
-              <td><%= registration.paid_for ? "yes" : "no" %>
-             
-              <td><%= registration.updated_at.strftime("%b %-d, %Y") %></td>
-
-              <td><%= link_to 'Edit', edit_registration_path(registration),
-                class: 'btn btn-primary btn-sm' %></td>
-              <td><%= link_to 'Delete', registration, class: 'btn btn-sm btn-danger', 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
+         
         </tbody>
       </table>
     </div>
