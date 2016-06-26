@@ -1,6 +1,6 @@
 require 'datatables_query'
 
-class TrainingDatatable < ApplicationRecord
+class RegistrationDatatable < ApplicationRecord
 
 	extend ::DataTables::Query
 

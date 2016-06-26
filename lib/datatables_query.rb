@@ -3,8 +3,6 @@ module DataTables
 
 		def gen_sql(params)
 
-			table_sym = self.table_name.to_sym
-
 			draw = params[:draw]
 			start = params[:start]
 			length = params[:length]
@@ -12,7 +10,7 @@ module DataTables
 			order = params[:order]
 			search = params[:search]
 
-			table = Arel::Table.new(table_sym)
+			table = arel_table 
 			query = table.project(Arel.star)
 
 			# Handle "start" and "length"
@@ -30,16 +28,15 @@ module DataTables
 			end
 
 			# Handle searching.
-			query = add_search_to_query(table, params, query)
+			add_search_to_query(params, query)
 
 			query.to_sql
 		end
 
 		def count_search_results(params)
-			table_sym = self.table_name.to_sym
-			table = Arel::Table.new(table_sym)	
+			table = arel_table	
 			query = table.project("count(*)") 
-			query = add_search_to_query(table, params, query)
+			query = add_search_to_query(params, query)
 			query.to_sql
 		end
 
@@ -57,9 +54,10 @@ module DataTables
 			searchable
 		end
 
-		def add_search_to_query(table, params, query)
+		def add_search_to_query(params, query)
 			search = params[:search]
 			columns = params[:columns]
+			table = arel_table
 
 			searchable = extract_searchable(columns)
 
@@ -75,13 +73,13 @@ module DataTables
 
 			unless search["value"].blank?
 				search_val = '%' + sanitize_sql(search["value"]) + '%'
-
+				
 				unless searchable.empty?
-					select = table[searchable.shift].matches(search_val)
+					predicate = table[searchable.shift].matches(search_val)
 					searchable.each do |col|
-						select = select.or(table[col].matches(search_val))
+						predicate = predicate.or(table[col].matches(search_val))
 					end
-					query.where(select)
+					query.where(predicate)
 				end
 			end
 			query

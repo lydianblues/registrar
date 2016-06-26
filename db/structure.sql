@@ -362,7 +362,7 @@ CREATE TABLE trainings (
 --
 
 CREATE VIEW registration_datatables AS
- SELECT outer_r.code AS registration_code,
+ SELECT (outer_r.code)::text AS registration_code,
     ( SELECT c.name
            FROM ((registrations r
              JOIN trainings t ON ((r.training_id = t.id)))
@@ -373,7 +373,7 @@ CREATE VIEW registration_datatables AS
              JOIN trainings t ON ((r.training_id = t.id)))
              JOIN courses c ON ((t.course_id = c.id)))
           WHERE (r.id = outer_r.id)) AS course_id,
-    ( SELECT t.code
+    ( SELECT (t.code)::text AS code
            FROM (registrations r
              JOIN trainings t ON ((r.training_id = t.id)))
           WHERE (r.id = outer_r.id)) AS training_code,
