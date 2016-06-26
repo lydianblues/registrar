@@ -212,17 +212,9 @@ CREATE TABLE locations (
 --
 
 CREATE VIEW location_datatables AS
- SELECT locations.id,
-    locations.name,
-    locations.street_1,
-    locations.street_2,
-    locations.city,
-    locations.state,
-    locations.zip,
-    locations.country,
-    locations.notes,
-    locations.created_at,
-    locations.updated_at
+ SELECT locations.name AS location_name,
+    locations.id AS location_id,
+    locations.city
    FROM locations;
 
 

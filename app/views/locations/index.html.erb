@@ -1,6 +1,6 @@
 <div class="card top-card">
   
-  <div class="card-header">
+  <div class="card-header" style="margin-bottom:1rem;">
     <div style="float:left;"><h2>Locations</h2></div>
     <div style="float:right;">
       <%= link_to 'New Location', new_location_path, class: 'btn btn-primary btn-md' %>
@@ -15,21 +15,13 @@
           <tr>
             <th>Name</th>
             <th>City</th>
-            <th colspan="2"></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
 
         <tbody>
-          <% @locations.each do |location| %>
-            <tr>
-              <td><%= link_to location.name, location %></td>
-              <td><%= location.city %></td>
-              <td><%= link_to 'Edit', edit_location_path(location),
-                class: 'btn btn-primary btn-sm' %></td>
-              <td><%= link_to 'Delete', location, class: 'btn btn-sm btn-danger', 
-                method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
+        
         </tbody>
       </table>
     </div>
@@ -47,10 +39,8 @@ $('#locations-table').dataTable( {
     serverSide: true
   },
   columns: [
-    {data: 'full_name'},
-    {data: 'wp_email'},
-    {data: 'occupation'},
-    {data: 'organization'},
+    {data: 'location_name'},
+    {data: 'city'},
     {data: 'edit_button', orderable: false, searchable: false },
     {data: 'delete_button', orderable: false, searchable: false }
   ],

@@ -3,7 +3,10 @@ class CreateLocationDatatables < ActiveRecord::Migration[5.0]
 
 		execute <<-SQL
 			create view location_datatables as
-				select * from locations
+				select name as location_name,
+					id as location_id,
+					city 
+				from locations;
 		SQL
 
 	end
