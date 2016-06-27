@@ -30,13 +30,23 @@ module DataTables
 			# Handle searching.
 			add_search_to_query(params, query)
 
+			restrict_students_to_group(query, params[:gid])
+
 			query.to_sql
 		end
 
 		def count_search_results(params)
 			table = arel_table	
 			query = table.project("count(*)") 
-			query = add_search_to_query(params, query)
+			add_search_to_query(params, query)
+			restrict_students_to_group(query, params[:gid])
+			query.to_sql
+		end
+
+		def get_group_size(params)
+			table = arel_table	
+			query = table.project("count(*)") 
+			restrict_students_to_group(query, params[:gid])
 			query.to_sql
 		end
 
@@ -52,6 +62,18 @@ module DataTables
 				end
 			end
 			searchable
+		end
+
+		def restrict_students_to_group(query, group_id)
+			unless group_id.blank?
+				if (self.name == 'Student')
+					table = arel_table
+					groups_students =  Arel::Table.new(:groups_students)
+					query.join(groups_students).on(table[:id].
+						eq(groups_students[:student_id]))
+							.where(groups_students[:group_id].eq(Arel::Nodes::Quoted.new(group_id)))
+				end
+			end
 		end
 
 		def add_search_to_query(params, query)

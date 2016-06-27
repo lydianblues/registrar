@@ -71,7 +71,14 @@ class StudentsController < ApplicationController
     @students = Student.find_by_sql(query)
    
     @draw = params[:draw].to_i
-    @recordsTotal = Student.count
+
+    if params[:gid].blank?
+      @recordsTotal = Student.count
+    else
+     query = Student.get_group_size(params)
+     result = ActiveRecord::Base.connection.execute(query)
+      @recordsTotal = result[0]['count']
+    end
    
     if params[:search]["value"].blank?
       @recordsFiltered = @recordsTotal
