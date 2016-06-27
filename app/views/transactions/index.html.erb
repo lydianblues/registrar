@@ -9,6 +9,11 @@
 
   <div class="card-body">
 
+
+    <div class="alert alert-info" role="alert">
+       You can scroll this table sideways to see all the fields.
+    </div>
+
     <div class="table-responsive">
       <table id="transactions-table" class="table table-striped table-sm table-hover table-bordered">
 
@@ -17,6 +22,7 @@
             <th>ID</th>
             <th>Registration</th>
             <th>Owner</th>
+            <th>Registrant</th>
             <th>Type</th>
             <th>Status</th>
             <th>Payer</th>
@@ -28,36 +34,7 @@
         </thead>
 
         <tbody>
-          <% @transactions.each do |t| %>
-            <tr id="tid-<%= t.transaction_id %>" >
-              <td><%= link_to t.transaction_id, t %></td>
-
-              <td><%= link_to t.registration.code, t.registration %></td>
-
-              <td><%= link_to t.registration.owner.wp_first_name + " " +
-                t.registration.owner.wp_last_name, t.registration.owner %></td>
-
-              <% if t.payment_instrument_type == 'paypal_account' %>
-                <td>PayPal</td>
-              <% else %>
-                <td>Credit Card</td>
-              <% end %>
-
-              <td><%= t.short_status %></td>
-
-              <td><%= t.payer_name %></td>
-
-              <td><%= '$%.2f' % t.amount %></td>
-
-              <td><%= t.created_local_time %></td>
-              <td><%= t.updated_local_time %></td>
-              
-              <td><%= link_to 'Refresh', "/api/transaction/#{t.id}/refresh.js", 
-                remote: true,
-                class: 'btn btn-primary btn-sm' %></td>
-              
-            </tr>
-          <% end %>
+        
         </tbody>
       </table>
         
@@ -75,25 +52,14 @@ $('#transactions-table').dataTable( {
     processing: true,
     serverSide: true
   },
-  =begin
-            ID
-            Registration
-            Owner
-            Type
-            Status
-            Payer
-            Amount
-            Created
-            Updated
-            Refresh
-=end
   columns: [
-    {data: 'id'},
-    {data: 'registration_link'},
-    {data: 'owner_link'},
+    {data: 'payment_transaction_id'},
+    {data: 'registration_code'},
+    {data: 'owner_name'},
+    {data: 'registerable_name'},
     {data: 'payment_type'},
     {data: 'status'},
-    {data: 'payer_link'},
+    {data: 'payer_name'},
     {data: 'amount'},
     {data: 'created_at'},
     {data: 'updated_at'},

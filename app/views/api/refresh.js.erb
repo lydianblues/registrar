@@ -1,10 +1,8 @@
+var selector = "#transactions-table a[href='/transactions/<%= @transaction.id %>']";
+var updated_at = "<%= @transaction.updated_local_time %>";
+var status = "<%= @transaction.status %>";
 
-	var selector = "#tid-<%= @transaction.transaction_id %> td";
-	var updated_at = "<%= @transaction.local_time %>";
-	var status = "<%= @transaction.status %>";
-	
-	var cols = jQuery(selector);
+var row = jQuery(selector).closest('tr');
 
-	// "eq" is zero based...
-	cols.eq(7).text(updated_at);
-	cols.eq(3).text(status);
+jQuery(row.children()[5]).text(status);
+jQuery(row.children()[9]).text(updated_at);

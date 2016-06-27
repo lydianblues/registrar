@@ -341,6 +341,26 @@ CREATE TABLE registrations (
 
 
 --
+-- Name: registrants; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW registrants AS
+ SELECT
+        CASE
+            WHEN ((r.registerable_type)::text = 'Student'::text) THEN ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
+               FROM students s
+              WHERE (s.id = r.registerable_id))
+            ELSE ( SELECT (((s.wp_last_name)::text || '#'::text) || (g.id)::text)
+               FROM (students s
+                 JOIN groups g ON ((g.student_id = s.id)))
+              WHERE (g.id = r.registerable_id))
+        END AS name,
+    r.registerable_id,
+    r.registerable_type
+   FROM registrations r;
+
+
+--
 -- Name: trainings; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -547,36 +567,47 @@ CREATE TABLE transactions (
 --
 
 CREATE VIEW transaction_datatables AS
- SELECT transactions.id,
-    transactions.registration_id,
-    transactions.owner_id,
-    transactions.status,
-    transactions.payment_instrument_type,
-    transactions.amount,
-    transactions.transaction_id,
-    transactions.transaction_type,
-    transactions.customer_id,
-    transactions.processor_authorization_code,
-    transactions.processor_response_code,
-    transactions.processor_response_text,
-    transactions.customer_first_name,
-    transactions.customer_last_name,
-    transactions.billing_first_name,
-    transactions.billing_last_name,
-    transactions.authorization_id,
-    transactions.capture_id,
-    transactions.payer_first_name,
-    transactions.payer_last_name,
-    transactions.payer_id,
-    transactions.payment_id,
-    transactions.transaction_fee_amount,
-    transactions.bin,
-    transactions.card_type,
-    transactions.cardholder_name,
-    transactions.last_4,
-    transactions.created_at,
-    transactions.updated_at
-   FROM transactions;
+ SELECT outer_t.id AS transaction_id,
+    outer_t.registration_id,
+    outer_t.transaction_id AS payment_transaction_id,
+    ( SELECT (r.code)::text AS code
+           FROM registrations r
+          WHERE (r.id = outer_t.registration_id)) AS registration_code,
+    ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
+           FROM (students s
+             JOIN registrations r ON ((r.owner_id = s.id)))
+          WHERE (r.id = outer_t.registration_id)) AS owner_name,
+    ( SELECT s.id
+           FROM (students s
+             JOIN registrations r ON ((r.owner_id = s.id)))
+          WHERE (r.id = outer_t.registration_id)) AS owner_id,
+    ( SELECT rt.name
+           FROM (registrations r
+             JOIN registrants rt ON (((r.registerable_id = rt.registerable_id) AND ((r.registerable_type)::text = (rt.registerable_type)::text))))
+          WHERE (r.id = outer_t.registration_id)) AS registerable_name,
+    ( SELECT r.registerable_id
+           FROM registrations r
+          WHERE (r.id = outer_t.registration_id)) AS registerable_id,
+    ( SELECT r.registerable_type
+           FROM registrations r
+          WHERE (r.id = outer_t.registration_id)) AS registerable_type,
+    outer_t.status,
+        CASE
+            WHEN ((outer_t.payment_instrument_type)::text = 'paypal_account'::text) THEN 'PayPal'::text
+            ELSE 'Credit Card'::text
+        END AS payment_type,
+        CASE
+            WHEN ((outer_t.payment_instrument_type)::text = 'paypal_account'::text) THEN (((outer_t.payer_first_name)::text || ' '::text) || (outer_t.payer_last_name)::text)
+            ELSE
+            CASE
+                WHEN ((outer_t.billing_last_name IS NULL) OR (outer_t.billing_first_name IS NULL)) THEN 'Unspecified'::text
+                ELSE (((outer_t.billing_first_name)::text || ' '::text) || (outer_t.billing_last_name)::text)
+            END
+        END AS payer_name,
+    ('$'::text || (outer_t.amount)::text) AS amount,
+    to_char(outer_t.created_at, 'MM/DD/YYYY HH:MI AM'::text) AS created_at,
+    to_char(outer_t.updated_at, 'MM/DD/YYYY HH:MI AM'::text) AS updated_at
+   FROM transactions outer_t;
 
 
 --
