@@ -15,6 +15,16 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
+    @trainings = []
+    @student.groups.each do |g|
+      g.registrations.each do |r|
+        @trainings << r.training
+      end
+    end
+    @student.registrations.each do |r|
+      @trainings << r.training
+    end
+
   end
 
   # GET /students/new

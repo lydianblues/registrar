@@ -46,6 +46,40 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: attendances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE attendances (
+    id integer NOT NULL,
+    student_id integer,
+    training_id integer,
+    date date,
+    notes text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: attendances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE attendances_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: attendances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE attendances_id_seq OWNED BY attendances.id;
+
+
+--
 -- Name: courses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -672,6 +706,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY attendances ALTER COLUMN id SET DEFAULT nextval('attendances_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::regclass);
 
 
@@ -744,6 +785,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: attendances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY attendances
+    ADD CONSTRAINT attendances_pkey PRIMARY KEY (id);
 
 
 --
@@ -832,6 +881,20 @@ ALTER TABLE ONLY transactions
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_attendances_on_student_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_attendances_on_student_id ON attendances USING btree (student_id);
+
+
+--
+-- Name: index_attendances_on_training_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_attendances_on_training_id ON attendances USING btree (training_id);
 
 
 --
@@ -1006,6 +1069,6 @@ ALTER TABLE ONLY groups
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030400'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160623224050'), ('20160624212534'), ('20160624212559'), ('20160624212609'), ('20160624212619'), ('20160624212631'), ('20160624212643'), ('20160624212724');
+INSERT INTO schema_migrations (version) VALUES ('20160504223233'), ('20160505014012'), ('20160505014050'), ('20160505014123'), ('20160505015155'), ('20160509030222'), ('20160509030400'), ('20160509030600'), ('20160509032020'), ('20160512181222'), ('20160527021958'), ('20160601200000'), ('20160601200010'), ('20160623224050'), ('20160624212534'), ('20160624212559'), ('20160624212609'), ('20160624212619'), ('20160624212631'), ('20160624212643'), ('20160624212724');
 
 
