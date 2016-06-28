@@ -1,11 +1,12 @@
-<%= simple_form_for(@group) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for(@group, ) do |f| %>
 
-  <div class="form-inputs">
-    <%= f.input :leader %>
-  </div>
+	<fieldset>
+	  <div class="form-inputs">
+	    <%= f.input :owner %>
+	  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+	  <div class="form-actions">
+	    <%= f.button :submit %>
+	  </div>
+	</fieldset>
 <% end %>

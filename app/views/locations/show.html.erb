@@ -1,40 +1,63 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= @location.name %></h3>
+<div class="card top-card">
+  <div class="card-header">
+    <h3>Location Details</h3>
   </div>
-  <div class="panel-body">
-  <p>
-      <strong>ID:</strong>
-      <%= @location.id %>
-  </p>
-  <p>
-      <strong>Address:</strong>
-      <!-- This styling is not very good.  Use isotope? -->
-      <div style="margin-left:1em;border:1px solid black; border-radius:8px;padding:1em;width:50%">
-      <%= @location.street_1 %><br>
-      <% if @location.street_2 %>
-        <%= @location.street_2%><br>
-      <% end %>
-      <%= @location.city %>,&nbsp;
-      <% if @location.country %>
-        <%= @location.country %>
-      <% else %>
-        <%= @location.state %>
-        <%= @location.zip %>
-      <% end %>
+  <div class="card-body card-table">
+
+    <div class="row">
+      <div class="col-sm-4">Name</div>
+      <div class="col-sm-offset-1 col-sm-7">
+           <%= @location.name %>
       </div>
-  </p>
-  <p>
-      <strong>Notes:</strong>
-      <%= @location.notes %>
-  </p>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-4">Database ID</div>
+      <div class="col-sm-offset-1 col-sm-7">
+           <%= @location.id %>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-4">Address</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <div style="border:1px solid black; border-radius:8px;padding:1em;width:100%;background:yellow;">
+          <%= @location.street_1 %><br>
+          <% if @location.street_2 %>
+            <%= @location.street_2%><br>
+          <% end %>
+          <%= @location.city %>,&nbsp;
+          <% if @location.country %>
+            <%= @location.country %>
+          <% else %>
+            <%= @location.state %>
+            <%= @location.zip %>
+          <% end %>
+      </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Notes</div>
+      <div class="col-sm-offset-1 col-sm-7">
+           <%= @location.notes %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= link_to 'Edit', edit_location_path(@location), :class => 'btn btn-sm btn-info' %>
+      <%= link_to 'Delete', location_path(@location), class: 'btn btn-sm btn-danger', 
+            method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+
   </div>
 </div>
 
+<% content_for :sidebar do %>
+  <p><p>
+  Links and helpful hints about airline tickets to fly to this location.
 
-<div class="form-actions">
-  <%= link_to 'Back', locations_path, :class => 'btn btn-sm btn-info'  %>
-  <%= link_to 'Edit', edit_location_path(@location), :class => 'btn btn-sm btn-info' %>
-    <%= link_to 'Delete', location_path(@location), class: 'btn btn-sm btn-danger', 
-            method: :delete, data: { confirm: 'Are you sure?' } %>
-</div>
+<% end %>

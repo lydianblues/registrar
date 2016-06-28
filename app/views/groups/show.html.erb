@@ -4,67 +4,86 @@
 	   <h2>Group Details</h2>
   </div>
 
-    <div class="card-body" style="padding:1em;">
+  <div class="card-body card-table">
 
-        <p>
-            <strong>Database ID:</strong>
-            <%= @group.id %>
-        </p>
-        <p>
-            <strong>Group Owner:</strong>
-            <%= link_to @group.owner.wp_first_name + ' ' +
-                @group.owner.wp_last_name, @group.owner %>
-        </p>
-        <p>
-            <strong>Group Name:</strong>
-            <%= link_to @group.owner.wp_last_name + '#' + (@group.id).to_s, @group %>
-        </p>
-        <p>
-            <strong>Created at:</strong>
-            <%= @group.created_at.strftime("%b %-d, %Y") %>
-        </p>
-        <p>
-            <strong>Updated at:</strong>
-            <%= @group.updated_at.strftime("%b %-d, %Y") %>
-        </p>
-        <p>
-            <strong>Members:</strong>
-            <%= @group.students.count %>
-        </p>
-        <p>
-            <!-- For now, a group can only belong to one registration. -->
-            <strong>Registration: </strong>
-            <% unless @group.registrations.empty? %>
-              <%= link_to @group.registrations[0].code, @group.registrations[0] %>
-            <% end %>
-        </p>
-        <p>
-            <strong>Course: </strong>
-            <% unless @group.registrations.empty? %>
+    <div class="row">
+      <div class="col-sm-4">Group Name</div>
+      <div class="col-sm-offset-1 col-sm-7">
+           <%= @group.handle %>
+      </div>
+    </div>
+        <div class="row">
+      <div class="col-sm-4">Database ID</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @group.id %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Group Owner</div>
+      <div class="col-sm-offset-1 col-sm-7">
+      <%= link_to @group.owner.handle, @group.owner %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Create At</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @group.created_at.strftime("%-m/%d/%Y %-l:%d %p") %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Updated At</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @group.updated_at.strftime("%-m/%d/%Y %-l:%d %p") %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Members</div>
+      <div class="col-sm-offset-1 col-sm-7">
+         <%= @group.students.count %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Registration</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <% unless @group.registrations.empty? %>
+          <%= link_to @group.registrations[0].code, @group.registrations[0] %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Course</div>
+      <div class="col-sm-offset-1 col-sm-7">
+         <% unless @group.registrations.empty? %>
               <%= link_to @group.registrations[0].training.course.name,
                 @group.registrations[0].training.course %>
-            <% end %>
+          <% end %>
+      </div>
+    </div>
 
-        </p>
-
-        <p>
-            <strong>Training: </strong>
-            <% unless @group.registrations.empty? %>
+    <div class="row">
+      <div class="col-sm-4">Training</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <% unless @group.registrations.empty? %>
               <%= link_to @group.registrations[0].training.code,
                 @group.registrations[0].training %>
             <% end %>
-
-        </p>
-  
-        <div class="form-actions">
-          <%= link_to 'Back', groups_path, :class => 'btn btn-sm btn-info'  %>
-          <%= link_to 'Edit', edit_group_path(@group), :class => 'btn btn-sm btn-info' %>
-          <%= link_to 'Delete', group_path(@group), class: 'btn btn-sm btn-danger', 
-            method: :delete, data: { confirm: 'Are you sure?' } %>
-        </div>
-
       </div>
     </div>
+  
+    <div class="form-actions">
+      <%= link_to 'Edit', edit_group_path(@group), :class => 'btn btn-sm btn-info' %>
+      <%= link_to 'Delete', group_path(@group), class: 'btn btn-sm btn-danger', 
+        method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+
+  </div>
+</div>
 
 <% content_for :wide_table  do %>
 <div class="card top-card">

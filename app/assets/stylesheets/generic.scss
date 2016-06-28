@@ -39,3 +39,26 @@ div.dataTables_wrapper div.dataTables_processing {
 #transactions-table {
 	width: 100rem;
 }
+
+/* 
+ * Summary Card.  This is copied from 
+ * the style.css stylesheet on dmind.
+ */
+.card-table {
+    padding:1em;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0.25em;
+    position:relative;
+}
+.card-table div.row {
+    margin-bottom: 0.5em;
+    width: 100%;
+    margin-left: -0.25em;
+}
+.card-table div.row:nth-child(odd) {
+    background-color: #eff;
+}
+.card-table div.row:nth-child(even) {
+    background-color: #ffe;
+}

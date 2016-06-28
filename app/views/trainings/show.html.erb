@@ -1,24 +1,37 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Training Session Details</h3>
-  </div>
-  <div class="panel-body">
-  <p>
-  <strong>Course:</strong>
-  <%= link_to @training.course.name, @training.course %>
-  </p>
-  <p>
-      <strong>Database ID:</strong>
-      <%= @training.id %>
-  </p>
-  <p>
-      <strong>Code:</strong>
-      <%= @training.code %>
-  </p>
-  <p>
-      <strong>Address:</strong>
-      <!-- This styling is not very good.  Use isotope? -->
-      <div style="margin-left:1em;border:1px solid black; border-radius:8px;padding:1em;width:50%;background:yellow;">
+<div class="card top-card">
+
+    <div class="card-header">
+        <h2>Training Session Details</h2>
+    </div>
+
+    <div class="card-body card-table">
+
+    <div class="row">
+      <div class="col-sm-4">Name</div>
+      <div class="col-sm-offset-1 col-sm-7">
+         <%= link_to @training.course.name, @training.course %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Database ID</div>
+      <div class="col-sm-offset-1 col-sm-7">
+         <%= @training.id %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Code</div>
+      <div class="col-sm-offset-1 col-sm-7">
+         <%= @training.code %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Address</div>
+      <div class="col-sm-offset-1 col-sm-7">
+       
+      <div style="border:1px solid black; border-radius:8px;padding:1em;width:100%;background:yellow;">
       <%= @training.location.name %><br>
       <%= @training.location.street_1 %><br>
       <% if @training.location.street_2 %>
@@ -32,53 +45,142 @@
         <%= @training.location.zip %>
       <% end %>
       </div>
-  </p>
-  <p>
-      <strong>Dates:</strong>
-      <%= "#{@training.start_date} through #{@training.end_date}" %>
-  </p>
-  <p>
-      <strong>Facilitator:</strong>
-      <%= link_to @training.facilitator.name, @training.facilitator %>
-  </p>
-  <p>
-      <strong>Regular Price:</strong>
-      <!-- FIXME -->
-      <%= @training.regular_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
-  </p>
-  <p>
-      <strong>Group Price:</strong>
-       <!-- FIXME -->
-      <%= @training.group_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
-  </p>
-  <p>
-      <strong>Student Price:</strong>
-       <!-- FIXME -->
-      <%= @training.student_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
-  </p>
-  <p>
-      <strong>New Registration Closed:</strong>
-      <%= @training.new_registration_closed %>
-  </p>
-  <p>
-      <strong>Early Registration Cutoff:</strong>
-      <%= @training.early_registration_cutoff %>
-  </p>
-  <p>
-      <strong>Mininum Attendees:</strong>
-      <%= @training.min_attendees %>
-  </p>
-  <p>
-      <strong>Maximum Attendees:</strong>
-      <%= @training.max_attendees %>
-  </p>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Dates</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= "#{@training.start_date} through #{@training.end_date}" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Facilitator</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= link_to @training.facilitator.name, @training.facilitator %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Regular Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <!-- FIXME -->
+        <%= @training.regular_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Group Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <!-- FIXME -->
+        <%= @training.group_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Student Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.student_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">New Registration Closed</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.new_registration_closed %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">New Registration Cutoff</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.early_registration_cutoff %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Minimum Attendees</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.min_attendees %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Maximum Attendees</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.max_attendees %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Current Attendees</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        TODO (count of current signups)
+      </div>
+    </div>
+  
+
+    <div class="form-actions">
+      <%= link_to 'Edit', edit_training_path(@training), :class => 'btn btn-sm btn-info' %>
+      <%= link_to 'Delete', training_path(@training), class: 'btn btn-sm btn-danger', 
+        method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
   </div>
 </div>
 
+<% content_for :wide_table  do %>
+    <div class="card">
+        <div class="card-header">
+            <div style="float:left;"><h2>Students Registered</h2></div>
+        </div>
 
-<div class="form-actions">
-  <%= link_to 'Back', trainings_path, :class => 'btn btn-sm btn-info'  %>
-  <%= link_to 'Edit', edit_training_path(@training), :class => 'btn btn-sm btn-info' %>
-    <%= link_to 'Delete', training_path(@training), class: 'btn btn-sm btn-danger', 
-            method: :delete, data: { confirm: 'Are you sure?' } %>
-</div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+              <table class="table table-striped table-sm table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Group</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% @trainees.each do |t| %>
+                        <tr>
+                            <td><%= link_to t[:student].handle, t[:student].handle %></td>
+                            <td><%= mail_to t[:student].wp_email %></td>
+
+                            <td><%= t[:registration].created_at.in_time_zone(
+                              'Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p') %>
+                            </td>
+                            <td>
+                              <%=
+                                unless t[:group].blank?
+                                  link_to t[:group].handle, t[:group]
+                                else
+                                  "-"
+                                end
+                              %>
+                            </td>
+                        </tr>
+                    <% end %>
+                    
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% content_for :sidebar do %>
+  <p><p>
+  Add a <a href='#' class="btn btn-sm btn-info">Email</a> button
+   here to send bulk email to all members of this group.
+<% end %>
+
+
+

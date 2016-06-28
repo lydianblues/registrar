@@ -23,6 +23,19 @@ class TrainingsController < ApplicationController
   # GET /trainings/1
   # GET /trainings/1.json
   def show
+    
+    @trainees = []
+    @training.registrations.each do |r|
+      if r.registerable_type == 'Student'
+        @trainees << {student: r.registerable, group: nil, registration: r}
+      else 
+        g = r.registerable
+        g.students.each do |s| 
+          @trainees << {student: s, group: g, registration: r}
+        end
+      end
+    end
+
   end
 
   # GET /trainings/new

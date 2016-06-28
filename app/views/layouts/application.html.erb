@@ -3,6 +3,7 @@
   <head>
     <title>Registrar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= favicon_link_tag %>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -55,27 +56,35 @@
 
   	<div class="container top-container">
             
-      <% flash.each do |name, msg| %>
-        <div class="alert alert-<%= name == "notice" ? "success" :
-          "danger" %> alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <strong><%= msg %></strong>
-        </div>
-      <% end %>
+        <% flash.each do |name, msg| %>
+          <div class="alert alert-<%= name == "notice" ? "success" :
+            "danger" %> alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><%= msg %></strong>
+          </div>
+        <% end %>
 
         <div class="row">
-    			<div class="col-sm-9"><%= yield %></div>
-          <div class="col-sm-3">
-            <div class="card" style="padding:0.5rem;">
-              <div class="card-header"><h2>Actions</h2></div>
-              Here we put a list of actions, such as view the list of registrations
-              for this student, etc.
-            </div>
-          </div>
-    		</div> <!-- row -->
+
+            <div class="col-sm-9"><%= yield %></div>
+
+            <div class="col-sm-3">
+                <div class="card" style="padding:0.5rem;">
+                    <div class="card-header">
+                        <h2>Actions</h2>
+                    </div>
+                    <div class="card-body">
+                        Here we put a list of actions, such as view the list of registrations
+                        for this student, etc.
+                    
+                        <%= content_for :sidebar %>
+                    </div> <!-- card body -->
+                </div> <!-- card -->
+            </div>  <!-- col -->
+    	</div> <!-- row -->
 
         <div class="row">
           <div class="col-sm-12">
