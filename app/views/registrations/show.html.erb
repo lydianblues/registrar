@@ -4,40 +4,70 @@
        <h2>Registration Details</h2>
     </div>
 
-    <div class="card-body" style="padding:1em;">
+    <div class="card-body card-table">
 
-        <p>
-            <strong>Code:</strong>
-            <%= @registration.code %>
-        </p
-        <p>
-          <strong>Course:</strong>
+      <div class="row">
+        <div class="col-sm-4">Code</div>
+        <div class="col-sm-offset-1 col-sm-7">
+           <%= @registration.code %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-4">Course</div>
+        <div class="col-sm-offset-1 col-sm-7">
           <%= link_to @registration.training.course.name, @registration.training.course %>
-        </p>
-        <p>
-          <strong>Training:</strong>
-          <%= link_to @registration.training.code, @registration.training %>
-        <p/>
-        <p>
-          <strong>Owner:</strong>
-          <%= link_to @registration.owner.wp_first_name + " " +
-            @registration.owner.wp_last_name, @registration.owner %>
-        </p>
-        <p>
-          <strong>Registrant:</strong>              
-          <%= link_to @registration.registerable.handle,
-            @registration.registerable %>
-        </p>
+        </div>
+      </div>
 
-        <p>
-          <strong>Paid:</strong>
-          <%= @registration.paid_for ? "yes" : "no" %>
-        </p>
 
-        <p>
-          <strong>Updated:</strong>
-          <%= @registration.updated_at.strftime("%b %-d, %Y") %>
-        </p>
+      <div class="row">
+        <div class="col-sm-4">Training</div>
+        <div class="col-sm-offset-1 col-sm-7">
+            <%= link_to @registration.training.code, @registration.training %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-4">Owner</div>
+        <div class="col-sm-offset-1 col-sm-7">
+           <%= link_to @registration.owner.handle, @registration.owner %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-4">Type</div>
+        <div class="col-sm-offset-1 col-sm-7">
+           <%= @registration.reg_type %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">Registrant</div>
+        <div class="col-sm-offset-1 col-sm-7">
+           <%= link_to @registration.registerable.handle,
+              @registration.registerable %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-4">Paid</div>
+        <div class="col-sm-offset-1 col-sm-7">
+           <%= @registration.paid_for ? "yes" : "no" %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-4">Updated</div>
+        <div class="col-sm-offset-1 col-sm-7">
+          <%= @registration.updated_at.strftime("%-m/%d/%Y %-l:%d %p") %>
+        </div>
+      </div>
 
     </div>
 </div>

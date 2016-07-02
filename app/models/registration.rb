@@ -11,6 +11,8 @@ class Registration < ApplicationRecord
   validates :training, presence: true
   validates :registerable, presence: true
 
+  monetize :amt_paid_cents
+
   extend ::DataTables::Query
 
   def price

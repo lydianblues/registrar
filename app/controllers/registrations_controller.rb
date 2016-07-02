@@ -20,13 +20,15 @@ class RegistrationsController < ApplicationController
     @Registrations = Registration.all
     @groups = Group.all
     @trainings = Training.all
+    # Or something like:
+    # Training.where('start_date > ?', Date.today - 3.days)
   end
 
   # GET /registrations/1/edit
   def edit
     @Registrations = Registration.all
     @groups = Group.all
-    @trainings = Training.all
+    @trainings = Training.all # Training.where('start_date > ?', Date.today)
   end
 
   # POST /registrations
@@ -67,29 +69,6 @@ class RegistrationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to registrations_url, notice: 'Registration was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-
-     def datatables
-
-    query = RegistrationDatatable.gen_sql(params)
-    @registrations = RegistrationDatatable.find_by_sql(query)
-   
-    @draw = params[:draw].to_i
-    @recordsTotal = RegistrationDatatable.count
-   
-    if params[:search]["value"].blank?
-      @recordsFiltered = @recordsTotal
-    else
-      query = RegistrationDatatable.count_search_results(params)
-      result = ActiveRecord::Base.connection.execute(query)
-      @recordsFiltered = result[0]['count']
-    end
-
-    respond_to do |format|
-      format.json do
-         
-      end
     end
   end
 

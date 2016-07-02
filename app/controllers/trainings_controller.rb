@@ -44,6 +44,9 @@ class TrainingsController < ApplicationController
     @courses = Course.all
     @locations = Location.all
     @training = Training.new
+    query = "select nextval(\'trainings_id_seq\')"
+    result = ActiveRecord::Base.connection.execute(query)
+    @training.code = 9999 + result[0]["nextval"]
   end
 
   # GET /trainings/1/edit
@@ -116,7 +119,6 @@ class TrainingsController < ApplicationController
     end
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training
@@ -125,8 +127,10 @@ class TrainingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_params
-      params.require(:training).permit(:start_date, :end_date, :code, :early_cost,
-       :late_cost, :staff_cost, :new_registration_closed,
+      params.require(:training).permit(:start_date, :end_date, :code, 
+        :regular_price, :group_price, :student_price, 
+        :early_regular_price, :early_group_price, :early_student_price,
+       :new_registration_closed,
        :min_attendees, :max_attendees,
        :early_registration_cutoff, :course_id, :facilitator_id, :location_id)
     end

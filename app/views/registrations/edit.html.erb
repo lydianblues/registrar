@@ -1,3 +1,13 @@
-<h1>Editing Registration</h1>
+<div class="card top-card">
+  
+  <div class="card-header">
+    <div style="float:left;"><h2>Editing Registration</h2></div>
+    <div style="float:right;">
+      <%= link_to 'New Registration', new_registration_path, class: 'btn btn-primary btn-md' %>
+    </div>
+  </div>
 
-<%= render 'form', registration: @registration %>
+  <div class="card-body" style="padding: 1em;">
+  	<%= render 'form', registration: @registration %>
+  </div>
+</div>

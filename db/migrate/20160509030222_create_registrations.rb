@@ -4,8 +4,8 @@ class CreateRegistrations < ActiveRecord::Migration[5.0]
       t.references :registerable, polymorphic: true, index: true
       t.references :training, index: true
       t.integer :code
-      t.boolean :paid_for
-      t.decimal :amt_paid, precision: 8, scale: 2, default: 0.0
+      t.boolean :paid_for, default: false
+      t.integer :amt_paid_cents, default: 0
       t.date :sign_up_date
       t.string :auth_code
       t.boolean :refunded

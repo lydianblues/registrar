@@ -1,5 +1,8 @@
-json.extract! @registration, :id, :updated_at, :price, :formatted_price,
+json.extract! @registration, :id, :updated_at, :formatted_price,
 	:reg_type, :code
+
+json.formatted_price @registration.price.format
+json.price @registration.price.to_d * 100 # cents as a double
 
 json.owner do
 	json.extract! @registration.owner, :wp_id, :wp_first_name, :wp_last_name,

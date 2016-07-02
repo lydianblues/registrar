@@ -5,12 +5,12 @@ class CreateTrainings < ActiveRecord::Migration[5.0]
       t.date :end_date
       t.string :code
 
-      t.integer :regular_price # in cents
-      t.integer :group_price # in cents
-      t.integer :student_price # in cents
-      t.integer :early_regular_price # in cents
-      t.integer :early_group_price # in cents
-      t.integer :early_student_price # in cents
+      t.integer :regular_price_cents, default: 0
+      t.integer :group_price_cents, default: 0
+      t.integer :student_price_cents, default: 0
+      t.integer :early_regular_price_cents, default: 0
+      t.integer :early_group_price_cents, default: 0
+      t.integer :early_student_price_cents, default: 0
       t.integer :min_group_size, default: 5
       
       t.date :new_registration_closed

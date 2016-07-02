@@ -67,7 +67,7 @@
       <div class="col-sm-4">Regular Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <!-- FIXME -->
-        <%= @training.regular_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+        <%= @training.regular_price.format %>
       </div>
     </div>
 
@@ -75,14 +75,14 @@
       <div class="col-sm-4">Group Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <!-- FIXME -->
-        <%= @training.group_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+        <%= @training.group_price.format %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-4">Student Price</div>
       <div class="col-sm-offset-1 col-sm-7">
-        <%= @training.student_price.to_s.sub(/^(.*)(..)$/, '$\1.\2') %>
+        <%= @training.student_price.format %>
       </div>
     </div>
 

@@ -1,14 +1,12 @@
-<%= simple_form_for(@training, html: { class: 'form-vertical' }) do |f| %>
-
-    <%= f.error_notification %>
+<%= simple_form_for(@training) do |f| %>
 
     <!-- '$' +  '%.2f' % 400  to format cents... 
         Look up how to input and output money with simple form...
         Also don't let user change the 'code' field
     -->
 
-  <fieldset>
-    <div class="form-inputs">
+  <fieldset class="form-group">
+   
         <%= f.input :course_id, collection: @courses, 
             prompt: "Choose a Course" %>
         <%= f.input :location_id, collection: @locations,
@@ -28,13 +26,10 @@
         <%= f.input :min_attendees %>
         <%= f.input :new_registration_closed %>
         <%= f.input :early_registration_cutoff %>
-    </div>
+    </fieldset>
+   
+    <%= f.button :submit, class: 'btn btn-md btn-primary' %>
+    <%= link_to 'Cancel', trainings_path, class: 'btn btn-md btn-warning' %>
 
-    <div class="form-actions">
-        <%= f.button :submit, class: 'btn btn-md btn-primary' %>
-        <%= link_to 'Cancel', trainings_path, class: 'btn btn-md btn-warning' %>
-    </div>
-
-  </fieldset>
 <% end %>
 
