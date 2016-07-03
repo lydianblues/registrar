@@ -957,7 +957,7 @@ CREATE INDEX index_students_on_organization ON students USING btree (organizatio
 -- Name: index_students_on_wp_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_students_on_wp_email ON students USING btree (wp_email);
+CREATE UNIQUE INDEX index_students_on_wp_email ON students USING btree (wp_email);
 
 
 --

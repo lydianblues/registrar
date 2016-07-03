@@ -16,8 +16,7 @@ class Registration < ApplicationRecord
   extend ::DataTables::Query
 
   def price
-
-    total_price = 0 # cents
+    
     price = 0 # cents
 
     # Registration.find(4).registerable.students.count has 7 students...
@@ -49,7 +48,7 @@ class Registration < ApplicationRecord
           if student.student_discount
             price += student_price
           else
-            price += price + regular_price
+            price += regular_price
           end
         end
       end

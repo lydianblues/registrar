@@ -35,7 +35,6 @@ class TrainingsController < ApplicationController
         end
       end
     end
-
   end
 
   # GET /trainings/new
@@ -128,11 +127,11 @@ class TrainingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def training_params
       params.require(:training).permit(:start_date, :end_date, :code, 
-        :regular_price, :group_price, :student_price, 
-        :early_regular_price, :early_group_price, :early_student_price,
-       :new_registration_closed,
-       :min_attendees, :max_attendees,
-       :early_registration_cutoff, :course_id, :facilitator_id, :location_id)
+        :formatted_regular_price, :formatted_group_price, :formatted_student_price,
+        :formatted_early_student_price, :formatted_early_regular_price, 
+        :formatted_early_group_price, :new_registration_closed,
+        :min_attendees, :max_attendees,
+        :early_registration_cutoff, :course_id, :facilitator_id, :location_id)
     end
 
     skip_before_action :verify_authenticity_token, :only => [:create]

@@ -4,7 +4,11 @@
             ['Group Inclusive', 'group-inclusive'], ['Group Exclusive', 'group-exclusive']],
             label_method: :first, value_method: :last, selected: @registration.reg_type) %>
     
-    <%= f.input :code, label: "Code" %>
+    <% if @registration.id %>
+        <%= f.input :code, label: "Code", disabled: true %>
+    <% else %>
+        <%= f.input :code, label: "Code" %>
+    <% end %>
 
      <%= f.input :training_id, collection: @trainings, 
         prompt: "Choose a Training", label_method: :label, value_method: :id,

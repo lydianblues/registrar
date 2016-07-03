@@ -173,7 +173,7 @@ organizations = [
 	Student.create!(
 		wp_first_name: first_names[-1 + rand(16)],
 		wp_last_name: last_names[-1 + rand(16)], 
-		wp_email: emails[-1 + rand(16)],
+		wp_email: "x" + i.to_s + emails[-1 + rand(16)],
 		occupation: occupations[-1 + rand(16)],
 		organization: organizations[-1 + rand(16)],
 		wp_id: 9999 + i, email_list: true, student_discount:true)

@@ -67,7 +67,7 @@
       <div class="col-sm-4">Regular Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <!-- FIXME -->
-        <%= @training.regular_price.format %>
+        <%= @training.formatted_regular_price %>
       </div>
     </div>
 
@@ -75,14 +75,37 @@
       <div class="col-sm-4">Group Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <!-- FIXME -->
-        <%= @training.group_price.format %>
+        <%= @training.formatted_group_price %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-4">Student Price</div>
       <div class="col-sm-offset-1 col-sm-7">
-        <%= @training.student_price.format %>
+        <%= @training.formatted_student_price %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Early Regular Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <!-- FIXME -->
+        <%= @training.formatted_early_regular_price %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Group Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <!-- FIXME -->
+        <%= @training.formatted_early_group_price %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">Student Price</div>
+      <div class="col-sm-offset-1 col-sm-7">
+        <%= @training.formatted_early_student_price %>
       </div>
     </div>
 
@@ -115,9 +138,9 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4">Current Attendees</div>
+      <div class="col-sm-4">Current Signups</div>
       <div class="col-sm-offset-1 col-sm-7">
-        TODO (count of current signups)
+        <%= @training.signups %>
       </div>
     </div>
   
@@ -144,6 +167,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Registration</th>
                     <th>Registration Date</th>
                     <th>Group</th>
                   </tr>
@@ -153,6 +177,7 @@
                         <tr>
                             <td><%= link_to t[:student].handle, t[:student].handle %></td>
                             <td><%= mail_to t[:student].wp_email %></td>
+                            <td><%= link_to t[:registration].code, t[:registration] %>
 
                             <td><%= t[:registration].created_at.in_time_zone(
                               'Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p') %>

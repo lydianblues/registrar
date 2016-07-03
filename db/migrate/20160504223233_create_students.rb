@@ -3,7 +3,7 @@ class CreateStudents < ActiveRecord::Migration[5.0]
     create_table :students do |t|
       t.string :wp_first_name
       t.string :wp_last_name
-      t.string :wp_email
+      t.string :wp_email # how to make me unique?
       t.integer :wp_id
       t.string :occupation
       t.string :organization
@@ -14,7 +14,7 @@ class CreateStudents < ActiveRecord::Migration[5.0]
 
       t.index :wp_first_name
       t.index :wp_last_name
-      t.index :wp_email
+      t.index :wp_email, unique: true
       t.index :occupation
       t.index :organization
 

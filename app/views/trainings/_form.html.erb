@@ -6,22 +6,24 @@
     -->
 
   <fieldset class="form-group">
-   
+                                                           
         <%= f.input :course_id, collection: @courses, 
             prompt: "Choose a Course" %>
         <%= f.input :location_id, collection: @locations,
             prompt: "Choose a Location" %>
         <%= f.input :facilitator_id, collection: @facilitators,
             prompt: "Choose a Facilitator" %>
+
         <%= f.input :start_date %>
         <%= f.input :end_date %>
-        <%= f.input :code %>
-        <%= f.input :regular_price %>
-        <%= f.input :group_price %>
-        <%= f.input :student_price %>
-        <%= f.input :early_regular_price %>
-        <%= f.input :early_group_price %>
-        <%= f.input :early_student_price %>
+        <%= f.input :code, as: :hidden %>
+        <%= f.input :code, disabled: true %>
+        <%= f.input :formatted_regular_price, label: "Regular Price" %>
+        <%= f.input :formatted_group_price, label: "Group Price" %>
+        <%= f.input :formatted_student_price, label: "Student Price" %>
+        <%= f.input :formatted_early_regular_price, label: "Early Regular Price" %>
+        <%= f.input :formatted_early_group_price, label: "Early Group Price" %>
+        <%= f.input :formatted_early_student_price, label: "Early Student Price" %>
         <%= f.input :max_attendees %>
         <%= f.input :min_attendees %>
         <%= f.input :new_registration_closed %>

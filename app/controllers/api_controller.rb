@@ -82,14 +82,14 @@ class ApiController < ApplicationController
 		elsif proxy_registration
 			friend_params = params[:participants][0]
 
-			puts friend_params
-
 			if friend_params[:wp_email].blank? 
 				render  inline: "{\"status\": \"Registrant has no email\"}"
 				return
 			end
 			friend = Student.find_by_wp_email(friend_params[:wp_email])
-			unless friend
+			if friend
+				# Maybe do update from current parameters
+			else
 				friend = Student.new(
 					wp_email: friend_params[:wp_email],
 					wp_first_name: friend_params[:wp_first_name],
@@ -97,14 +97,30 @@ class ApiController < ApplicationController
 					email_list: friend_params[:email_list],
 					occupation: friend_params[:occupation]
 				)
-				puts friend
 			end
 			registration.registerable = friend
 		elsif group_registration
 			member_list = params[:participants]
 			member_list.each do |member_params|
-				member = Student.find_by_wp_email(member_params[:email])
-				unless member	
+				member = Student.find_by_wp_email(member_params[:wp_email])
+				if member 
+					# Update the database.  For all the parameter fields that are
+					# not blank (except wp_email), replace the existing values
+					# with the values in the parameters.
+					unless member_params[:wp_first_name].blank?
+						member.wp_first_name = member_params[:wp_first_name]
+					end
+					unless member_params[:wp_last_name].blank?
+						member.wp_last_name = member_params[:wp_last_name]
+					end
+					member.email_list = member_params[:email_list] # boolean
+					unless member_params[:occupation].blank?
+						member.occupation = member_params[:occupation]
+					end
+					unless member_params[:organization].blank?
+						member.organization = member_params[:organization]
+					end
+				else	
 					member = Student.new(
 						wp_email: member_params[:wp_email],
 						wp_first_name: member_params[:wp_first_name],
@@ -113,8 +129,8 @@ class ApiController < ApplicationController
 						occupation: member_params[:occupation],
 						organization: member_params[:organization]
 					)
-					member.save!
 				end
+				member.save!
 				# Add the new member to the group
 				group.students << member
 				
