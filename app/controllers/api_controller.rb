@@ -4,25 +4,14 @@ class ApiController < ApplicationController
 	# Create a new Registration.
 	def create
 		
-		training_id = params[:training_id]
-		if training_id.blank? 
-			render  inline: "{\"status\": \"Training ID is missing\"}"
-			return
-		end
-
-		begin
-			training = Training.find(training_id)
-		rescue ActiveRecord::RecordNotFound
-			render  inline: "{\"status\": \"Training ID is is invalid\"}"
-			return
-		end
+		training = Training.find(params[:training_id])
 
 		# Validation should be in the Registration model?
 		reg_type = params[:reg_type]
 		unless ['group-inclusive', 'group-exclusive',
 			'single-self', 'single-other'].include?(reg_type) 
-			render  inline: "{\"status\": \"Registration Type is invalid\"}"
-			return
+			
+			raise "Invalid registration type"
 		end
 		
 		#
@@ -30,30 +19,10 @@ class ApiController < ApplicationController
 		# is the entity that pays for the the registration. The owner may already
 		# be in the database from a previous transaction. 
 		#
-		owner_params = params[:owner]
-		owner = Student.find_by_wp_email(owner_params[:wp_email])
-		unless owner 
-			owner = Student.find_by_wp_login(owner_params[:wp_login])
-			if owner && owner_params[:wp_email]
-				owner.wp_email = owner_params[:wp_email]
-			end
-			unless owner
-				owner = Student.new(
-					wp_id: owner_params[:wp_id],
-					wp_login: owner_params[:wp_login],
-					wp_email: owner_params[:wp_email],
-					wp_first_name: owner_params[:wp_first_name],
-					wp_last_name: owner_params[:wp_last_name],
-					wp_display_name: owner_params[:wp_display_name],
-					occupation: owner_params[:occupation],
-					organization: owner_params[:organization],
-					email_list: owner_params[:email_list])
-			end	
-		end
+		owner = Student.create_or_update!(params[:owner])
 		
 		group_registration =
 			['group-inclusive', 'group-exclusive'].include?(reg_type)
-
 		proxy_registration = reg_type == 'single-other'
 		self_registration = reg_type == 'single-self'		
 		
@@ -80,57 +49,14 @@ class ApiController < ApplicationController
 		if self_registration
 			registration.registerable = owner
 		elsif proxy_registration
-			friend_params = params[:participants][0]
-
-			if friend_params[:wp_email].blank? 
-				render  inline: "{\"status\": \"Registrant has no email\"}"
-				return
-			end
-			friend = Student.find_by_wp_email(friend_params[:wp_email])
-			if friend
-				# Maybe do update from current parameters
-			else
-				friend = Student.new(
-					wp_email: friend_params[:wp_email],
-					wp_first_name: friend_params[:wp_first_name],
-					wp_last_name: friend_params[:wp_last_name],
-					email_list: friend_params[:email_list],
-					occupation: friend_params[:occupation]
-				)
-			end
+			friend = Student.create_or_update!(params[:participants][0])
 			registration.registerable = friend
 		elsif group_registration
 			member_list = params[:participants]
 			member_list.each do |member_params|
-				member = Student.find_by_wp_email(member_params[:wp_email])
-				if member 
-					# Update the database.  For all the parameter fields that are
-					# not blank (except wp_email), replace the existing values
-					# with the values in the parameters.
-					unless member_params[:wp_first_name].blank?
-						member.wp_first_name = member_params[:wp_first_name]
-					end
-					unless member_params[:wp_last_name].blank?
-						member.wp_last_name = member_params[:wp_last_name]
-					end
-					member.email_list = member_params[:email_list] # boolean
-					unless member_params[:occupation].blank?
-						member.occupation = member_params[:occupation]
-					end
-					unless member_params[:organization].blank?
-						member.organization = member_params[:organization]
-					end
-				else	
-					member = Student.new(
-						wp_email: member_params[:wp_email],
-						wp_first_name: member_params[:wp_first_name],
-						wp_last_name: member_params[:wp_last_name],
-						email_list: member_params[:email_list],
-						occupation: member_params[:occupation],
-						organization: member_params[:organization]
-					)
-				end
-				member.save!
+
+				member = Student.create_or_update!(member_params)
+
 				# Add the new member to the group
 				group.students << member
 				

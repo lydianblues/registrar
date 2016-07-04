@@ -43,6 +43,7 @@ class TrainingsController < ApplicationController
     @courses = Course.all
     @locations = Location.all
     @training = Training.new
+    # TODO create our own sequence
     query = "select nextval(\'trainings_id_seq\')"
     result = ActiveRecord::Base.connection.execute(query)
     @training.code = 9999 + result[0]["nextval"]
