@@ -78,6 +78,10 @@
             <h2>Trainings</h2>
         </div>
 
+        <div class="alert alert-info" role="alert">
+            List of all trainings that this student has signed up for.
+        </div>
+
         <div class="card-body" style="padding:1em;">
             <div class="table-responsive">
                 <table id="students-table" class="table table-striped table-sm table-hover table-bordered">
@@ -109,13 +113,59 @@
     </div>
 
     <div class="card">
+        <div class="card-header">
+            <h2>Registrations</h2>
+        </div>
 
+        <div class="alert alert-info" role="alert">
+            All the registrations owned by the student.
+        </div>
+
+        <div class="card-body" style="margin:1em;">
+            <div class="table-responsive">
+                <table id="registrations-table" class="table table-striped table-sm table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Registration</th>
+                            <th>Course</th>
+                            <th>Training</th>
+                            <th>Type</th>
+                            <th>Paid</th>
+                            <th>Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @registrations.each do |r| %>
+                            <td><%= link_to r.code, r %></td>
+                            <td><%= link_to r.training.course.name, r.training.course %></td>
+                            <td><%= link_to r.training.code, r.training %></td>
+                            <td><%= r.reg_type %></td>
+                            <td><%= r.paid_for ? "Yes" : "No" %></td>
+                            <td><%= r.updated_at.in_time_zone(
+                                'Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p') %>
+                            </td>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+       </div>
+    </div>
+
+        <div class="card">
         <div class="card-header">
             <h2>Attendance</h2>
         </div>
 
-        <div class="card-body" style="padding:1em;">
-            Day by day attendance for each training goes here...
+        <div class="alert alert-info" role="alert">
+            Day by day attendance for each training goes here. There
+            is one row for each day of attendance at any training.  Rows
+            are grouped by training session.
         </div>
+
+        <div class="card-body" style="padding:1em;">
+       </div>
     </div>
+
+
+    
 <% end %>

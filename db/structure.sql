@@ -402,7 +402,7 @@ CREATE TABLE trainings (
     id integer NOT NULL,
     start_date date,
     end_date date,
-    code character varying,
+    code character varying(20),
     regular_price_cents integer DEFAULT 0,
     group_price_cents integer DEFAULT 0,
     student_price_cents integer DEFAULT 0,
@@ -972,6 +972,13 @@ CREATE INDEX index_students_on_wp_first_name ON students USING btree (wp_first_n
 --
 
 CREATE INDEX index_students_on_wp_last_name ON students USING btree (wp_last_name);
+
+
+--
+-- Name: index_trainings_on_code; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_trainings_on_code ON trainings USING btree (code);
 
 
 --

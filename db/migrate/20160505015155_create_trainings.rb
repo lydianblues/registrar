@@ -3,7 +3,7 @@ class CreateTrainings < ActiveRecord::Migration[5.0]
     create_table :trainings do |t|
       t.date :start_date
       t.date :end_date
-      t.string :code
+      t.string :code, limit:20
 
       t.integer :regular_price_cents, default: 0
       t.integer :group_price_cents, default: 0
@@ -23,5 +23,6 @@ class CreateTrainings < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+    add_index(:trainings, :code, unique: true)
   end
 end

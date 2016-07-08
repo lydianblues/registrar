@@ -24,6 +24,7 @@ class StudentsController < ApplicationController
     @student.registrations.each do |r|
       @trainings << r.training
     end
+    @registrations = Registration.where(owner_id: @student.id).all
 
   end
 
