@@ -450,35 +450,6 @@ groups[1].students << students[9]
 groups[1].students << students[10] # student discount
 groups[1].students << students[11] # student discount
 
-Registration.create!(
-	registerable: students[0],
-	training: trainings[0],
-	owner: students[rand(10)],
-	code: 9999 + rand(90000))
-
-Registration.create(
-	registerable: students[1],
-	training: trainings[1],
-	owner: students[rand(10)],
-	code: 9999 + rand(90000))
-
-Registration.create(
-	registerable: groups[5],
-	training: trainings[0],
-	owner: students[rand(10)],
-	code: 9999 + rand(90000))
-
-Registration.create(
-	registerable: groups[4],
-	training: trainings[0],
-	owner: students[rand(10)],
-	code: 9999 + rand(90000))
-
-Registration.create(
-	registerable: groups[1],
-	training: trainings[0],
-	owner: students[rand(10)],
-	code: 9999 + rand(90000))
 
 User.create(
 	email: "admin@niroga.org",

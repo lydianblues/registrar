@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+	before_action :staff_or_token_access
 	wrap_parameters false
 
 	# Create a new Registration.

@@ -13,4 +13,20 @@ class ApplicationController < ActionController::Base
   		redirect_to root_path, alert: 'Niroga staff only!'
   	end
 
+    ### Read this from a file that is not checked in to GitHub!!! TODO
+    API_TOKEN = "LwveqfAx78GuYOQPhDH4WQ=="
+
+    def staff_or_token_access
+
+      # OK if the user is logged in.
+      return if current_user
+
+      # Try with the Api Key.
+      api_key = request.headers['X-Api-Key']
+      return if api_key == API_TOKEN
+
+      redirect_to root_path, alert: 'Niroga staff only!'
+
+    end
+
 end

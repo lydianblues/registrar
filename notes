@@ -1,0 +1,4 @@
+curl -H "Authorization: Token token=WwEsPpOCYMsyPsmmvKBqQDOaEJ4t" http://localhost:3000/events
+curl -H "X-Api-Key: WwEsPpOCYMsyPsmmvKBqQDOaEJ4t" http://localhost:3000/v1/events.json
+
+

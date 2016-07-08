@@ -1,7 +1,9 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
-  before_filter :staff_only, except: [:index, :show] #Fix this hole
   
+  before_action :staff_only, except: [:index, :show]
+  before_action :staff_or_token_access, only: [:index, :show]
+
   # GET /courses
   # GET /courses.json
   def index
@@ -97,4 +99,6 @@ class CoursesController < ApplicationController
     def course_params
       params.require(:course).permit(:name, :description)
     end
+
+    
 end

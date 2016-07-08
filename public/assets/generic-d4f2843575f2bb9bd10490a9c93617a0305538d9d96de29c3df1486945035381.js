@@ -1,0 +1,1 @@
+jQuery(function(e){e("#students-table").DataTable(),alert("Before datatables setup")});
