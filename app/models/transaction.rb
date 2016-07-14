@@ -88,4 +88,8 @@ class Transaction < ApplicationRecord
 	def created_local_time
 		created_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
 	end
+
+	def money_amount
+		Money.new(amount) * 100
+	end
 end

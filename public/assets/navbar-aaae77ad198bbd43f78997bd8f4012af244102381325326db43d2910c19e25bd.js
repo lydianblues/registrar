@@ -1,1 +1,0 @@
-jQuery(function(n){n("li.nav-item a").on("click",function(){})});

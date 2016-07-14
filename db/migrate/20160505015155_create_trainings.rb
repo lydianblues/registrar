@@ -17,6 +17,8 @@ class CreateTrainings < ActiveRecord::Migration[5.0]
       t.date :early_registration_cutoff
       t.integer :min_attendees
       t.integer :max_attendees
+      t.boolean :online
+      t.text :notes
       t.references :course, foreign_key: true
       t.references :facilitator, foreign_key: true
       t.references :location, foreign_key: true

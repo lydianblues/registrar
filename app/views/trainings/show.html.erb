@@ -28,31 +28,35 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4">Address</div>
+      <div class="col-sm-4">Online</div>
       <div class="col-sm-offset-1 col-sm-7">
-       
-      <div style="border:1px solid black; border-radius:8px;padding:1em;width:100%;background:yellow;">
-      <%= @training.location.name %><br>
-      <%= @training.location.street_1 %><br>
-      <% if @training.location.street_2 %>
-        <%= @training.location.street_2%><br>
-      <% end %>
-      <%= @training.location.city %>,&nbsp;
-      <% if @training.location.country %>
-        <%= @training.location.country %>
-      <% else %>
-        <%= @training.location.state %>
-        <%= @training.location.zip %>
-      <% end %>
-      </div>
-
+         <%= @training.online? ? "Yes" : "No" %>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm-4">Dates</div>
+      <div class="col-sm-4">Address</div>
       <div class="col-sm-offset-1 col-sm-7">
-        <%= "#{@training.start_date} through #{@training.end_date}" %>
+       
+      <div style="border:1px solid black; border-radius:8px;padding:1em;width:100%;background:yellow;">
+        <% unless @training.online %>
+          <%= @training.location.name %><br>
+          <%= @training.location.street_1 %><br>
+          <% if @training.location.street_2 %>
+            <%= @training.location.street_2%><br>
+          <% end %>
+          <%= @training.location.city %>,&nbsp;
+          <% if @training.location.country %>
+            <%= @training.location.country %>
+          <% else %>
+            <%= @training.location.state %>
+            <%= @training.location.zip %>
+          <% end %>
+        <% else %>
+            <%= @training.location.name %><br>
+        <% end %>
+      </div>
+
       </div>
     </div>
 
@@ -62,6 +66,15 @@
         <%= link_to @training.facilitator.name, @training.facilitator %>
       </div>
     </div>
+
+    <% unless @training.online %>
+      <div class="row">
+        <div class="col-sm-4">Dates</div>
+        <div class="col-sm-offset-1 col-sm-7">
+          <%= "#{@training.start_date} through #{@training.end_date}" %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="row">
       <div class="col-sm-4">Regular Price</div>
@@ -86,6 +99,8 @@
       </div>
     </div>
 
+    <% unless @training.online %>
+
     <div class="row">
       <div class="col-sm-4">Early Regular Price</div>
       <div class="col-sm-offset-1 col-sm-7">
@@ -95,7 +110,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4">Group Price</div>
+      <div class="col-sm-4">Early Group Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <!-- FIXME -->
         <%= @training.formatted_early_group_price %>
@@ -103,7 +118,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4">Student Price</div>
+      <div class="col-sm-4">Early Student Price</div>
       <div class="col-sm-offset-1 col-sm-7">
         <%= @training.formatted_early_student_price %>
       </div>
@@ -136,6 +151,8 @@
         <%= @training.max_attendees %>
       </div>
     </div>
+
+    <% end %>
 
     <div class="row">
       <div class="col-sm-4">Current Signups</div>
@@ -175,7 +192,7 @@
                 <tbody>
                     <% @trainees.each do |t| %>
                         <tr>
-                            <td><%= link_to t[:student].handle, t[:student].handle %></td>
+                            <td><%= link_to t[:student].handle, t[:student] %></td>
                             <td><%= mail_to t[:student].wp_email %></td>
                             <td><%= link_to t[:registration].code, t[:registration] %>
 

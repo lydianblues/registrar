@@ -451,6 +451,10 @@ groups[1].students << students[10] # student discount
 groups[1].students << students[11] # student discount
 
 
+Location.create(
+	name: "Online Only"
+)
+
 User.create(
 	email: "admin@niroga.org",
 	password: "harpenter911",

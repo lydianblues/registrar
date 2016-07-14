@@ -87,6 +87,7 @@ CREATE TABLE courses (
     id integer NOT NULL,
     name character varying,
     description text,
+    notes text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -414,6 +415,8 @@ CREATE TABLE trainings (
     early_registration_cutoff date,
     min_attendees integer,
     max_attendees integer,
+    online boolean,
+    notes text,
     course_id integer,
     facilitator_id integer,
     location_id integer,

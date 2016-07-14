@@ -80,4 +80,14 @@ class Registration < ApplicationRecord
   	registerable.class.name == "Group" ? registerable.id : nil
   end
 
+  def amt_approved
+    approved = 0.0
+    transactions.each do |t|
+      if t.processor_response_code == "1000"
+        approved += t.amount
+      end
+    end
+    Money.new(approved) * 100
+  end
+
 end

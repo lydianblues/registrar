@@ -61,14 +61,26 @@ class TrainingsController < ApplicationController
   # POST /trainings
   # POST /trainings.json
   def create
-    @training = Training.new(training_params)
+    myparams = training_params # make a copy to modify
+    online = training_params[:online] == "1" ? true : false
+    if online
+      myparams[:location_id] = Location.find_by_name("Online Only").id.to_s
+    end
+    @training = Training.new(myparams)
 
+    byebug
     respond_to do |format|
       if @training.save
         format.html { redirect_to @training, notice: 'Training was successfully created.' }
         format.json { render :show, status: :created, location: @training }
       else
-        format.html { render :new }
+        format.html do
+          @facilitators = Facilitator.all
+          @courses = Course.all
+          @locations = Location.all
+          flash.now[:error] = @training.errors.full_messages[0]
+          render :new
+        end
         format.json { render json: @training.errors, status: :unprocessable_entity }
       end
     end
@@ -133,7 +145,7 @@ class TrainingsController < ApplicationController
         :formatted_regular_price, :formatted_group_price, :formatted_student_price,
         :formatted_early_student_price, :formatted_early_regular_price, 
         :formatted_early_group_price, :new_registration_closed,
-        :min_attendees, :max_attendees,
+        :min_attendees, :max_attendees, :online,
         :early_registration_cutoff, :course_id, :facilitator_id, :location_id)
     end
 

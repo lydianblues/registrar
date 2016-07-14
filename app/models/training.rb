@@ -74,7 +74,12 @@ class Training < ApplicationRecord
   end
 
   def label
-  	code + " " + course.name + " " + location.city + " " + start_date.strftime("%b %-d, %Y")
+    if online
+      code + " " + course.name + " (Online)"
+    else
+  	 code + " " + course.name + " " + location.city + " " +
+      start_date.strftime("%b %-d, %Y")
+    end
   end
 
 end
