@@ -27,9 +27,5 @@ json.data do |json|
 		json.edit_button raw render(template: 'registrations/_edit_button.html.erb',
 			locals: {id: registration.registration_id})
 		
-		json.delete_button raw render(template: 'registrations/_delete_button.html.erb',
-			locals: {id: registration.registration_id})
-
-		
 	end
 end

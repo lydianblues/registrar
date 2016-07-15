@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   post '/api/register', to: 'api#create'
   get '/api/register/:id', to: 'api#show'
   put '/api/register/:id', to:'api#update'
+  put '/api/register/:id/refund', to: 'api#refund'
+  put '/api/register/:id/cancel', to: 'api#cancel'
   get '/api/transaction/:id/refresh', to: 'api#refresh'
 
   

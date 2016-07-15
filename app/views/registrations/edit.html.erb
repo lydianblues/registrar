@@ -1,13 +1,75 @@
-<div class="card top-card">
-  
-  <div class="card-header">
-    <div style="float:left;"><h2>Editing Registration</h2></div>
-    <div style="float:right;">
-      <%= link_to 'New Registration', new_registration_path, class: 'btn btn-primary btn-md' %>
-    </div>
-  </div>
+<div class="card top-card">  
+ 	<div class="card-header">
+   		<h2>General Info</h2>
+  	</div>
+  	<%= render partial: "details" %>
+</div>
 
-  <div class="card-body" style="padding: 1em;">
+<div class="card">  
+ 	<div class="card-header">
+   		<h2>Refund Status</h2>
+  	</div>
+  	<%= render partial: "financial_details" %>
+</div>
+
+<div class="card">
+	<div class="card-header">
+   <h2>Refund Details</h2>
+  </div>
+  <div class="alert alert-info" role="alert">
+      Enter the amount to refund, and optionally the transaction ID
+      from BrainTree and some notes.  Then click Refund or Cancel on
+      the SideBar.
+  </div>
+	<div class="card-body" style="padding: 1em;">
+
   	<%= render 'form', registration: @registration %>
   </div>
 </div>
+
+<% content_for :sidebar do %>
+	<div class="alert alert-danger" role="alert">
+    	Currently, you cannot actually run a refund through this
+    	page.  You must also go to BrainTree and and enter the same refund amount
+    	that you enter on this page.  Execute the refund first on Braintree to get
+    	the transaction ID -- you can enter it on this page, if it helps with 
+    	tracking.
+	</div>
+	<div class="alert alert-info" role="alert">
+    	You can cancel a single or group registration.  If cancelling
+    	a group registration, the single registrant or all group members will
+    	be removed from the
+    	training roster.  A refund amount should be calculated and entered
+    	on this page.
+    	<div class="row" style="margin-top:1rem;">
+    		<div class="col-sm-12">
+      			<%= link_to 'Cancel Registration',
+              "/api/register/#{@registration.id}/cancel.json",
+              class: 'btn btn-sm btn-danger', remote: true,
+        			method: :put, data: { confirm: 'Are you sure?' } %>
+    		</div>
+  		</div>
+  	</div>
+
+  	<div class="alert alert-info" role="alert">
+    	You can also issue a full or partial refund.  The registration will remain
+    	valid, no individuals or group members are removed from the training roster.
+    	<div class="row" style="margin-top:1rem;">
+    		<div class="col-sm-12">
+      			<%= link_to 'Full or Partial Refund',
+              "/api/register/#{@registration.id}/refund.json",
+              class: 'btn btn-sm btn-danger', remote: true,
+        			method: :put, data: { confirm: 'Are you sure?' } %>
+    		</div>
+  		</div>
+  	</div>
+  	
+<% end %>
+
+<script>
+  jQuery(function($) {
+    $("a[data-remote]").on("ajax:success", function(){
+        alert("Something good happened");
+    }); 
+  });
+</script>

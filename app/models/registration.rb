@@ -12,6 +12,7 @@ class Registration < ApplicationRecord
   validates :registerable, presence: true
 
   monetize :amt_paid_cents
+  monetize :amt_refunded_cents
 
   extend ::DataTables::Query
 
@@ -88,6 +89,37 @@ class Registration < ApplicationRecord
       end
     end
     Money.new(approved) * 100
+  end
+
+  def amt_refunded
+    Money.new(amt_refunded_cents)
+  end
+
+  # Please fix me
+  def updated_local_time
+    updated_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
+  end
+  
+  # Please fix me
+  def created_local_time
+    created_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
+  end
+
+   # Please fix me
+  def refunded_local_time
+    if refunded_at.nil?
+      "Not Refunded"
+    else
+      refunded_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
+    end
+  end
+
+  def cancelled_local_time
+    if cancelled_at.nil?
+      "Not Cancelled"
+    else
+      refunded_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
+    end
   end
 
 end

@@ -12,6 +12,12 @@ class RegistrationsController < ApplicationController
   # GET /registrations/1
   # GET /registrations/1.json
   def show
+    if @registration.registerable_type == "Student"
+      @registrants = [@registration.registerable]
+    else
+      @registrants= @registration.registerable.students.to_a
+    end
+    @registrants
   end
 
   # GET /registrations/new

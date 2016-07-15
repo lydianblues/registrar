@@ -107,6 +107,24 @@ class ApiController < ApplicationController
 		end
 	end
 
+	# Partial or full refund of a registration.
+	def refund
+		respond_to do |format|
+			format.json do
+				render inline: "{\"status\": \"OK\"}", status: 200
+			end
+		end
+	end
+
+	# Cancel a registration. An individual or all group members
+	# are removed from the Training.
+	def cancel
+		respond_to do |format|
+			format.json do
+				render inline: "{\"status\": \"OK\"}", status: 200
+			end
+		end
+	end
 
 	# DEPRECATED: Use 'skip_before_action' instead
 	skip_before_filter :verify_authenticity_token

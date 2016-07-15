@@ -72,15 +72,12 @@
             <div class="col-sm-9"><%= yield %></div>
 
             <div class="col-sm-3">
-                <div class="card" style="padding:0.5rem;">
+                <div class="card">
                     <div class="card-header">
                         <h2>Actions</h2>
                     </div>
-                    <div class="card-body">
-                        Here we put a list of actions, such as view the list of registrations
-                        for this student, etc.
-                    
-                        <%= content_for :sidebar %>
+                    <div class="card-body" style="padding:0.5rem;">
+                      <%= content_for :sidebar %>
                     </div> <!-- card body -->
                 </div> <!-- card -->
             </div>  <!-- col -->

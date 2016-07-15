@@ -1,10 +1,7 @@
 <div class="card top-card">
   
   <div class="card-header">
-    <div style="float:left;"><h2>Registrations</h2></div>
-    <div style="float:right;">
-      <%= link_to 'New Registration', new_registration_path, class: 'btn btn-primary btn-md' %>
-    </div>
+    <h2>Registrations</h2>
   </div>
 
   <div class="card-body">
@@ -25,7 +22,6 @@
             <th>Paid</th>
             <th>Last Update</th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -38,24 +34,24 @@
 
 <script>
 
-$('#registrations-table').dataTable( {
-  processing: true,
-  serverSide: true,
-  ajax: {
-    url: '/registrations/datatables'
-  },
-  columns: [
-    {data: 'registration_code'},
-    {data: 'course_name'},
-    {data: 'training_code'},
-    {data: 'owner_name'},
-    {data: 'registrant'},
-    {data: 'paid_for'},
-    {data: 'updated_at'},
-    {data: 'edit_button', orderable: false, searchable: false },
-    {data: 'delete_button', orderable: false, searchable: false }
-  ],
 
-} );
+    $('#registrations-table').dataTable( {
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/registrations/datatables'
+      },
+      columns: [
+        {data: 'registration_code'},
+        {data: 'course_name'},
+        {data: 'training_code'},
+        {data: 'owner_name'},
+        {data: 'registrant'},
+        {data: 'paid_for'},
+        {data: 'updated_at'},
+        {data: 'edit_button', orderable: false, searchable: false }
+      ],
+
+    } );
 
 </script>

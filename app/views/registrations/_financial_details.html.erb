@@ -1,0 +1,63 @@
+ <div class="card-body card-table">
+
+  <div class="row">
+    <div class="col-sm-4">Original Transaction ID</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= link_to @registration.transactions.first.transaction_id,
+          @registration.transactions.first %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Paid For</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.paid_for? ? "Yes" : "No" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Original Amount Approved</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.amt_approved.format %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Previously Refunded</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.refunded? ? "Yes" : "No" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Refunded At</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.refunded_local_time %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Cancelled At</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.cancelled_local_time %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Refund Transaction ID</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.refund_transaction_id %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Amount Refunded</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.amt_refunded.format %>
+    </div>
+  </div>
+
+
+
+
+</div>

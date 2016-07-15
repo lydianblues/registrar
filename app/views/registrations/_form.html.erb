@@ -1,40 +1,5 @@
 <%= simple_form_for(@registration) do |f| %>
-    <%= f.input(:reg_type, label: "Registration Type",
-        collection: [['Single Self', 'single-self'], ['Single Other', 'single-other'],
-            ['Group Inclusive', 'group-inclusive'], ['Group Exclusive', 'group-exclusive']],
-            label_method: :first, value_method: :last, selected: @registration.reg_type) %>
-    
-    <% if @registration.id %>
-        <%= f.input :code, label: "Code", disabled: true %>
-    <% else %>
-        <%= f.input :code, label: "Code" %>
-    <% end %>
-
-     <%= f.input :training_id, collection: @trainings, 
-        prompt: "Choose a Training", label_method: :label, value_method: :id,
-        selected: @registration.training_id %>
-
-    <%= f.input :registerable_type, as: :radio_buttons, label: "Type",
-        collection: [['Student', 'Student'], ['Group', 'Group']], 
-        label_method: :last, value_method: :first, input_html: {class: 'radio-inline'} %>
-    
-    <%= f.input :owner, label: "Owner",
-        prompt: "Choose a Owner", 
-        default: @registration.owner.handle %>
-
-    <%= f.input :group_id, collection: @groups,
-        prompt: "Choose a Group", label_method: :label, value_method: :id,
-        input_html: {id: :registerable_group} %>
-    
-    <%= f.input :paid_for %>
-    <%= f.input :amt_paid %>
-    <%= f.input :sign_up_date %>
-    <%= f.input :auth_code %>
-    <%= f.input :refunded %>
-       
-   
-    <%= f.button :submit, class: 'btn btn-md btn-primary' %>
-    <%= link_to 'Cancel', registrations_path, class: 'btn btn-md btn-warning' %>
-
-  
+    <%= f.input :amt_refunded, label: "Amount to Refund" %>
+    <%= f.input :refund_transaction_id, label: "Transaction ID" %>
+    <%= f.input :notes %>
 <% end %>

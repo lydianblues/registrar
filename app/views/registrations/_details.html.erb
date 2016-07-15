@@ -1,0 +1,68 @@
+<div class="card-body card-table">
+
+  <div class="row">
+    <div class="col-sm-4">Code</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.code %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-4">Course</div>
+    <div class="col-sm-offset-1 col-sm-7">
+      <%= link_to @registration.training.course.name, @registration.training.course %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-4">Training</div>
+    <div class="col-sm-offset-1 col-sm-7">
+        <%= link_to @registration.training.code, @registration.training %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-4">Owner</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= link_to @registration.owner.handle, @registration.owner %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Owner Email</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= mail_to @registration.owner.wp_email, @registration.owner.wp_email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Type</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.reg_type %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Created At</div>
+    <div class="col-sm-offset-1 col-sm-7">
+      <%= @registration.created_local_time %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Updated At</div>
+    <div class="col-sm-offset-1 col-sm-7">
+      <%= @registration.updated_local_time %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Notes</div>
+    <div class="col-sm-offset-1 col-sm-7">
+      <%= @registration.notes %>
+    </div>
+  </div>
+</div>
