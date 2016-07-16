@@ -28,6 +28,11 @@
 </div>
 
 <% content_for :sidebar do %>
+  <div class="alert alert-info" role="alert">
+    <%= link_to 'View Registration', registration_path,
+      class: 'btn btn-sm btn-danger'
+    %>
+  </div>
 	<div class="alert alert-danger" role="alert">
     	Currently, you cannot actually run a refund through this
     	page.  You must also go to BrainTree and and enter the same refund amount

@@ -19,12 +19,20 @@ class Registration < ApplicationRecord
   def price
     
     price = 0 # cents
+    @group_count = 0
+    @regular_count = 0
+    @student_count = 0
 
     # Registration.find(4).registerable.students.count has 7 students...
     # Registration.find(5).registerable.students.count has 4 students...
     
     regular_price = training.regular_price
-    student_price = training.student_price
+
+    if training.student_price.blank?
+      student_price = regular_price
+    else
+      student_price = training.student_price
+    end
    
     if registerable_type == "Group"
       group_price = training.group_price
@@ -32,7 +40,6 @@ class Registration < ApplicationRecord
         group_price = regular_price
       end
 
-      min_price = [group_price, student_price].min
       min_group_size = training.min_group_size
 
       group_discount_available =
@@ -41,15 +48,24 @@ class Registration < ApplicationRecord
       registerable.students.each do |student|
         if group_discount_available
           if student.student_discount
-            price += min_price
+            if student_price <= group_price
+              @student_count += 1
+              price += student_price
+            else
+              @group_count += 1
+              price += group_price
+            end
           else
             price += group_price
+            @group_count += 1
           end
         else
           if student.student_discount
             price += student_price
+            @student_count += 1
           else
             price += regular_price
+            @regular_count += 1
           end
         end
       end
@@ -58,11 +74,13 @@ class Registration < ApplicationRecord
       student = registerable
       if student.student_discount
         price += student_price
+        @student_count += 1
       else
         price += regular_price
+        @regular_price += 1
       end
     end
-      return price
+      return price.as_us_dollar
     # return 200000 # for testing failed transactions
   end
 
@@ -120,6 +138,41 @@ class Registration < ApplicationRecord
     else
       refunded_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
     end
+  end
+
+  def regular_count
+    self.price unless @regular_count
+    @regular_count
+  end
+
+  def group_count
+     self.price unless @group_count
+     @group_count
+  end
+
+  def student_count
+    self.price unless @group_count
+    @student_count
+  end
+
+  def amount_charged
+    amt = Money.new(0)
+    transactions.each do |t|
+      if t.transaction_type == "sale"
+        amt += t.money_amount
+      end
+    end
+    return amt
+  end
+
+    def amount_refunded
+    amt = Money.new(0)
+    transactions.each do |t|
+      if t.transaction_type == "refund"
+        amt += t.money_amount
+      end
+    end
+    return amt
   end
 
 end
