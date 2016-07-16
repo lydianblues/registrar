@@ -12,6 +12,9 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @email_addresses = @group.students.map {|s| s.wp_email }
+    @email_addresses << @group.owner.wp_email
+    @email_addresses = @email_addresses.uniq.join(', ')
   end
 
   # GET /groups/new
@@ -61,6 +64,33 @@ class GroupsController < ApplicationController
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def add
+    sp = params[:student]
+    email = sp[:wp_email]
+    student = Student.find_by_wp_email(email) # nil when not found
+    group = Group.find(params[:id]) # exception when not found
+    if student.nil?
+      student = Student.new(
+        wp_first_name: sp[:wp_first_name],
+        wp_last_name: sp[:wp_last_name],
+        wp_email: email,
+        student_discount: (sp[:student_discount] == "0" ? false : true),
+        email_list: (sp[:email_list] == "0" ? false : true),
+        occupation: sp[:occupation],
+        organization: sp[:organization])
+    end
+    group.students << student
+    redirect_to action: :show, id: group.id
+  end
+
+  def remove
+    sp = params[:student]
+    student = Student.find(sp[:student_id]) # exception when not found
+    group = Group.find(params[:id]) # exception when not found
+    group.students.delete(student)
+    redirect_to action: :show, id: group.id
   end
 
   def datatables

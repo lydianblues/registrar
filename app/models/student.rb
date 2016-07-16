@@ -5,6 +5,8 @@ class Student < ApplicationRecord
 	has_and_belongs_to_many :groups
 	has_many :transactions
 
+    validates_uniqueness_of :wp_email
+
 	extend ::DataTables::Query
 
 	def label

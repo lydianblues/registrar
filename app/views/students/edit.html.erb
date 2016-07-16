@@ -1,3 +1,17 @@
-<h1>Editing Student</h1>
+<div class="card top-card">
+	<div class="card-header">
+	    <h2>Editing Student</h2>
+	</div>
+	<div class="card-body" style="padding:0.5rem;">
+		<%= render partial: 'form', locals: {disable_email: true} %>
+	</div>
+</div>
 
-<%= render 'form', student: @student %>
+<% content_for :sidebar do %>
+	<div style="margin:0.5rem;">
+	<%= link_to "Student Details", @student, :class => 'btn btn-md btn-info'%>
+	</div>
+	<div style="margin:0.5rem;">
+	<%= link_to 'All Students', students_path, class: 'btn btn-md btn-warning' %>
+	</div>
+<% end %>

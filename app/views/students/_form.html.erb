@@ -1,20 +1,15 @@
-<%= simple_form_for(@student, html: { class: 'form-vertical' }) do |f| %>
-
+<%= simple_form_for(@student) do |f| %>
     <%= f.error_notification %>
-
-  <fieldset>
-    <div class="form-inputs">
-            <%= f.input :wp_first_name %>
-            <%= f.input :wp_last_name %>
-            <%= f.input :wp_email %>
-            <%= f.input :occupation %>
-            <%= f.input :organization %>
-        </div>
-
-        <div class="form-actions">
-            <%= f.button :submit, class: 'btn btn-md btn-primary' %>
-            <%= link_to 'Cancel', students_path, class: 'btn btn-md btn-warning' %>
-        </div>
-
-  </fieldset>
+    <%= f.input :wp_first_name, label: "First Name" %>
+    <%= f.input :wp_last_name, label: "Last Name" %>
+    <% if disable_email %>
+        <%= f.input :wp_email, label: "Email", disabled: true %>
+    <% else %>
+        <%= f.input :wp_email, label: "Email" %>
+    <% end %>
+    <%= f.input :student_discount, label: raw("&nbsp;Student Discount") %>
+    <%= f.input :email_list, label: raw("&nbsp;Add to Email List") %>
+    <%= f.input :occupation %>
+    <%= f.input :organization %>
+    <%= f.button :submit, class: 'btn btn-md btn-primary' %>
 <% end %>

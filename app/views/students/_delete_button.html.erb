@@ -1,2 +1,14 @@
-<%= link_to 'Delete', student, class: 'btn btn-sm btn-danger', 
-	method: :delete, data: { confirm: 'Are you sure?' } %>
+<% if @group %>
+	<%= simple_form_for(student, 
+      url: "/groups/#{@group.id}/remove", method: :post) do |f| %>
+
+      	<%= f.hidden_field :student_id, value: student.id %>
+
+		<%= f.button :submit, "Remove", class: 'btn btn-sm btn-danger',
+       		data: { confirm: 'Are you sure?' } %>  
+
+	<% end %>
+<% else %>
+	<%= link_to 'Delete', student, class: 'btn btn-sm btn-danger', 
+		method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>

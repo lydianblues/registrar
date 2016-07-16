@@ -1,4 +1,6 @@
 
+/* Move this stuff to generic? */
+
 .dataTables_length {
 	margin-left: 1rem;
 }
@@ -21,3 +23,8 @@ table.dataTable thead .sorting:before,
 	table.dataTable thead .sorting_desc_disabled:before {
 		top: 0.15em;
 }
+
+.help-block {
+	color: red;
+}
+

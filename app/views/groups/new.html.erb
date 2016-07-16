@@ -1,5 +1,18 @@
-<h1>New Group</h1>
+<div class="card top-card">
+	<div class="card-header">
+	    <h2>New Group</h2>
+	</div>
+	<div class="card-body" style="padding:0.5rem;">
+		<%= render partial: 'form' %>
+	</div>
+</div>
 
-<%= render 'form', group: @group %>
+<% content_for :sidebar do %>
+	<div style="margin:0.5rem;">
+	<%= link_to "Student Details", @student, :class => 'btn btn-md btn-info'%>
+	</div>
+	<div style="margin:0.5rem;">
+	<%= link_to 'All Students', students_path, class: 'btn btn-md btn-warning' %>
+	</div>
+<% end %>
 
-<%= link_to 'Back', groups_path %>

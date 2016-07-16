@@ -49,6 +49,13 @@
         </div>
 
         <div class="row">
+            <div class="col-sm-4">Student Discount</div>
+            <div class="col-sm-offset-1 col-sm-7">
+                <%= @student.student_discount? ? "Yes" : "No" %> 
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-sm-4">Created At</div>
             <div class="col-sm-offset-1 col-sm-7">
                 <%= @student.created_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p') %>
@@ -61,15 +68,24 @@
                 <%= @student.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p') %>
             </div>
         </div>
-      
-        <div class="form-actions">
-         
-          <%= link_to 'Edit', edit_student_path(@student), :class => 'btn btn-sm btn-info' %>
-           
-        </div>
-
     </div>
 </div>
+
+<% content_for :sidebar do %>
+    <div style="margin:0.5rem;">
+        <%= link_to 'Edit This Student', edit_student_path(@student), :class => 'btn btn-md btn-info' %>
+    </div>
+    <div style="margin:0.5rem;">
+        <%= link_to 'View All Students', students_path, class: 'btn btn-md btn-info' %>
+    </div>
+     <div style="margin:0.5rem;">
+        <%= mail_to @student.wp_email, "Send Email", class: 'btn btn-md btn-warning' %>
+    </div>
+     <div style="margin:0.5rem;">
+        <%= link_to "Create New Student", new_student_path, class: 'btn btn-md btn-warning' %>
+    </div>
+    
+<% end %>
 
 <% content_for :wide_table do %>
     <div class="card">
@@ -151,7 +167,39 @@
        </div>
     </div>
 
-        <div class="card">
+ <div class="card">
+        <div class="card-header">
+            <h2>Groups</h2>
+        </div>
+
+        <div class="alert alert-info" role="alert">
+            List of groups that this student belongs to.
+        </div>
+
+        <div class="card-body" style="padding:1em;">
+            <div class="table-responsive">
+                <table id="groups-table" class="table table-striped table-sm table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Handle</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @student.groups.each do |g| %>
+                            <tr>
+                                <td><%= link_to g.handle, g %></td>
+                                <td><%= link_to g.owner.handle, g.owner %></td>
+                            </tr>         
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+   
+
+    <div class="card">
         <div class="card-header">
             <h2>Attendance</h2>
         </div>
@@ -163,7 +211,7 @@
         </div>
 
         <div class="card-body" style="padding:1em;">
-       </div>
+        </div>
     </div>
 
 

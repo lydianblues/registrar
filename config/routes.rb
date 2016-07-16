@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   resources :organizations
   resources :transactions
 
+  post '/groups/:id/add', to: 'groups#add' # add a group member
+  post '/groups/:id/remove', to: 'groups#remove' # remove a group member
+
   post '/api/register', to: 'api#create'
   get '/api/register/:id', to: 'api#show'
   put '/api/register/:id', to:'api#update'

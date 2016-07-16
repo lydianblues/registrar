@@ -75,15 +75,24 @@
             <% end %>
       </div>
     </div>
-  
-    <div class="form-actions">
-      <%= link_to 'Edit', edit_group_path(@group), :class => 'btn btn-sm btn-info' %>
-      <%= link_to 'Delete', group_path(@group), class: 'btn btn-sm btn-danger', 
-        method: :delete, data: { confirm: 'Are you sure?' } %>
-    </div>
-
   </div>
 </div>
+
+<div class="alert alert-info" role="alert">
+       When you add or remove group members, any registration for that group may have
+       its calculated price change.  
+
+       <% if @group.registrations.empty? %>
+        Currently, this group does not belong to a registration.
+      <% else %>
+        Currently, this group belongs to a registration.
+        Please visit the registration 
+        <%= link_to @group.registrations[0].code, @group.registrations[0] %>
+        to recalculate the price.
+        <p><p>
+       Note that the DMind user interface only allows one registration per group.
+       <% end %>
+    </div>
 
 <% content_for :wide_table  do %>
 <div class="card top-card">
@@ -115,6 +124,38 @@
     </div>
   </div>
 </div>
+
+<% content_for :sidebar do %>
+  <div class="alert alert-info" role="alert">
+    Add a new Group Member by Email Address
+  </div>
+  <div style="margin:0.5rem">
+    <%= simple_form_for(Student.new, remote: true,
+      url: "/groups/#{@group.id}/add", method: :post) do |f| %>
+      <%= f.input :wp_email, label: "Email"%>
+      <%= f.button :submit, "Add to Group", class: 'btn btn-md btn-primary' %>       
+    <% end %>
+  </div>
+
+  <hr>
+  <div style="margin:0.5rem">
+        <%= link_to 'Create Student', new_student_path, class: 'btn btn-md btn-info' %>
+  </div>
+  <div style="margin:0.5rem">
+        <%= link_to 'View All Groups', groups_path, class: 'btn btn-md btn-info' %>
+  </div>
+     <div style="margin:0.5rem;">
+        <%= mail_to @group.owner.wp_email, "Send Email to Owner",
+          class: 'btn btn-md btn-info' %>
+    </div>
+    <div style="margin:0.5rem;">
+        <%= mail_to @email_addresses, "Send Email to Group",
+          class: 'btn btn-md btn-info' %>
+    </div>
+     <div style="margin:0.5rem;">
+        <%= link_to "Create New Group", new_group_path, class: 'btn btn-md btn-info' %>
+    </div>
+<% end %>
 
 <script>
 
