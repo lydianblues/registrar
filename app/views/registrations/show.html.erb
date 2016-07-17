@@ -3,13 +3,12 @@
     <div class="card-header">
        <h2>Registration Details</h2>
     </div>
-
     <%= render partial: "details" %>
 </div>
 
 <div class="card">
     <div class="card-header">
-       <h2>Recalculate Price</h2>
+       <h2>Calculated Price</h2>
     </div>
 
     <div class="card-body card-table" style="padding:1rem;">
@@ -143,7 +142,7 @@
 <% content_for :wide_table  do %>
     <div class="card">
         <div class="card-header">
-            <div style="float:left;"><h2>Transactions for this Registration</h2></div>
+            <h2>Transactions for this Registration</h2>
         </div>
 
         <div class="card-body" style="padding:1rem 1rem 0rem 1rem">
@@ -155,11 +154,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Status</th>
+                    <th>Type</th>
                     <th>Owner</th>
                     <th>Payer</th>
                     <th>Amount</th>
                     <th>Updated At</th>
-                    <th>Refresh</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -167,6 +166,7 @@
                         <tr>
                             <td><%= link_to t.transaction_id, transaction_path(t.id) %></td>
                             <td><%= t.status %></td>
+                            <td><%= t.transaction_type %></td>
                             <td><%= link_to t.owner.handle, t.owner %></td>
                             <td>
                                 <% if t.payer_first_name.blank?  || t.payer_last_name.blank? %>
@@ -175,10 +175,8 @@
                                     <%= t.payer_first_name + " " + t.payer_last_name %>
                                 <% end %>
                             </td>
-                            <td><%= format("$%.2f", t.amount) %></td>
+                            <td><%= t.money_amount.format %></td>
                             <td><%= t.updated_local_time %>
-                            <td><%= link_to 'Refresh', "/api/transaction/#{t.id}/refresh.js", 
-                              remote: true, class: 'btn btn-primary btn-sm' %></td>
                         </tr>
                     <% end %>
                 </tbody>
@@ -229,15 +227,12 @@
     </div>
 <% end %>
 
-<% content_for :sidebar do %>
-  
-    
+<% content_for :sidebar do %>  
     <div class="alert alert-info" role="alert" style="margin-bottom:0em;">
       Edit this registration to record new transactions for refunds or additional
       charges.
       <p><p>
       <%= link_to 'Edit Registration', edit_registration_path(@registration),
-        class: 'btn btn-sm btn-danger', method: :get %>
-    
+        class: 'btn btn-sm btn-danger', method: :get %>   
   </div>
 <% end %>
