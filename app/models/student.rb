@@ -14,7 +14,9 @@ class Student < ApplicationRecord
 	end
 
 	def handle
-		wp_first_name + " " + wp_last_name
+		(wp_first_name.nil? ? "" : wp_first_name) +
+        " " + 
+        (wp_last_name.nil? ? "" : wp_last_name)
 	end
 
 
