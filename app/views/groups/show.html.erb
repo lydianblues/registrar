@@ -131,8 +131,9 @@
   </div>
   <div style="margin:0.5rem">
     <%= simple_form_for(Student.new, remote: true,
+      :html => {'data-type': 'json', multipart: true},
       url: "/groups/#{@group.id}/add", method: :post) do |f| %>
-      <%= f.input :wp_email, label: "Email"%>
+      <%= f.input :wp_email, label: "Email" %>
       <%= f.button :submit, "Add to Group", class: 'btn btn-md btn-primary' %>       
     <% end %>
   </div>
@@ -159,7 +160,7 @@
 
 <script>
 
-$('#group-members-table').dataTable( {
+var gm_table = $('#group-members-table').dataTable( {
   processing: true,
   serverSide: true,
   ajax: {
@@ -176,7 +177,18 @@ $('#group-members-table').dataTable( {
     {data: 'delete_button', orderable: false, searchable: false }
   ],
 
-} );
+});
+
+jQuery(function($) {
+  $('#new_student').on("ajax:success", function(e, data, status, xhr) {
+    // Trigger a datatable reload...
+    gm_table.api().ajax.reload();
+    // use a modal here...
+  }).on("ajax:error", function(e, data, status, xhr) {
+    // use a modal here...
+    alert("failure");
+  });
+});
 
 </script>
 

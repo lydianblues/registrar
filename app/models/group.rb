@@ -5,6 +5,8 @@ class Group < ApplicationRecord
 	has_and_belongs_to_many :students
 	belongs_to :owner, class_name: :Student, foreign_key: "student_id"
 
+	attr_accessor :owner_email
+
 	extend ::DataTables::Query
 
 	def label
@@ -13,5 +15,5 @@ class Group < ApplicationRecord
 
 	def handle
 		owner.wp_last_name + '#' + id.to_s
-	 end
+	end
 end

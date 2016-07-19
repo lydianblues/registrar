@@ -20,3 +20,4 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/dataTables.bootstrap4
 //= require trainings
+//= require generic

@@ -1,12 +1,32 @@
+
+<% if @group.errors.any? %>
+  	 <div id="error_explanation" class="alert alert-warning alert-dismissible fade in" role="alert">
+  	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    		<span aria-hidden="true">&times;</span>
+		  	</button>
+    	<h2><%= pluralize(@group.errors.count, "error") +
+    		" prevented this #{@group.class.name} from being saved:" %>
+    	</h2>
+	  	<% @group.errors.full_messages.each do |msg| %>
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    		<span aria-hidden="true">&times;</span>
+		  		</button>
+		  		<%= msg %>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+
 <%= simple_form_for(@group) do |f| %>
-
-	<fieldset>
-	  <div class="form-inputs">
-	    <%= f.input :students %>
-	  </div>
-
-	  <div class="form-actions">
-	    <%= f.button :submit %>
-	  </div>
-	</fieldset>
+	<div class="form-inputs">
+		<%= f.input :owner_email, as: :email, 
+			label_html: (@group.errors.messages[:owner].empty? ? {} :
+				{class: 'label-for-error'}),
+			label: "Owner Email", required: true %>
+	</div>
+	<div class="form-actions">
+		<%= f.button :submit, class: 'btn btn-primary btn-md' %>
+	</div>
+	 
 <% end %>

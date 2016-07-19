@@ -5,7 +5,9 @@ class Student < ApplicationRecord
 	has_and_belongs_to_many :groups
 	has_many :transactions
 
-    validates_uniqueness_of :wp_email
+    validates :wp_email, presence: true, uniqueness: true
+    validates :wp_first_name, presence: true
+    validates :wp_last_name, presence: true
 
 	extend ::DataTables::Query
 

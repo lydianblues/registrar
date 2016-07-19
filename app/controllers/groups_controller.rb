@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  before_filter :staff_only
+  before_action :staff_only
 
   # GET /groups
   # GET /groups.json
@@ -29,7 +29,10 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    @group = Group.new(group_params)
+    byebug
+    email = params[:group][:owner_email]
+    owner = Student.find_by_wp_email!(email)
+    @group = Group.create!(owner: owner)
 
     respond_to do |format|
       if @group.save
@@ -66,24 +69,45 @@ class GroupsController < ApplicationController
     end
   end
 
-  def add
-    sp = params[:student]
-    email = sp[:wp_email]
-    student = Student.find_by_wp_email(email) # nil when not found
-    group = Group.find(params[:id]) # exception when not found
-    if student.nil?
-      student = Student.new(
-        wp_first_name: sp[:wp_first_name],
-        wp_last_name: sp[:wp_last_name],
-        wp_email: email,
-        student_discount: (sp[:student_discount] == "0" ? false : true),
-        email_list: (sp[:email_list] == "0" ? false : true),
-        occupation: sp[:occupation],
-        organization: sp[:organization])
+    def add       
+        sp = params[:student]
+        email = sp[:wp_email]
+        errors = {}
+        group = Group.find_by_id(params[:id])
+
+        if group.nil?
+            errors[:group] = ["group is missing"]
+        else
+            student = Student.find_by_wp_email(email) # nil when not found
+            if student.nil?
+                student = Student.create(
+                    wp_first_name: sp[:wp_first_name],
+                    wp_last_name: sp[:wp_last_name],
+                    wp_email: email,
+                    student_discount: (sp[:student_discount] == "1" ? true : false),
+                    email_list: (sp[:email_list] == "1" ? true : false),
+                    occupation: sp[:occupation],
+                    organization: sp[:organization])
+            end
+            
+            if student.errors.empty?
+                group.students << student 
+            else
+                errors = student.errors.messages
+            end
+        end
+        respond_to do |format|
+            if errors.empty?
+                format.json do
+                    render json: student, status: :ok
+                end
+            else
+                format.json do
+                    render json: errors, status: :unprocessable_entity
+                end
+            end
+        end
     end
-    group.students << student
-    redirect_to action: :show, id: group.id
-  end
 
   def remove
     sp = params[:student]
@@ -125,6 +149,6 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:leader)
+      params.require(:group).permit(:owner_email)
     end
 end
