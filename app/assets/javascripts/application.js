@@ -21,3 +21,4 @@
 //= require dataTables/dataTables.bootstrap4
 //= require trainings
 //= require generic
+//= require registrations

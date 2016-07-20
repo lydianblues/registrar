@@ -427,12 +427,12 @@ trainings = [
 ]
 
 groups = [
-	Group.create(tag: "alpha", owner: students[0]),
-	Group.create(tag: "beta", owner: students[1]),
-	Group.create(tag: "gamma", owner: students[2]),
-	Group.create(tag: "delta", owner: students[2]),
-	Group.create(tag: "epsilon", owner: students[2]),
-	Group.create(tag: "zeta", owner: students[4])
+	Group.create(handle: "alpha", owner: students[0]),
+	Group.create(handle: "beta", owner: students[1]),
+	Group.create(handle: "gamma", owner: students[2]),
+	Group.create(handle: "delta", owner: students[2]),
+	Group.create(handle: "epsilon", owner: students[2]),
+	Group.create(handle: "zeta", owner: students[4])
 ]
 
 # Group 4 has more than 5 students

@@ -26,8 +26,20 @@ class TransactionsController < ApplicationController
   # POST /transactions
   # POST /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
+    transaction_id = params[:transaction][:transaction_id]
+    registration_code = params[:transaction][:registration_code]
+    owner_email = params[:transaction][:owner_email]
+    reg = Registration.find_by_code(registration_code)
+    if owner_email.blank?
+      owner = reg.owner
+    else
+      owner = Student.find_by_wp_email(owner_email)
+    end
+    @transaction = Transaction.new(transaction_id: transaction_id)
+    trans.owner = owner
 
+    reg.transactions << @transaction
+  
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
@@ -94,6 +106,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.fetch(:transaction, {})
+      params.require(:transaction).permit(:transaction_id, :registration_code)
     end
 end

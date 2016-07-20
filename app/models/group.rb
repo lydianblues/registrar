@@ -13,7 +13,7 @@ class Group < ApplicationRecord
 		"#{id} last updated by #{owner.wp_first_name} #{owner.wp_last_name} on #{updated_at.strftime("%b %-d, %Y")}"
 	end
 
-	def handle
-		owner.wp_last_name + '#' + id.to_s
+	def init_handle
+		update_attribute(:handle, owner.wp_last_name + '#' + id.to_s)
 	end
 end

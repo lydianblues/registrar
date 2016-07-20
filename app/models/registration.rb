@@ -14,6 +14,8 @@ class Registration < ApplicationRecord
   monetize :amt_paid_cents
   monetize :amt_refunded_cents
 
+  attr_accessor :owner_email, :registrant_email, :group_handle, :training_code
+
   extend ::DataTables::Query
 
   def price
@@ -77,7 +79,7 @@ class Registration < ApplicationRecord
         @student_count += 1
       else
         price += regular_price
-        @regular_price += 1
+        @regular_count += 1
       end
     end
       return price.as_us_dollar

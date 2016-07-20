@@ -1,27 +1,23 @@
 jQuery(function($) {
 
-	setTimeout(function() {
+	$("#registration_registrant_email").parent().hide();
+	$("#registration_group_handle").parent().hide();
 
-		// These inner checks for a element "ready" are needed because
-		// these elements are created by javascript in SimpleForm.  If
-		// that javascript is not yet done, the elements won't be on the
-		// page, so that we can attach the event handlers.
+	$("#registration-type").on("click", function() {
 
-		$("#registration_registerable_type_group").ready(function() {
-			$("#registerable_group").parent().hide();
-			$("#registration_registerable_type_group").change(function() {
-				$("#registerable_student").parent().hide();
-				$("#registerable_group").parent().show();
-			});
-		});
+		var val = $("#registration-type input:checked").attr('value');
 
-		$("#registration_registerable_type_student").ready(function() {
-			$("#registration_registerable_type_student").prop('checked', true);
-			$("#registration_registerable_type_student").change(function() {
-				$("#registerable_student").parent().show();
-				$("#registerable_group").parent().hide();
-			});
-		});
-	}, 1000);
+		if (val === 'single-self') {
+			$("#registration_registrant_email").parent().hide();
+			$("#registration_group_handle").parent().hide();
+		} else if (val === 'single-other') {
+			$("#registration_registrant_email").parent().show();
+			$("#registration_group_handle").parent().hide();
+		} else {
+			$("#registration_registrant_email").parent().hide();
+			$("#registration_group_handle").parent().show();
+		}
+
+	});
 
 });

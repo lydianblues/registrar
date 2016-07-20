@@ -1,5 +1,51 @@
+<% @errobj = @registration %>
+<% if @errobj.errors.any? %>
+  	 <div id="error_explanation" class="alert alert-warning alert-dismissible fade in" role="alert">
+  	 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    		<span aria-hidden="true">&times;</span>
+		  	</button>
+    	<h2><%= pluralize(@errobj.errors.count, "error") +
+    		" prevented this #{@errobj.class.name} from being saved:" %>
+    	</h2>
+	  	<% @errobj.errors.full_messages.each do |msg| %>
+			<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    		<span aria-hidden="true">&times;</span>
+		  		</button>
+		  		<%= msg %>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+
 <%= simple_form_for(@registration) do |f| %>
-    <%= f.input :amt_refunded, label: "Amount to Refund" %>
-    <%= f.input :refund_transaction_id, label: "Transaction ID" %>
-    <%= f.input :notes %>
+
+	<div class="form-inputs">
+	    <%= f.input :training_code, collection: @trainings,
+	    	prompt: "Select Training Session",
+	    	label_method: :label, value_method: :code %>
+
+	    <%= f.input :owner_email, as: :string %>
+
+	    <div id="registration-type" class="form-control" style="margin-bottom:0.5rem;" %>
+	    <%= f.collection_radio_buttons(:reg_type, 
+	    	[['Single Self', 'single-self'] ,
+	    	['Single Other', 'single-other'],
+	    	['Group Inclusive', 'group-inclusive'],
+	    	['Group Exclusive', 'group-exclusive']
+	    	], :last, :first,
+	    	label: 'Registration Type',
+	    	item_wrapper_class: "radio-select-list") do |b|
+	    		b.radio_button + " " + b.text
+	    	end %>
+	    </div>
+
+	    <%= f.input :registrant_email, as: :string %>
+	    <%= f.input :group_handle, as: :string %>
+	</div>
+	<div class="form-actions">
+		<%= f.button :submit, class: 'btn btn-primary btn-md' %>
+	</div>
+
+
 <% end %>

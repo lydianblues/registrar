@@ -1,0 +1,27 @@
+<div class="card top-card">
+
+ 	<div class="card-header">
+ 		<h1>Create Transaction</h1>
+	</div>
+
+	<div class="alert alert-info" role="alert" style="margin-bottom:0em;">
+		The transaction (sale or refund) must already have been performed on
+		Braintree.  Enter the transaction ID from Braintree and the DMind
+		registration code to record the transaction on the Registrar and link
+		it to the registration.
+		<p></p>
+		If you don't fill in the owner email, it defaults to the owner of the
+		registration.
+	</div>
+
+	<div class="card-body" style="padding:0.5rem;">
+		<%= render 'form', transaction: @transaction %>
+		<p><p>
+	</div>
+</div>
+
+<% content_for :sidebar do %>
+	<div style="padding:0.5rem;">
+		No actions are currently available.
+	</div>
+<% end %>

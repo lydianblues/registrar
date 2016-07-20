@@ -10,6 +10,8 @@ class Transaction < ApplicationRecord
 	belongs_to :registration
 	belongs_to :owner, class_name: 'Student'
 
+	attr_accessor :registration_code, :owner_email
+
 	extend ::DataTables::Query
 
 	def setup(bt_tid)

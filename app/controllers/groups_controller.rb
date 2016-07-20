@@ -29,13 +29,16 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    byebug
+    
     email = params[:group][:owner_email]
     owner = Student.find_by_wp_email!(email)
-    @group = Group.create!(owner: owner)
+    @group = Group.new
+    @group.owner = owner
+    @group.save
 
     respond_to do |format|
       if @group.save
+        @group.init_handle
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
