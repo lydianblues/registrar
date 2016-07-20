@@ -1,23 +1,25 @@
 jQuery(function($) {
 
-	$("#registration_registrant_email").parent().hide();
-	$("#registration_group_handle").parent().hide();
+	$(document).on('turbolinks:load', function() {
 
-	$("#registration-type").on("click", function() {
+		$("#registration_registrant_email").parent().hide();
+		$("#registration_group_handle").parent().hide();
 
-		var val = $("#registration-type input:checked").attr('value');
+		$("#registration-type").on("click", function() {
 
-		if (val === 'single-self') {
-			$("#registration_registrant_email").parent().hide();
-			$("#registration_group_handle").parent().hide();
-		} else if (val === 'single-other') {
-			$("#registration_registrant_email").parent().show();
-			$("#registration_group_handle").parent().hide();
-		} else {
-			$("#registration_registrant_email").parent().hide();
-			$("#registration_group_handle").parent().show();
-		}
+			var val = $("#registration-type input:checked").attr('value');
 
+			if (val === 'single-self') {
+				$("#registration_registrant_email").parent().hide();
+				$("#registration_group_handle").parent().hide();
+			} else if (val === 'single-other') {
+				$("#registration_registrant_email").parent().show();
+				$("#registration_group_handle").parent().hide();
+			} else {
+				$("#registration_registrant_email").parent().hide();
+				$("#registration_group_handle").parent().show();
+			}
+		});
 	});
-
+	
 });

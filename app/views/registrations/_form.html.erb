@@ -21,8 +21,9 @@
 <%= simple_form_for(@registration) do |f| %>
 
 	<div class="form-inputs">
-	    <%= f.input :training_code, collection: @trainings,
-	    	prompt: "Select Training Session",
+
+	    <%= f.input :training_code, collection: @trainings, label: "Training Code",
+	    	prompt: "Select Training Session", label: "Training Session",
 	    	label_method: :label, value_method: :code %>
 
 	    <%= f.input :owner_email, as: :string %>
@@ -43,9 +44,12 @@
 	    <%= f.input :registrant_email, as: :string %>
 	    <%= f.input :group_handle, as: :string %>
 	</div>
+
 	<div class="form-actions">
 		<%= f.button :submit, class: 'btn btn-primary btn-md' %>
 	</div>
 
 
 <% end %>
+
+

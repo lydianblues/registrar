@@ -46,7 +46,7 @@ class RegistrationsController < ApplicationController
     if reg_type == 'single-self'
       registerable = owner
     elsif reg_type == 'single-other'
-      registerable = Student.find_by_email(p[:registrant_email])
+      registerable = Student.find_by_wp_email(p[:registrant_email])
     else 
       registerable = Group.find_by_handle(p[:group_handle])
     end

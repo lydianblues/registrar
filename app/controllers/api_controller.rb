@@ -88,7 +88,6 @@ class ApiController < ApplicationController
 		unless (params[:success] == "false")			
 			@registration = Registration.find(params[:id])
 			@registration.paid_for = true
-			@registration.amt_paid = 0 # FIXME, should this be an increment?
 			@registration.save!
 			@transaction = Transaction.new
 			@transaction.registration = @registration

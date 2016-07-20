@@ -46,6 +46,20 @@
   </div>
 
   <div class="row">
+    <div class="col-sm-4">Paid For</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.paid_for? ? "Yes" : "No" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">Cancelled At</div>
+    <div class="col-sm-offset-1 col-sm-7">
+       <%= @registration.cancelled_local_time %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-sm-4">Created At</div>
     <div class="col-sm-offset-1 col-sm-7">
       <%= @registration.created_local_time %>

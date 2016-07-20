@@ -62,8 +62,8 @@ class CreateRegistrationDatatables < ActiveRecord::Migration[5.0]
 
 			    case when paid_for is TRUE then 'Yes' ELSE 'No' END as paid_for,
 
-			    to_char(updated_at, 'MM/DD/YYYY HH:MI AM') as updated_at,
-
+			    updated_at,
+			    
 			    id as registration_id
 
 			from registrations outer_r

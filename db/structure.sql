@@ -364,14 +364,7 @@ CREATE TABLE registrations (
     training_id integer,
     code integer,
     paid_for boolean DEFAULT false,
-    amt_paid_cents integer DEFAULT 0,
     sign_up_date date,
-    auth_code character varying,
-    refunded boolean DEFAULT false,
-    refunded_at date,
-    amt_refunded_cents integer DEFAULT 0,
-    refund_transaction_id character varying,
-    canceled boolean DEFAULT false,
     cancelled_at date,
     notes text,
     reg_type character varying,
@@ -480,7 +473,7 @@ CREATE VIEW registration_datatables AS
             WHEN (outer_r.paid_for IS TRUE) THEN 'Yes'::text
             ELSE 'No'::text
         END AS paid_for,
-    to_char(outer_r.updated_at, 'MM/DD/YYYY HH:MI AM'::text) AS updated_at,
+    outer_r.updated_at,
     outer_r.id AS registration_id
    FROM registrations outer_r;
 

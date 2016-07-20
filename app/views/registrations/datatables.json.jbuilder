@@ -22,7 +22,9 @@ json.data do |json|
 			locals: {registrant: registration.registrant, id: registration.registerable_id,
 				type: registration.registerable_type })
 
-		json.extract! registration, :paid_for, :updated_at
+		json.extract! registration, :paid_for
+
+		json.updated_at registration.updated_local_time
 
 		json.edit_button raw render(template: 'registrations/_edit_button.html.erb',
 			locals: {id: registration.registration_id})

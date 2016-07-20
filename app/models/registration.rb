@@ -11,9 +11,6 @@ class Registration < ApplicationRecord
   validates :training, presence: true
   validates :registerable, presence: true
 
-  monetize :amt_paid_cents
-  monetize :amt_refunded_cents
-
   attr_accessor :owner_email, :registrant_email, :group_handle, :training_code
 
   extend ::DataTables::Query
@@ -138,7 +135,7 @@ class Registration < ApplicationRecord
     if cancelled_at.nil?
       "Not Cancelled"
     else
-      refunded_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
+      cancelled_at.in_time_zone('Pacific Time (US & Canada)').strftime('%m/%d/%Y %l:%M %p')
     end
   end
 
@@ -170,7 +167,7 @@ class Registration < ApplicationRecord
     def amount_refunded
     amt = Money.new(0)
     transactions.each do |t|
-      if t.transaction_type == "refund"
+      if t.transaction_type == "refund" # t.status == "voided", I think...
         amt += t.money_amount
       end
     end
