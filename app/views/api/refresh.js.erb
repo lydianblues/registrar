@@ -1,8 +1,15 @@
 var selector = "#transactions-table a[href='/transactions/<%= @transaction.id %>']";
 var updated_at = "<%= @transaction.updated_local_time %>";
 var status = "<%= @transaction.status %>";
+var type = "<%= @transaction.transaction_type %>";
 
 var row = jQuery(selector).closest('tr');
 
-jQuery(row.children()[5]).text(status);
-jQuery(row.children()[9]).text(updated_at);
+<% if @context == "registration" %>
+	jQuery(row.children()[1]).text(status);
+	jQuery(row.children()[2]).text(type);
+	jQuery(row.children()[6]).text(updated_at);
+<% elsif @context == "transaction" %>
+	jQuery(row.children()[5]).text(status);
+	jQuery(row.children()[9]).text(updated_at);
+<% end %>

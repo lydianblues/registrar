@@ -54,18 +54,13 @@
 
         <div class="row">
             <div class="col-sm-9">
-               Total         
+               Cost of this Registration         
             </div>
             
             <div class="col-sm-3">
                 <div style="float:right;">
-                    <%= @amt_due = (@registration.training.student_price *
-                         @registration.student_count) +
-                        (@registration.training.group_price *
-                         @registration.group_count) +
-                        (@registration.training.regular_price *
-                         @registration.regular_count) 
-                        @amt_due.format
+                    <%= @amount_due = @registration.amount_due
+                        @amount_due.format
                     %> 
                 </div>
             </div>
@@ -78,7 +73,7 @@
 
         <div class="row">
             <div class="col-sm-9">   
-                Total Charged   
+                Amount Charged   
             </div>
             <div class="col-sm-3">
                 <div style="float:right;">
@@ -89,7 +84,7 @@
         </div>
         <div class="row">
             <div class="col-sm-9">   
-                Total Refunded   
+                Amount Refunded   
             </div>
             <div class="col-sm-3">
                 <div style="float:right;">
@@ -100,7 +95,7 @@
         </div>
         <div class="row">
             <div class="col-sm-9">   
-                Total Credits   
+                Net Payment   
             </div>
             <div class="col-sm-3">
                 <div style="float:right;">
@@ -112,25 +107,25 @@
                 </div>
             </div>
         </div>
-        <% if @amt_paid > @amt_due %>
+        <% if @amt_paid > @amount_due %>
             <div class="row" style="color:red;">
                 <div class="col-sm-9">   
                     Balance to Refund 
                 </div>
                 <div class="col-sm-3">
                     <div style="float:right;">
-                        <%= (@amt_paid - @amt_due).format %>
+                        <%= (@amt_paid - @amount_due).format %>
                     </div>
                 </div>
         </div>
-        <% elsif @amt_paid < @amt_due %>
+        <% elsif @amt_paid < @amount_due %>
             <div class="row" style="color:red;">
                 <div class="col-sm-9">   
                     Balance Due   
                 </div>
                 <div class="col-sm-3">
                     <div style="float:right;">
-                        <%= (@amt_due - @amt_paid).format %>
+                        <%= (@amount_due - @amt_paid).format %>
                     </div>
                 </div>
             </div>
@@ -178,8 +173,10 @@
                             </td>
                             <td><%= t.money_amount.format %></td>
                             <td><%= t.updated_local_time %></td>
-                            <td><%= link_to 'Refresh', "/api/transaction/#{t.id}/refresh.js", 
-                                remote: true, class: 'btn btn-primary btn-sm' %>
+                            <td><%= link_to 'Refresh',
+                                url_for(controller: :api, action: :refresh, id: t.id,
+                                    only_path: true, context: "registration", format: "js"),
+                                    remote: true, class: 'btn btn-primary btn-sm' %>
                             </td>
                         </tr>
                     <% end %>
@@ -233,8 +230,13 @@
 
 <% content_for :sidebar do %>  
     <div class="alert alert-info" role="alert" style="margin-bottom:0em;">
-      Edit this registration to record new transactions for refunds or additional
-      charges.
+      Edit this registration to:
+      <ul> 
+        <li>Record new transaction</li>
+        <li>Full or partial refund of existing transaction</li>
+        <li>Void a transaction</li>
+        <li>Cancel a registration</li>
+      </ul>
       <p><p>
       <%= link_to 'Edit Registration', edit_registration_path(@registration),
         class: 'btn btn-sm btn-danger', method: :get %>   

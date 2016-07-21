@@ -101,6 +101,7 @@ class ApiController < ApplicationController
 	def refresh
 		@transaction = Transaction.find(params[:id])
 		@transaction.refresh
+		@context = params[:context]
 		respond_to do |format|
 			format.js { render layout: false, content_type: 'text/javascript' }
 		end

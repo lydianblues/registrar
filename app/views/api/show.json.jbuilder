@@ -1,5 +1,4 @@
-json.extract! @registration, :id, :updated_at, :formatted_price,
-	:reg_type, :code
+json.extract! @registration, :id, :updated_at, :reg_type, :code
 
 json.formatted_price @registration.price.format
 json.price @registration.price.to_d * 100 # cents as a double
