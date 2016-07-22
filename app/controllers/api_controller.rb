@@ -33,10 +33,13 @@ class ApiController < ApplicationController
 		# an earlier registration for a later registration.
 		#
 		if (group_registration)
+			connection = ActiveRecord::Base.connection
+			result = connection.execute("select nextval('group_handle_seq');")
+			id = result[0]["nextval"]
 			group = Group.new
+			group.handle = owner.wp_last_name + "#" + id.to_s
 			group.owner = owner;
-			group.save! # to generate the group id needed in next line
-			group.tag = owner.wp_last_name + "#" + group.id.to_s
+			group.save!
 		end
 		
 		registration = Registration.new

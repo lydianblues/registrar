@@ -22,3 +22,4 @@
 //= require trainings
 //= require generic
 //= require registrations
+//= require transactions

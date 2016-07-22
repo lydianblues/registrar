@@ -23,3 +23,27 @@ jQuery(function($) {
 	});
 	
 });
+
+jQuery(function($) {
+$(document).on('turbolinks:load', function() {
+    if ( ! $.fn.DataTable.isDataTable('#registrations-table') ) {
+        $('#registrations-table').dataTable( {
+            processing: true,
+            serverSide: true,
+            ajax: {
+            	url: '/registrations/datatables'
+            },
+            columns: [
+                {data: 'registration_code'},
+                {data: 'course_name'},
+                {data: 'training_code'},
+                {data: 'owner_name'},
+                {data: 'registrant'},
+                {data: 'paid_for'},
+                {data: 'updated_at'},
+                {data: 'edit_button', orderable: false, searchable: false }
+            ],
+        });
+    }
+});
+});

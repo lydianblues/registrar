@@ -24,14 +24,11 @@ class CreateTransactionDatatables < ActiveRecord::Migration[5.0]
 		        (select s.id
 		                from students s
 		                join registrations r on r.owner_id = s.id
-		                where r.id = outer_t.registration_id) as owner_id,
+		                where r.id = outer_t.registration_id) as owner_id,     
 
-		        (select rt.name
-		                from registrations r join registrants rt
-		                on (r.registerable_id = rt.registerable_id
-		                and r.registerable_type = rt.registerable_type)
-		                where r.id = outer_t.registration_id)
-		                as registerable_name,
+		        (select registrant_name(r.registerable_type, r.registerable_id)
+		        	from registrations r where r.id = outer_t.registration_id)
+		        	as registerable_name,
 
 		        (select r.registerable_id
 		                from registrations r

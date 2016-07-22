@@ -29,6 +29,31 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: registrant_name(character varying, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION registrant_name(registerable_type character varying, registerable_id integer) RETURNS character varying
+    LANGUAGE plpgsql
+    AS $$
+			
+			DECLARE
+				student_row students%ROWTYPE;
+			    group_row groups%ROWTYPE;
+			BEGIN
+                IF registerable_type = 'Student'
+                THEN
+					SELECT * INTO student_row FROM students s WHERE s.id = registerable_id;
+					RETURN student_row.wp_first_name || ' ' || student_row.wp_last_name;
+                ELSE
+					SELECT * INTO group_row FROM groups g WHERE g.id = registerable_id;
+                    SELECT * INTO student_row FROM students s WHERE s.id = group_row.student_id;
+					RETURN student_row.wp_last_name || '#' || group_row.id;
+				END IF;
+			END;
+			$$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -253,6 +278,46 @@ CREATE VIEW group_datatables AS
 
 
 --
+-- Name: group_handle_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE group_handle_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_handle_seqs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE group_handle_seqs (
+    id integer NOT NULL
+);
+
+
+--
+-- Name: group_handle_seqs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE group_handle_seqs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: group_handle_seqs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE group_handle_seqs_id_seq OWNED BY group_handle_seqs.id;
+
+
+--
 -- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -372,26 +437,6 @@ CREATE TABLE registrations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: registrants; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW registrants AS
- SELECT
-        CASE
-            WHEN ((r.registerable_type)::text = 'Student'::text) THEN ( SELECT (((s.wp_first_name)::text || ' '::text) || (s.wp_last_name)::text)
-               FROM students s
-              WHERE (s.id = r.registerable_id))
-            ELSE ( SELECT (((s.wp_last_name)::text || '#'::text) || (g.id)::text)
-               FROM (students s
-                 JOIN groups g ON ((g.student_id = s.id)))
-              WHERE (g.id = r.registerable_id))
-        END AS name,
-    r.registerable_id,
-    r.registerable_type
-   FROM registrations r;
 
 
 --
@@ -617,9 +662,8 @@ CREATE VIEW transaction_datatables AS
            FROM (students s
              JOIN registrations r ON ((r.owner_id = s.id)))
           WHERE (r.id = outer_t.registration_id)) AS owner_id,
-    ( SELECT rt.name
-           FROM (registrations r
-             JOIN registrants rt ON (((r.registerable_id = rt.registerable_id) AND ((r.registerable_type)::text = (rt.registerable_type)::text))))
+    ( SELECT registrant_name(r.registerable_type, r.registerable_id) AS registrant_name
+           FROM registrations r
           WHERE (r.id = outer_t.registration_id)) AS registerable_name,
     ( SELECT r.registerable_id
            FROM registrations r
@@ -729,6 +773,13 @@ ALTER TABLE ONLY facilitators ALTER COLUMN id SET DEFAULT nextval('facilitators_
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY group_handle_seqs ALTER COLUMN id SET DEFAULT nextval('group_handle_seqs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY groups ALTER COLUMN id SET DEFAULT nextval('groups_id_seq'::regclass);
 
 
@@ -811,6 +862,14 @@ ALTER TABLE ONLY courses
 
 ALTER TABLE ONLY facilitators
     ADD CONSTRAINT facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_handle_seqs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY group_handle_seqs
+    ADD CONSTRAINT group_handle_seqs_pkey PRIMARY KEY (id);
 
 
 --
@@ -1099,6 +1158,7 @@ INSERT INTO schema_migrations (version) VALUES
 ('20160624212619'),
 ('20160624212631'),
 ('20160624212643'),
-('20160624212724');
+('20160624212724'),
+('20160721223105');
 
 
