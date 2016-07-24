@@ -64,9 +64,9 @@ class CreateTransactionDatatables < ActiveRecord::Migration[5.0]
 
 		        '$' || amount::text AS amount,
 
-		        to_char(created_at, 'MM/DD/YYYY HH:MI AM') as created_at,
+		        created_at,
 
-		        to_char(updated_at, 'MM/DD/YYYY HH:MI AM') as updated_at
+		        updated_at
 
 		        from transactions outer_t;
 				

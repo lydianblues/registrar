@@ -19,7 +19,10 @@ json.data do |json|
 				registerable_id: transaction.registerable_id,
 				registerable_type: transaction.registerable_type})
 
-		json.extract! transaction, :payment_type, :status, :payer_name, :amount, :created_at, :updated_at
+		json.extract! transaction, :payment_type, :status, :payer_name, :amount
+
+		json.created_at transaction.created_local_time
+		json.updated_at transaction.updated_local_time
 		
 		json.refresh_button raw render(template: 'transactions/_refresh_button.html.erb',
 			locals: {tid: transaction.transaction_id})

@@ -24,7 +24,7 @@ jQuery(function($) {
 	
 });
 
-jQuery(function($) {
+/* jQuery(function($) { */
 $(document).on('turbolinks:load', function() {
     if ( ! $.fn.DataTable.isDataTable('#registrations-table') ) {
         $('#registrations-table').dataTable( {
@@ -46,4 +46,4 @@ $(document).on('turbolinks:load', function() {
         });
     }
 });
-});
+/* }); */

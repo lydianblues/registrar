@@ -1,4 +1,4 @@
-jQuery(function($) {
+/* jQuery(function($) { */
 	$(document).on('turbolinks:load', function() {
 		if ($("#training_online").is(":checked")) {
 			$(".in-person-only").hide();
@@ -12,4 +12,4 @@ jQuery(function($) {
 		});
 
 	});
-});
+/* }); */
