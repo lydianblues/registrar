@@ -290,34 +290,6 @@ CREATE SEQUENCE group_handle_seq
 
 
 --
--- Name: group_handle_seqs; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE group_handle_seqs (
-    id integer NOT NULL
-);
-
-
---
--- Name: group_handle_seqs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE group_handle_seqs_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: group_handle_seqs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE group_handle_seqs_id_seq OWNED BY group_handle_seqs.id;
-
-
---
 -- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -685,8 +657,8 @@ CREATE VIEW transaction_datatables AS
             END
         END AS payer_name,
     ('$'::text || (outer_t.amount)::text) AS amount,
-    to_char(outer_t.created_at, 'MM/DD/YYYY HH:MI AM'::text) AS created_at,
-    to_char(outer_t.updated_at, 'MM/DD/YYYY HH:MI AM'::text) AS updated_at
+    outer_t.created_at,
+    outer_t.updated_at
    FROM transactions outer_t;
 
 
@@ -767,13 +739,6 @@ ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::r
 --
 
 ALTER TABLE ONLY facilitators ALTER COLUMN id SET DEFAULT nextval('facilitators_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY group_handle_seqs ALTER COLUMN id SET DEFAULT nextval('group_handle_seqs_id_seq'::regclass);
 
 
 --
@@ -862,14 +827,6 @@ ALTER TABLE ONLY courses
 
 ALTER TABLE ONLY facilitators
     ADD CONSTRAINT facilitators_pkey PRIMARY KEY (id);
-
-
---
--- Name: group_handle_seqs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY group_handle_seqs
-    ADD CONSTRAINT group_handle_seqs_pkey PRIMARY KEY (id);
 
 
 --
