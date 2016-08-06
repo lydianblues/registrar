@@ -39,7 +39,6 @@ class RegistrationsController < ApplicationController
   # POST /registrations.json
   def create
     p = params[:registration]
-    byebug
     training = Training.find_by_code(p[:training_code])
     owner = Student.find_by_wp_email(p[:owner_email])
     reg_type = p[:reg_type]

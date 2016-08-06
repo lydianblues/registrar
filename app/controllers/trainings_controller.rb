@@ -68,7 +68,6 @@ class TrainingsController < ApplicationController
     end
     @training = Training.new(myparams)
 
-    byebug
     respond_to do |format|
       if @training.save
         format.html { redirect_to @training, notice: 'Training was successfully created.' }
